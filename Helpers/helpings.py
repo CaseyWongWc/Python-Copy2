@@ -60,3 +60,7 @@ def list_project_files():
 
 def lsalf():
     return cmd("ls", "-alF")
+
+
+def INFO():
+    return str(ROOT) + "\n" + cmd("date") + list_project_files()
