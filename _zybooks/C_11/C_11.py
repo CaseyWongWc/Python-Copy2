@@ -591,7 +591,6 @@ with io.StringIO() as buf:
 (*privacy) Python does have a way to support private variables through name mangling using double underscores in front of an identifier, such as *self.__data*. A private variable is used mostly as a way to prevent name collisions in inheritance trees instead of as a form of information hiding.'''
 '''Figure 13.1.1: A derived class example: Class Produce is derived from class Items.'''
 make_file(f"data/Figure13_1_1.py",'''#'Figure 13.1.1: A derived class example: Class Produce is derived from class Items.
-# val: PosixPath('/home/runner/workspace/data/Figure13_1_1.py')
 class Item:
     def __init__(self):
         self.name = ""
@@ -632,80 +631,14 @@ print(f"  (Expires:({item2.get_expiration()}))")''')
 
 ##################################################################################################################################
 INFO()
-# out: /home/runner/workspace
-# out: Thu Apr 30 11:33:03 PM UTC 2026
-# out: ./.gitignore
-# out: ./uv.lock
-# out: ./pyproject.toml
-# out: ./.upm/store.json1205111821
-# out: ./.upm/store.json
-# out: ./.pythonlibs/CACHEDIR.TAG
-# out: ./.pythonlibs/.gitignore
-# out: ./.pythonlibs/pyvenv.cfg
-# out: ./.replit
-# out: ./.git/description
-# out: ./.git/HEAD
-# out: ./.git/FETCH_HEAD
-# out: ./.git/COMMIT_EDITMSG
-# out: ./.git/config
-# out: ./.git/ORIG_HEAD
-# out: ./.git/index
-# out: ./__pycache__/inline_output.cpython-311.pyc
-# out: ./__pycache__/inline_output_v2.cpython-311.pyc
-# out: ./__pycache__/inline_output_v3.cpython-311.pyc
-# out: ./__pycache__/main.cpython-311.pyc
-# out: ./old/goog (copy).py
-# out: ./old/goog (copy)2.py
-# out: ./old/goog (copy)3.py
-# out: ./old/example.txt
-# out: ./old/greeting.txt
-# out: ./old/log.txt
-# out: ./old/MEEEEOWWWWWW.txt
-# out: ./old/names.txt
-# out: ./old/notes.txt
-# out: ./old/sample.txt
-# out: ./old/score.txt
-# out: ./old/goog (copy)4.py
-# out: ./old/real.txt
-# out: ./old/inline_output.py
-# out: ./old/goog (copy)5.py
-# out: ./old/goog (copy)6.py
-# out: ./old/inline_output_v2.py
-# out: ./old/goog (copy)8.py
-# out: ./old/goog (copy)9.py
-# out: ./old/goog (copy)10.py
-# out: ./old/goog (copy)7.py
-# out: ./old/goog (copy)11.py
-# out: ./old/goog (copy)12.py
-# out: ./old/goog (copy)13.py
-# out: ./old/goog (copy)14.py
-# out: ./old/goog (copy)15.py
-# out: ./cs2520_lec13_exceptions_exercises.md
-# out: ./cs2520_lec13_exercises (2).md
-# out: ./data/real.txt
-# out: ./data/real.py
-# out: ./data/module_a.py
-# out: ./data/__init__.py
-# out: ./data/module_b.py
-# out: ./data/something.py
-# out: ./data/Square.py
-# out: ./data/generated-icon.png
-# out: ./data/Figure13_1_1.py
-# out: ./Helpers/helpings.py
-# out: ./inline_output_v3.py
-# out: ./main.py
-# out: ./goog.py
 ##############################################################################
 from Helpers.helpings import *  # you already have this in goog.py [page:1]
 
 make_dir("_zybooks/C_11")
-# val: PosixPath('/home/runner/workspace/_zybooks/C_11')
 src = ret_file("goog.py")  # read the original file text [page:1]
 Path("_zybooks/C_11").mkdir(exist_ok=True)  # ensure folder exists [page:1]
-# val: None
 with open("_zybooks/C_11/C_11.py", "w", encoding="utf-8") as f:
     f.write(src)
-    # val: 24170
 
 
 # ret_file("_zybooks/C_11/README.md")
@@ -823,7 +756,6 @@ Lab activities
 0 / 10 points
   """
     make_file(f"_zybooks/C_11/README.md", README)
-    # val: PosixPath('/home/runner/workspace/_zybooks/C_11/README.md')
 
 
 del TEMPORARY
