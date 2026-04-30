@@ -1,7 +1,5 @@
-from inline_output import run_and_annotate
-
 print("hello world")
-
-run_and_annotate("goog.py")
+# out: hello world
 
 print(1+1)
+# out: 2
