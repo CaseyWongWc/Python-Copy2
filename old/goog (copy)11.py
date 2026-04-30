@@ -20,43 +20,9 @@ make_file(
 )
 remove_path("test")
 # val: PosixPath('/home/runner/workspace/test')
-
-
-ret_file("goog.py")
-# out: from Helpers.helpings import *
-# out: 
-# out: 
-# out: make_dir("test")
-# out: make_file("test/hello.txt", "Hello, World!")
-# out: 
-# out: print("Hello, World!")
-# out: 
-# out: remove_path("test")
-# out: 
-# out: 
-# out: make_file(
-# out:     "test/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/hello.txt",
-# out:     "Hello, World!",
-# out: )
-# out: remove_path("test")
-# out: 
-# out: 
-# out: ret_file("goog.py")
-# out: 
-# out: 
-# out: ret_file("data/real.txt")
-# out: INFO()
-
-
-ret_file("data/real.txt")
-# out: hello
-# out: world
-
-
-
 INFO()
 # out: /home/runner/workspace
-# out: Thu Apr 30 12:45:35 PM UTC 2026
+# out: Thu Apr 30 12:41:14 PM UTC 2026
 # out: ./.gitignore
 # out: ./uv.lock
 # out: ./pyproject.toml
@@ -99,7 +65,6 @@ INFO()
 # out: ./old/goog (copy)9.py
 # out: ./old/goog (copy)10.py
 # out: ./old/goog (copy)7.py
-# out: ./old/goog (copy)11.py
 # out: ./cs2520_lec13_exceptions_exercises.md
 # out: ./cs2520_lec13_exercises (2).md
 # out: ./data/real.txt
@@ -112,3 +77,4 @@ INFO()
 # out: ./inline_output_v3.py
 # out: ./main.py
 # out: ./goog.py
+
