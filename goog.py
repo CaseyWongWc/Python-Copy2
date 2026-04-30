@@ -288,5 +288,93 @@ def fac(n):
 #)
 
 
-cmd("date")
-# out: Thu Apr 30 09:25:08 PM UTC 2026
+
+
+try:
+    filename = str("goog.py")
+    with open(filename, "r") as f:
+        for line in f:
+            print(float(line))
+except FileNotFoundError:
+    print("That file does not exist.")
+except ValueError:
+    print("One line was not a number.")
+    # out: One line was not a number.
+except Exception as e:
+    print(e)
+finally:
+    print("Program finished.")
+    # out: Program finished.
+
+
+def countdown(n):
+    if n == 0:
+        print("done")
+        # out: done
+        return
+    print(n)
+    # out: 3
+    # out: 2
+    # out: 1
+    countdown(n - 1)
+    # val: None
+    # val: None
+    # val: None
+
+countdown(3)
+# val: None
+
+def factorial(n):
+    print(n)
+    # out: 4
+    # out: 3
+    # out: 2
+    # out: 1
+    if n == 1:
+        print("done")
+        # out: done
+        return 1
+    print (f"{n} * factorial({n-1})")
+    # out: 4 * factorial(3)
+    # out: 3 * factorial(2)
+    # out: 2 * factorial(1)
+    return n * factorial(n - 1)
+
+factorial(4)
+# val: 24
+
+
+
+
+
+
+class NegativeNumberError(Exception):
+    pass
+
+def square(n):
+    if n < 0:
+        raise NegativeNumberError("number cannot be negative")
+    return n * n
+
+try:
+    print(square(-3))
+except NegativeNumberError as e:
+    print(e)
+    # out: number cannot be negative
+
+#
+
+class fart(Exception):
+    pass
+def isbool_(n):
+     if n == True or n == False:
+        return True
+     else:
+        raise fart("not a bool💥")
+try:
+    print(isbool_(1),"i am true")
+    # out: True i am true
+    print(isbool_("yes"))
+except fart as e:
+    print(e)
+    # out: not a bool💥
