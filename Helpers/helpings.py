@@ -55,8 +55,8 @@ def ret_file(path):
 
 
 def list_project_files():
-    return run_cmd("find", ".", "-maxdepth", "2", "-type", "f")
+    return cmd("find", ".", "-maxdepth", "2", "-type", "f")
 
 
 def lsalf():
-    return run_cmd("ls", "-alF")
+    return cmd("ls", "-alF")
