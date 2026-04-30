@@ -112,8 +112,7 @@ def run_and_annotate(path: str) -> str:
     for idx, line in enumerate(cleaned.splitlines(), start=1):
         new_lines.append(line)
         if idx in outputs:
-            m = re.match(r"\s*", line)
-            indent = m.group(0) if m else ""
+            indent = re.match(r"\s*", line).group(0)
             for out_line in outputs[idx]:
                 new_lines.append(f"{indent}{OUT_PREFIX} {out_line}")
 
