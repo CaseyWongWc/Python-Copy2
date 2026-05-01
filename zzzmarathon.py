@@ -198,3 +198,39 @@ class House(Dwelling):
 h = House()
 # h can call open_door(), open_window(), and open_basement()
 ##########################
+'''challenge activity
+13.1.1: Derived classes.
+712910.5105864.qx3zqy7
+Jump to level 1
+Type the program's output
+
+class Vehicle:
+    def __init__(self):
+        self.speed = 0
+
+    def set_speed(self, speed_to_set):
+        self.speed = speed_to_set
+
+    def print_speed(self):
+        print(self.speed)
+
+
+class Car(Vehicle):
+    def print_car_speed(self):
+        print("Speed: ", end = "")
+        self.print_speed()
+
+
+myCar = Car()
+myCar.set_speed(55)
+myCar.print_car_speed()
+1
+2
+3
+Check
+Next
+1
+2
+3
+
+Feedback?'''
