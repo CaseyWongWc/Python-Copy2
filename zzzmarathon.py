@@ -846,4 +846,34 @@ while command != "q":
     command = input(menu)
 #=
 ##########################
-''''''
+'''participation activity
+
+## 
+
+13.2.1: Searching for attributes in the inheritance tree.
+
+1)
+
+"Inheritance tree" describes the hierarchy between base and derived classes.
+
+True
+
+False
+
+2)
+
+Evaluating bike.wheelie() searches TransportMode, then MotorVehicle, then finally MotorCycle for the wheelie() method.
+
+True
+
+False
+
+3)
+
+When adding a new derived class, a programmer has to change the base class as well.
+
+True
+
+False
+
+Feedback?'''
