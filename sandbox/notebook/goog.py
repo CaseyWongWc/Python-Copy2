@@ -2605,3 +2605,97 @@ with Scratch as e:
     pixel_data_loc = struct.unpack("<L", b"\x06\x00\x00\x00")[0]
     print(f"Pixel data location: {pixel_data_loc}")
     # out: Pixel data location: 6
+
+##############################################################################
+'''## 12.5 Command-line arguments and files
+
+The location of an input file or output file may not be known before writing a program. Instead, a program can use command-line arguments to allow the user to specify the location of an input file as shown in the following program. Assume two text files exist named "myfile1.txt" and "myfile2.txt" with the contents shown. The sample output shows the results when executing the program for either input file and for an input file that does not exist.
+
+> **Using command-line arguments to specify the name of an input file.**
+> ```python
+> import sys
+> import os
+> 
+> if len(sys.argv) != 2:
+>     
+>     print(f"Usage: {sys.argv[0]} input_file")
+>     sys.exit(1)  # 1 indicates error
+> 
+> 
+> print(f"Opening file {sys.argv[1]}.")
+> 
+> if not os.path.exists(sys.argv[1]):  # Make sure file exists
+>     print("File does not exist.")
+>     sys.exit(1)  # 1 indicates error
+> 
+> f = open(sys.argv[1], "r")
+> 
+> # Input files should contain two integers on separate lines
+> 
+> print("Reading two integers.")
+> num1 = int(f.readline())
+> num2 = int(f.readline())
+> 
+> 
+> print(f"Closing file {sys.argv[1]}")
+> f.close()  # Done with the file, so close it
+> 
+> 
+> print(f"\nnum1: {num1}")
+> 
+> print(f"num2: {num2}")
+> 
+> print(f"num1 + num2: {num1 + num2}")
+> ```
+> ```
+> 5
+> 10
+> ```
+
+### PARTICIPATION ACTIVITY: Filename command line arguments.
+
+> python
+
+**1.** A script "myscript.py" has two command line arguments, one for an input file and a second for an output file. Type a command to run the program with input file "infile.txt" and output file "out".
+Answer: myscript.py infile.txt out
+*Hint: No quotes and no semicolons should be included. Pass in the script and the arguments.*
+*python is called first to start the Python interpreter,  followed by the script name and the two arguments.*
+
+**2.** For a program run as "python scriptname data.txt", what is sys.argv[1]? Do not use quotes in the answer.
+Answer: data.txt
+*Hint: sys.argv[0] is always the program name.*
+*sys.argv[0] is the script's name, sys.argv[1] is the next argument, which is data.txt.*'''
+####################################################
+'''12.5 Command-line arguments and files
+The location of an input file or output file may not be known before writing a program. Instead, a program can use command-line arguments to allow the user to specify the location of an input file as shown in the following program. Assume two text files exist named "myfile1.txt" and "myfile2.txt" with the contents shown. The sample output shows the results when executing the program for either input file and for an input file that does not exist.'''
+
+#❓hello is your context okay?
+#💿yes, it is.
+with Scratch as a:
+    import sys
+    import os
+
+    if len(sys.argv) != 2:
+        print(f"Usage: {sys.argv[0]} input_file")
+        sys.exit(1)  # 1 indicates error
+
+    print(f"Opening file {sys.argv[1]}.")
+
+    if not os.path.exists(sys.argv[1]):  # Make sure file exists
+        print("File does not exist.")
+        sys.exit(1)  # 1 indicates error
+
+    f = open(sys.argv[1], "r")
+
+    # Input files should contain two integers on separate lines
+
+    print("Reading two integers.")
+    num1 = int(f.readline())
+    num2 = int(f.readline())
+
+    print(f"Closing file {sys.argv[1]}")
+    f.close()  # Done with the file, so close it
+
+    print(f"\nnum1: {num1}")
+    print(f"num2: {num2}")
+    print(f"num1 + num2: {num1 + num2}")
