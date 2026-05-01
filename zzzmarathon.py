@@ -525,6 +525,7 @@ then the output is:
 Order ID: 0
 Quantity: 150, Price: $185.00
 Order ID: 465
+'''
 class FlowerOrder:
     def __init__(self):
         self.quantity = 0
@@ -537,4 +538,31 @@ class FlowerOrder:
         self.price = price_value
 
     def display(self):
-        print(f"Quantity: {self.quantity}, Price: ${self.price:.2f}")'''
+        print(f"Quantity: {self.quantity}, Price: ${self.price:.2f}")
+
+
+""" Your code goes here """
+class Ageratum(FlowerOrder):
+    def __init__(self):
+        FlowerOrder.__init__(self)
+        self.id = 0
+
+    def set_id(self, id_value):
+        self.id = id_value
+
+    def display_id(self):
+        print(f"Order ID: {self.id}")
+
+
+quantity_value = int(input())
+price_value = float(input())
+id_value = int(input())
+
+flower_order = Ageratum()
+flower_order.display_id()
+
+flower_order.set_quantity(quantity_value)
+flower_order.set_price(price_value)
+flower_order.set_id(id_value)
+flower_order.display()
+flower_order.display_id()
