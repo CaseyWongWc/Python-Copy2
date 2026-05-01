@@ -408,4 +408,19 @@ myCar.print_battery_level()
 Battery: 5
 '''
 ##########################
-''''''
+'''activity
+13.1.2: Defining a derived class.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+Complete the definition of class Daffodil so that Daffodil is derived from the base class FlowerOrder.
+
+Click here for example
+Ex: If the input is:
+250
+85.00
+then the output is:
+
+Daffodil
+Quantity: 250, Price: $85.00
+'''
