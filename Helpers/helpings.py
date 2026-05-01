@@ -90,3 +90,39 @@ def setin(*inputs):
         builtins.input = mock_input
     else:
         builtins.input = builtins._original_input_backup
+
+
+def quiz(section_id, questions, prompt_label="Answer"):
+    """
+    Run a multi-question participation activity.
+
+    questions = list of (question_text, expected_answer) tuples.
+    Uses your existing setin() for staged inputs.
+
+    Example:
+        setin("True", "False", "True")
+        quiz("11.1.2", [
+            ("car_sticker_price", True),
+            ("todays_temperature", False),
+            ("inventory_quantity", True),
+        ])
+    """
+    print(f"━━━ ✏️  Quiz {section_id} ━━━")
+    correct = 0
+    for i, (item, expected) in enumerate(questions, 1):
+        try:
+            answer = input(f"  {i}) {item}: ")
+        except EOFError:
+            print(f"  ⚠️  No more staged inputs at question {i}")
+            break
+
+        ok = str(answer).strip().lower() == str(expected).strip().lower()
+        if ok:
+            print(f"     ✅ Correct!")
+            correct += 1
+        else:
+            print(f"     ❌ Got '{answer}', expected '{expected}'")
+
+    total = len(questions)
+    print(f"━━━ Score: {correct}/{total} ━━━\n")
+    return correct, total
