@@ -954,3 +954,9 @@ class Boat(Property):
 
 
 my_vehicle = Boat("Tim", "C65874")
+
+{
+    "owner",
+    "tag",
+    "info()"
+}
