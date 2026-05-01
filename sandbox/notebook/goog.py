@@ -501,6 +501,8 @@ from ast import Del
 
 from ast import Del
 
+#from old.inline_output import _strip_old_annotations
+
 
 [
 # val: [{'a': 1}, {'b': 2}]
@@ -695,8 +697,6 @@ def none():
     beet_file.close()
 pass
 
-
-
 with Scratch as a:
     with "data1.txt":
         Tia 31
@@ -710,9 +710,16 @@ with Scratch as a:
         Mel 38
         Ana 23
         Del 18
-    with "temp.py":
+    with "main.py":
         src_name = input()
         tie_file = open(src_name)
         tie_data = tie_file.read()
         tie_file.close()
         print(tie_data)
+    with open("/workspaces/Python-Copy2/sandbox/files/main.py", "r") as f:
+        f.read()
+        # val: src_name = input()
+        # val: tie_file = open(src_name)
+        # val: tie_data = tie_file.read()
+        # val: tie_file.close()
+        # val: print(tie_data)
