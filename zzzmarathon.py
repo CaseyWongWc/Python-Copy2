@@ -184,5 +184,10 @@ Feedback?'''
 class Dwelling:
     def open_door(self):
         pass
-    
+class House(Dwelling):
+    def open_window(self):
+        pass
+    def open_basement(self):
+        pass
+h = House()
 #
