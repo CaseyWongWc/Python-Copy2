@@ -721,4 +721,4 @@ How was this section?
 
 
 Provide section feedback'''
-##########################
+##########################Figure 13.2.1: Searching the inheritance tree for an attribute.
