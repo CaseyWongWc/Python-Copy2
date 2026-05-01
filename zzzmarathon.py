@@ -893,3 +893,44 @@ Feedback?'''
     }
 }
 ##########################
+'''challenge activity
+13.2.1: Accessing base class attributes.
+712910.5105864.qx3zqy7
+Jump to level 1
+Select the attributes that
+my_vehicle can access.class Property:
+    def __init__(self, owner):
+        self.owner = owner
+
+
+class Scarf(Property):
+    def __init__(self, owner, color):
+        Property.__init__(self, owner)
+        self.color = color
+
+    def info(self):
+        print(f"{self.owner}'s scarf is {self.color}.")
+
+
+class Boat(Property):
+    def __init__(self, owner, tag):
+        Property.__init__(self, owner)
+        self.tag = tag
+
+    def info(self):
+        print(f"{self.owner}'s boat has tag {self.tag}.")
+
+
+my_vehicle = Boat("Tim", "C65874")
+1
+2
+Check
+Next
+1
+2
+
+Feedback?'''
+class Property:
+    def __init__(self, owner):
+        self.owner = owner
+        
