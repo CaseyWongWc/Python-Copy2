@@ -2362,3 +2362,4 @@ with Scratch as e:
     print(my_num)
     # out: 327424
     #✅ Note: The output may vary based on the actual value of my_bytes and the format specified in struct.unpack().
+bytes([12, 15, 20])
