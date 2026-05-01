@@ -16,7 +16,8 @@ run_loop() {
             TIMESTAMP=$(date +"%H:%M:%S")
             git add .
             git commit -m "🔄 autosave @ $TIMESTAMP"
-            git push
+            git pull --rebase origin main --autostash 2>/dev/null || true
+            git push origin main
             echo "[✅ $TIMESTAMP] Changes saved & pushed!"
         else
             echo "[$(date +"%H:%M:%S")] No changes — skipping."

@@ -1,25 +1,13 @@
-class Vehicle:
-  def __init__(self):
-      self.speed = 0
+from Helpers.helpings import *
+import unittest
 
-  def set_speed(self, speed_to_set):
-      self.speed = speed_to_set
+class TestGoogle(unittest.TestCase):
+    def test_google(self):
+        self.assertEqual(google("What is the capital of France?"), "The capital of France is Paris.")
+        self.assertEqual(google("Who is the president of the United States?"), "The president of the United States is Joe Biden.")
+        self.assertEqual(google("What is the largest mammal?"), "The largest mammal is the blue whale.")
+        self.assertEqual(google("What is the square root of 16?"), "The square root of 16 is 4.")
+        self.assertEqual(google("What is the chemical symbol for water?"), "The chemical symbol for water is H2O.")
 
-  def print_speed(self):
-      print(self.speed)
-      # out: 55
-
-
-class Car(Vehicle):
-  def print_car_speed(self):
-      print("Speed: ", end = "")
-      # out: Speed: 
-      self.print_speed()
-      # val: None
-
-
-myCar = Car()
-myCar.set_speed(55)
-# val: None
-myCar.print_car_speed()
-# val: None
+if __name__ == "__main__":
+    unittest.main()
