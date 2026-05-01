@@ -1,6 +1,9 @@
 from Helpers.helpings import *
 import unittest
 
+class Google:
+    def __init__(self):
+        self.knowledge =
 class TestGoogle(unittest.TestCase):
     def test_google(self):
         self.assertEqual(google("What is the capital of France?"), "The capital of France is Paris.")
