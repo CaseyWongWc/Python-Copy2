@@ -27,6 +27,9 @@ with "names.txt":
 
 contents = open("../files/names.txt").read()
 contents
+# val: Tia
+# val: Lynn
+# val: Ravi
 
 
 # --- 2. Sandbox scope (vars don't leak) --------------------------------------
@@ -37,6 +40,7 @@ with Scratch:
     helper = "temp"  # also local to the block
 
 x                   # still 100 — Scratch reverted it
+# val: 100
 
 
 # --- 3. Sandbox scope with capture ------------------------------------------
@@ -46,7 +50,9 @@ with Scratch as a:
     score = 42
 
 a.name
+# val: Casey
 a.score
+# val: 42
 
 
 # --- 4. Comment-driven inputs -----------------------------------------------
@@ -54,16 +60,13 @@ a.score
 # in: 7
 # in: 3
 n = int(input("first: "))
+# out: first: 7
 m = int(input("second: "))
+# out: second: 3
 n + m
+# val: 10
 
 
 # --- 5. Magic save still works ----------------------------------------------
 # Add a `# zy: 12.1 MyExample` (or `# quick:`, `# note:`, `# save:`) at the
 # top of this file to auto-save a copy after annotation.
-# !err: --- ERROR ---
-# !err: Traceback (most recent call last):
-# !err:   File "<string>", line 63, in <module>
-# !err:   File "goog.py", line 23, in <module>
-# !err:     with "names.txt":
-# !err: TypeError: 'str' object does not support the context manager protocol

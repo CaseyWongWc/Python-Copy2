@@ -70,5 +70,15 @@ string-splitting fix) carry over.
   preprocessor uses Python's `tokenize` module to find REAL `with`
   statements, so identical-looking text inside triple-quoted docstrings
   is left completely alone (no file extraction, no scope rewriting).
+  Known tradeoff: if the source can't be tokenized at all (e.g.
+  intentionally malformed bytes from a paste accident), v6 falls back
+  to permissive line-regex matching so the magic features still work
+  — at the small cost that a magic-looking line inside a docstring in
+  that broken file might trigger preprocessing. In practice this is
+  vanishingly rare since Casey's notebooks tokenize fine.
+- `sandbox/files/` is a runtime output directory: only `.gitkeep` and
+  `.gitignore` are tracked, every other file (e.g. `names.txt` written
+  by `with "names.txt":`) is regenerated on each run and ignored by
+  git.
 - The sandbox folder is intentionally isolated from the root v3/v4/v5 setup;
   experimenting in `sandbox/notebook/goog.py` cannot break the root tools.
