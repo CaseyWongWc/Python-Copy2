@@ -2424,3 +2424,5 @@ class TestHI(unittest.TestCase):
     def test_b(self):
         c = HI()
         self.assertLess(c.sprockets, 5)
+if __name__ == "__main__":
+    unittest.main()
