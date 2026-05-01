@@ -962,47 +962,59 @@ my_vehicle = Boat("Tim", "C65874")
 }
 ##########################
 '''challenge activity
+
+## 
+
 13.2.1: Accessing base class attributes.
+
 712910.5105864.qx3zqy7
-Jump to level 1
-Determine the order of search when my_pet.info() is evaluated.class Property:
-    def __init__(self, owner):
-        self.owner = owner
 
-    def info(self):
-        print(f"Owner is {self.owner}.")
+.zyante-bold\{font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-weight:300\}.zyante-section-bold\{font-family:Helvetica;font-weight:300\}.progressionTool\{min-width:425px\}.progressionTool div.zyante-progression-start-reset-buttons-container\{height:45px;margin-bottom:10px\}.progressionTool button.zyante-progression-next-button,.progressionTool button.zyante-progression-try-again,.progressionTool button.zyante-progression-show-solution\{margin-left:30px\}.progressionTool button.zyante-progression-reset-button,.progressionTool button.zyante-progression-show-solution\{background-color:#fff;color:#0072b3\}.progressionTool button.zyante-progression-reset-button:hover:not(.disabled),.progressionTool button.zyante-progression-show-solution:hover:not(.disabled)\{background-color:#fff\}.progressionTool div.zyante-progression-tool-specific-outlet\{margin-bottom:10px\}.progressionTool div.zyante-progression-tool-specific-outlet.is-exam\{margin-bottom:25px\}.progressionTool div.zyante-progression-status-bar\{align-items:stretch;background-color:#eee;border:1px solid #0072b3;display:flex;height:30px\}.progressionTool div.zyante-progression-status-bar div\{align-items:center;color:#999;display:flex;font-size:10px;justify-content:center;width:100%\}.progressionTool div.zyante-progression-status-bar div.filled\{background-color:#87add2;color:#eee\}.progressionTool div.zyante-progression-status-bar div.highlighted\{border:0;font-weight:700;font-size:15px;outline:3px solid #576E91;z-index:1\}.progressionTool div.zyante-progression-status-bar div.highlighted:not(.filled)\{color:gray\}.progressionTool div.zyante-progression-status-bar div:not(:last-child)\{border-right:1px dashed #0072b3\}.progressionTool div.zyante-progression-status-bar div:not(:last-child).highlighted\{border:0\}.progressionTool span.zyante-progression-x-mark\{color:#bb0404;font-size:18px;font-style:normal\}.progressionTool span.zyante-progression-hint\{font-size:18px;font-style:italic;font-weight:700\}.progressionTool span.hint\_symbols\{color:#bb0404;font-size:22px\}.progressionTool div.specific-hint\{align-items:center;display:flex;padding:5px\}.progressionTool div.check-next-container\{display:flex;margin-top:10px\}.progressionTool div.zyante-progression-is-done\{align-self:center\}.progressionTool div.zyante-progression-explanation-area\{margin-top:15px\}.progressionTool div.zyante-progression-spinner\{display:inline-block;height:40px;margin-left:30px;position:relative;vertical-align:top;width:20px\}.progressionTool.progression-started div.zyante-progression-status-bar div\{cursor:pointer\}.progressionTool div.zyante-progression-solution-area\{align-items:center;display:flex;margin-top:25px\}.progressionTool div.zyante-progression-solution-area .solution\{margin-left:20px\}.progressionTool .glow\{animation:glow-grey 8s linear infinite\}@keyframes glow-grey\{0%\{box-shadow:inset 0 0 1px 0 #5c5c5c,inset 0 0 1px 0 #5c5c5c;border-color:#5c5c5c\}8%\{box-shadow:inset 0 0 3px 1px #5c5c5c,inset 0 0 3px 1px #5c5c5c;border-color:#5c5c5c\}90%\{box-shadow:inset 0 0 3px 1px #5c5c5c,0 0 inset 3px 1px #5c5c5c;border-color:#5c5c5c\}92%\{box-shadow:inset 0 0 1px 0 #5c5c5c,inset 0 0 1px 0 #5c5c5c;border-color:#5c5c5c\}\} .zyante-bold\{font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-weight:300\}.zyante-section-bold\{font-family:Helvetica;font-weight:300\}.ProgressionPlayer div.question-area .element\{font-family:Roboto,sans-serif;font-weight:300\}.ProgressionPlayer div.question-area .element \[aria-invalid=true\]\{outline:2px solid #bb0404\}.ProgressionPlayer div.question-area.show-grid::before\{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:var(--grid-vertical,linear-gradient(90deg,#000 1px,transparent 1px)),var(--grid-horizontal,linear-gradient(#000 1px,transparent 1px));background-size:var(--grid-size,20px) var(--grid-size,20px);border-left:var(--border-left,none);border-top:var(--border-top,none);border-right:var(--border-right,1px solid #000);border-bottom:var(--border-bottom,1px solid #000);opacity:var(--grid-opacity,.2)\}.ProgressionPlayer .zyante-progression-explanation-area p\{font-family:Roboto,sans-serif;font-weight:300;margin:0 0 10px\}.ProgressionPlayer .white-space-pre\{white-space:pre-wrap\}.ProgressionPlayer div.zyante-progression-explanation-area .element\{white-space:normal\}.ProgressionPlayer div.zyante-progression-explanation-area ul\{white-space:wrap\}.zyante-bold\{font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-weight:300\}.zyante-section-bold\{font-family:Helvetica;font-weight:300\}div.question-area .zyante-progression-explanation p,div.zyante-progression-explanation-area .zyante-progression-explanation p,div.preview-container .zyante-progression-explanation p\{margin-bottom:0\}div.question-area .zyante-progression-explanation p:first-child,div.zyante-progression-explanation-area .zyante-progression-explanation p:first-child,div.preview-container .zyante-progression-explanation p:first-child\{display:inline\}div.question-area .zyante-progression-explanation img,div.zyante-progression-explanation-area .zyante-progression-explanation img,div.preview-container .zyante-progression-explanation img\{display:block;max-width:100%\}div.question-area .zyante-progression-explanation .MathJax\_SVG\_Display,div.zyante-progression-explanation-area .zyante-progression-explanation .MathJax\_SVG\_Display,div.preview-container .zyante-progression-explanation .MathJax\_SVG\_Display\{padding-left:0;padding-right:0\}div.question-area .element,div.zyante-progression-explanation-area .element,div.preview-container .element\{font-family:Roboto,sans-serif\}div.question-area .element input,div.zyante-progression-explanation-area .element input,div.preview-container .element input\{font-family:Roboto,sans-serif;font-weight:300\}div.question-area .element table,div.zyante-progression-explanation-area .element table,div.preview-container .element table\{background:#f5f5f5;border:2px solid #bdbdbd;border-collapse:collapse;height:100%;line-height:1;margin:0 auto;white-space:pre;width:100%\}div.question-area .element table.dbTable caption,div.zyante-progression-explanation-area .element table.dbTable caption,div.preview-container .element table.dbTable caption\{caption-side:top;font-weight:700;text-align:center\}div.question-area .element table.fix-width,div.zyante-progression-explanation-area .element table.fix-width,div.preview-container .element table.fix-width\{table-layout:fixed\}div.question-area .element table th,div.zyante-progression-explanation-area .element table th,div.preview-container .element table th,div.question-area .element table td,div.zyante-progression-explanation-area .element table td,div.preview-container .element table td\{border:1px solid #bdbdbd;box-sizing:border-box;width:auto\}div.question-area .element table td,div.zyante-progression-explanation-area .element table td,div.preview-container .element table td\{padding:8px\}div.question-area .element table th,div.zyante-progression-explanation-area .element table th,div.preview-container .element table th\{background-color:#e0e0e0;font-weight:300;padding:5px\}div.question-area .element.as-spreadsheet>table,div.zyante-progression-explanation-area .element.as-spreadsheet>table,div.preview-container .element.as-spreadsheet>table\{table-layout:fixed\}div.question-area .element.as-spreadsheet>table td,div.zyante-progression-explanation-area .element.as-spreadsheet>table td,div.preview-container .element.as-spreadsheet>table td\{background-color:#fff\}div.question-area .element.as-spreadsheet>table th,div.zyante-progression-explanation-area .element.as-spreadsheet>table th,div.preview-container .element.as-spreadsheet>table th,div.question-area .element.as-spreadsheet>table td,div.zyante-progression-explanation-area .element.as-spreadsheet>table td,div.preview-container .element.as-spreadsheet>table td\{height:1em;text-align:center;vertical-align:bottom\}div.question-area .element.as-spreadsheet>table tr>th:first-child,div.zyante-progression-explanation-area .element.as-spreadsheet>table tr>th:first-child,div.preview-container .element.as-spreadsheet>table tr>th:first-child\{width:8%\}div.question-area .element.as-spreadsheet>table th,div.zyante-progression-explanation-area .element.as-spreadsheet>table th,div.preview-container .element.as-spreadsheet>table th\{color:#666;font-weight:700\}div.question-area\{position:relative\}div.question-area .element\{position:absolute\}div.question-area .element img\{height:100%;width:100%\}div.question-area .element .keep-height-ratio\{height:auto\}div.question-area .element .keep-width-ratio\{width:auto\}div.question-area .element input:not(\[type=checkbox\]):not(\[type=radio\])\{width:100%\}div.question-area .element .multiple-choice-label\{display:block;padding-left:1em;text-indent:-1em\}div.question-area .element .multiple-choice-label.contains-image\{display:flex;align-items:center;padding-left:0;text-indent:0\}div.question-area .element .multiple-choice-label.contains-image img\{margin-left:8px;vertical-align:middle\}div.question-area .element.zb-checkbox\{align-items:center;display:flex\}div.question-area .element.zb-checkbox input\{border:2px solid #757575;margin:0;margin-right:4px;padding:0\}div.question-area .element.zb-checkbox label\{margin:0;white-space:pre-wrap;width:fit-content\}div.question-area .element.as-spreadsheet>button\{font-size:16px\}div.question-area .element.text-element\{line-height:1.4;white-space:pre-wrap\}div.question-area .element.text-element ul\{white-space:wrap\}div.question-area .dropdown,div.question-area .short-answer\{padding:5px\}div.question-area .dropdown select,div.question-area .short-answer select\{-webkit-appearance:none;appearance:none;background-repeat:no-repeat;background-position-x:calc(97%);background-position-y:center;background-size:12px;border-radius:3px;font-weight:300;padding:1.5px 16px 1.5px 4px\}div.question-area .short-answer input\[type=text\]:not(\[type=range\]):not(\[type=radio\]):not(\[type=checkbox\]),div.question-area .short-answer input\[type=number\]:not(\[type=range\]):not(\[type=radio\]):not(\[type=checkbox\])\{box-sizing:content-box;padding:1px\}div.question-area .short-answer.symbolic-give-units\{display:flex\}
 
+Start Jump to level 1
 
-class Van(Property):
-    def __init__(self, owner, tag):
-        Property.__init__(self, owner)
-        self.tag = tag
+![](<blob:https://learn.zybooks.com/43825272-3d31-4054-b595-587529d2d064>)
 
-    def info(self):
-        print(f"{self.owner}'s van has tag {self.tag}.")
+Determine the order of search when my\_pet.info() is evaluated.
 
+`class Property: def __init__(self, owner): self.owner = owner def info(self): print(f"Owner is {self.owner}.") class Van(Property): def __init__(self, owner, tag): Property.__init__(self, owner) self.tag = tag def info(self): print(f"{self.owner}'s van has tag {self.tag}.") class Cat(Property): def __init__(self, owner, age): Property.__init__(self, owner) self.age = age def info(self): print(f"{self.owner}'s cat is {self.age} years old.") my_pet = Cat("Rae", 5) my_pet.info()`
 
-class Cat(Property):
-    def __init__(self, owner, age):
-        Property.__init__(self, owner)
-        self.age = age
+Property
 
-    def info(self):
-        print(f"{self.owner}'s cat is {self.age} years old.")
+Van
 
+Cat
 
-my_pet = Cat("Rae", 5)
-my_pet.info()PropertyVanCat
-Pick
+Pick First Second Third Not searched
 
-Pick
+Pick First Second Third Not searched
 
-Pick
+Pick First Second Third Not searched
+
 1
+
 2
+
 Check
+
 Next
+
+Try again
+
+question\_mark signifies a specific hint for an answer
+
+Show solution
+
+**Done**. Click any level to practice more. Completion is preserved.
+
+✖ ![Correct](<https://zytools.zybooks.com/zyBooks2/fingerprinted/e6ed6b01-5dff-40e3-82f5-77f61bbe09cd/utilities/resource/checkmark.png>)
+
+Solution
+
 1
+
 2
 
-Feedback?'''
+Feedback?
+
+\~ [Section 13.2 - CS 2520: Python for Programmers | zyBooks](<https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/13/section/2?content_resource_id=122585380>)'''
