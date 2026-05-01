@@ -287,6 +287,8 @@ myCar.set_speed(55)
 myCar.print_car_speed()
 #Output:
 '''
-
+#Output:
 '''Moving at: 55
+
 '''
+##########################
