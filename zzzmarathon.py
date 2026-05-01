@@ -877,3 +877,18 @@ True
 False
 
 Feedback?'''
+
+{
+    {
+        "\"Inheritance tree\" describes the hierarchy between base and derived classes.",
+        "True"
+    },
+    {
+        "Evaluating bike.wheelie() searches TransportMode, then MotorVehicle, then finally MotorCycle for the wheelie() method.",
+        "True"
+    },
+    {
+        "When adding a new derived class, a programmer has to change the base class as well.",
+        "False"
+    }
+}
