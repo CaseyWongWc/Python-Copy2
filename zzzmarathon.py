@@ -2411,9 +2411,4 @@ if __name__ == "__main__":
 #?
 
 ##########################scratch work
-class forgoog():
-    from Helpers.helpings import *
-    import unittest
-    def __init__(self):
-        self.name = "forgoog"
-        self.value = 0
+#"goog.py"
