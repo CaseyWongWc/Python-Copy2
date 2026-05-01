@@ -1028,16 +1028,20 @@ with Scratch as a:
         f.close()  # Close the file
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: Example string:
         #⭐ val:   test....
         f.close()
@@ -1081,16 +1085,20 @@ with Scratch as a:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
@@ -1136,46 +1144,58 @@ with Scratch as a:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
@@ -1211,46 +1231,58 @@ with Scratch as ae:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
@@ -1307,16 +1339,20 @@ with Scratch as e:
     #not native
     ret_file = open("myfile.txt", "r")
     ret_file.read()
-    # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-    # val: try:
-    # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-    # val: except TypeError:
-    # val:     pass
-    # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-    # val: f.flush()  # This will force the output buffer to be written to disk.
-    # val: import os
-    # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+    # val: f = open("data.txt", "rb")
+    # val: print(f)
+    # val: #⭐ out: <_io.BufferedReader name='data.txt'>
     # val: f.close()
+    # val: f = open("myfile.txt", "rb")
+    # val: print(f)
+    # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+    # val: f.close()
+    # val: x = b"\x1a"
+    # val: print(x)
+    # val: #⭐ out: b'\x1a'
+    # val: x = b"\x05\x15\xf2"
+    # val: print(x)
+    # val: #⭐ out: b'\x05\x15\xf2'
     # val: 2
 ####################################################
 '''Output buffer
@@ -1391,16 +1427,20 @@ with Scratch as a:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("myfile.txt", "w")  # Open a file with default line-buffering.
-        # val: try:
-        # val:     f.write(10.0)  # This will raise an error because write() expects a string argument.
-        # val: except TypeError:
-        # val:     pass
-        # val: f.write("Hello")  # This will write "Hello" to the buffer, but not immediately to disk.
-        # val: f.flush()  # This will force the output buffer to be written to disk.
-        # val: import os
-        # val: os.fsync(f.fileno())  # This may be necessary on some operating systems to ensure data is written to disk.
+        # val: f = open("data.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
         # val: f.close()
+        # val: f = open("myfile.txt", "rb")
+        # val: print(f)
+        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        # val: f.close()
+        # val: x = b"\x1a"
+        # val: print(x)
+        # val: #⭐ out: b'\x1a'
+        # val: x = b"\x05\x15\xf2"
+        # val: print(x)
+        # val: #⭐ out: b'\x05\x15\xf2'
         # val: 2
         f.close()
         # val: None
@@ -1717,7 +1757,7 @@ with Scratch as e:
 
         file_data = colors_file.read()  # Read the contents of the file
         print(file_data)  # Print the contents of the file
-        # out: violetvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletviolet
+        # out: violetvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletviolet
 
         colors_file.close()  # Close the file
         # val: None
@@ -1980,10 +2020,9 @@ with Scratch as e:
     # ....
     file_info = os.stat("myfile.txt")
     print(file_info)
-    # out: os.stat_result(st_mode=33206, st_ino=1313110, st_dev=1796, st_nlink=1, st_uid=1000, st_gid=1000, st_size=479, st_atime=1777672454, st_mtime=1777672454, st_ctime=1777672454)
+    # out: os.stat_result(st_mode=33206, st_ino=1313074, st_dev=1796, st_nlink=1, st_uid=1000, st_gid=1000, st_size=285, st_atime=1777677824, st_mtime=1777677824, st_ctime=1777677824)
     # ....
-    os.remove("myfile.txt")
-    # val: None
+    #os.remove("myfile.txt")
 ####################################################
 '''participation activity
 12.3.2: Portable file paths.
@@ -2362,4 +2401,207 @@ with Scratch as e:
     print(my_num)
     # out: 327424
     #✅ Note: The output may vary based on the actual value of my_bytes and the format specified in struct.unpack().
-bytes([12, 15, 20])
+with Scratch as e:
+    bytes([12, 15, 20])
+    # val: b'\x0c\x0f\x14'
+    bytes("A text string", "ascii")
+    # val: b'A text string'
+    bytes(10)
+    # val: b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+
+    bytes(1)
+    # val: b'\x00'
+    bytes(0)
+    # val: b''
+    try:
+        bytes(-1)
+    except ValueError as e:
+        print("Error:", e)
+        # out: Error: negative count
+    try:
+        bytes([256])
+    except ValueError as e:
+        print("Error:", e)
+        # out: Error: bytes must be in range(0, 256)
+    bytes([255])
+    # val: b'\xff'
+    yes=str(bytes([255]))
+    print(f"{yes}")
+    # out: b'\xff'
+    str(yes)
+    # val: b'\xff'
+    yes2=""+str(yes)
+    print(f"{yes2}")
+    # out: b'\xff'
+    print(b"\xff'")
+    # out: b"\xff'"
+
+    print(b"123456789 is the same as \x31\x32\x33\x34\x35\x36\x37\x38\x39")
+    # out: b'123456789 is the same as 123456789'
+    1
+    # val: 1
+    2
+    # val: 2
+    3
+    # val: 3
+    ###b"\x01"*3000 + b"\x02"*3000 + b"\x03"*3000
+
+    b"\x01"*3 + b"\x02"*3 + b"\x03"*3
+    # val: b'\x01\x01\x01\x02\x02\x02\x03\x03\x03'
+
+    b"\x01"*1 + b"\x02"*1 + b"\x03"*1 + b"\x04"*1 + b"\x05"*1 + b"\x06"*1 + b"\x07"*1 + b"\x08"*1 + b"\x09"*1 + b"\x0a"*1 + b"\x0b"*1 + b"\x0c"*1 + b"\x0d"*1 + b"\x0e"*1 + b"\x0f"*1
+    # val: b'\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f'
+    print(b"\x03"*2)
+    # out: b'\x03\x03'
+
+    b"\x03"+b"\x01"
+    # val: b'\x03\x01'
+
+        
+with Scratch as e:
+    with "myfile.txt":
+        print("This will not work because the file is not opened in binary mode.")
+    try:
+        with open("myfile.txt", "rb") as f:
+            contents = f.read()
+            print(contents)
+            # out: b'f = open("data.txt", "rb")\nprint(f)\n#\xe2\xad\x90 out: <_io.BufferedReader name=\'data.txt\'>\nf.close()\nf = open("myfile.txt", "rb")\nprint(f)\n#\xe2\xad\x90 out: <_io.BufferedReader name=\'myfile.txt\'>\nf.close()\nx = b"\\x1a"\nprint(x)\n#\xe2\xad\x90 out: b\'\\x1a\'\nx = b"\\x05\\x15\\xf2"\nprint(x)\n#\xe2\xad\x90 out: b\'\\x05\\x15\\xf2\'\n2'
+    except FileNotFoundError:
+        print("File not found.")
+
+
+####################################################
+'''participation activity
+12.4.1: Binary Data.
+1)
+Open "data.txt" as read-only in binary mode.
+f = open("data.txt", 
+)
+
+Check
+
+Show answer
+2)
+Open "myfile.txt" as read-only in binary mode.
+f = 
+
+
+Check
+
+Show answer
+3)
+Assign x with a bytes object with a single byte whose hexadecimal value is 0x1a. Use a bytes literal.
+x = 
+
+
+Check
+
+Show answer
+4)
+Assign x with a bytes object containing three bytes with hexadecimal values 0x05, 0x15, and 0xf2. Use a bytes literal.
+x = 
+
+
+Check
+
+Show answer'''
+with "myfile.txt":
+    f = open("data.txt", "rb")
+    print(f)
+    #⭐ out: <_io.BufferedReader name='data.txt'>
+    f.close()
+    f = open("myfile.txt", "rb")
+    print(f)
+    #⭐ out: <_io.BufferedReader name='myfile.txt'>
+    f.close()
+    x = b"\x1a"
+    print(x)
+    #⭐ out: b'\x1a'
+    x = b"\x05\x15\xf2"
+    print(x)
+    #⭐ out: b'\x05\x15\xf2'
+
+open("data1.txt", "rb")
+# val: <_io.BufferedReader name='data1.txt'>
+def none():
+    f = open("data1.txt", "rb")
+    print(f)
+    # out: <_io.BufferedReader name='data1.txt'>
+    #⭐ out: <_io.BufferedReader name='data1.txt'>
+    f.close()
+    # val: None
+    f = open("my123.txt", "rb")
+    print(f)
+    # out: <_io.BufferedReader name='my123.txt'>
+    #⭐ out: <_io.BufferedReader name='my123.txt'>
+    f.close()
+    # val: None
+    x = b"\x1a"
+    print(x)
+    # out: b'\x1a'
+    #⭐ out: b'\x1a'
+    x = b"\x05\x15\xf2"
+    print(x)
+    # out: b'\x05\x15\xf2'
+    #⭐ out: b'\x05\x15\xf2'
+none()
+# val: None
+
+
+with Scratch as e:
+    #not native
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    yes=open("data1.txt", "rb")
+    print(yes)
+    # out: <_io.BufferedReader name='data1.txt'>
+    yes2=yes.read()
+    print(yes2)
+    # out: b'violet\n'
+    ###open("ball.bmp", "rb").read()
+####################################################
+'''participation activity
+12.4.2: The struct module.
+1)
+Complete the statement to pack an integer variable "my_num" into a 2-byte sequence. Assign my_bytes with the sequence. Use the byte ordering given by ">".
+my_bytes = struct.pack(
+)
+
+Check
+
+Show answer
+2)
+Assume that variable my_bytes is b"\x00\x04\xff\x00". Complete the statement to assign my_num with the 4-byte integer obtained by unpacking my_bytes. Use the byte ordering given by ">".
+my_num = struct.unpack(
+)
+
+Check
+
+Show answer
+
+Feedback?'''
+with Scratch as a:
+    import struct
+    my_num = 42
+    my_bytes = struct.pack(">h", my_num)
+    print(my_bytes)
+    # out: b'\x00*'
+    #✅ Note: The output may vary based on the actual value of my_num and the format specified in struct.pack().
+    my_bytes = b"\x00\x04\xff\x00"
+    my_num = struct.unpack(">I", my_bytes)[0]
+    print(my_num)
+    # out: 327424
+    #✅ Note: The output may vary based on the actual value of my_bytes and the format specified in struct.unpack().
+with Scratch as e:
+    #not native
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    import struct
+    my_ball = open("ball.bmp", "rb").read()
+    pixel_data_loc = my_ball[10:14]
+    pixel_data_loc = struct.unpack("<L", pixel_data_loc)[0]
+    print(f"Pixel data location: {pixel_data_loc}")
+    # out: Pixel data location: 1212747008
+    pixel_data_loc = struct.unpack("<L", b"\x06\x00\x00\x00")[0]
+    print(f"Pixel data location: {pixel_data_loc}")
+    # out: Pixel data location: 6
