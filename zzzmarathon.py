@@ -490,6 +490,8 @@ class Job:
 class BusinessAnalyst(Job):
 
     """ Your code goes here """
+    def __init__(self):
+        Job.__init__(self)
 
     def print_title(self):
         print("Business Analyst")
