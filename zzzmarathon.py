@@ -455,3 +455,51 @@ bouquet_order.set_quantity(quantity_value)
 bouquet_order.set_price(price_value)
 bouquet_order.print_order()
 bouquet_order.display()
+
+'''challenge activity
+13.1.2: Defining a derived class.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+Define the BusinessAnalyst class's __init__ method to explicitly call the base class's __init__ method.
+
+Click here for example
+Ex: If the input is:
+2005
+3
+then the output is:
+
+Business Analyst
+Start year: 2005, Level: 3
+'''
+class Job:
+    def __init__(self):
+        self.start_year = 0
+        self.level = 0
+
+    def set_start_year(self, start_year_value):
+        self.start_year = start_year_value
+
+    def set_level(self, level_value):
+        self.level = level_value
+
+    def display(self):
+        print(f"Start year: {self.start_year}, Level: {self.level}")
+
+
+class BusinessAnalyst(Job):
+
+    """ Your code goes here """
+
+    def print_title(self):
+        print("Business Analyst")
+
+
+start_year_value = int(input())
+level_value = int(input())
+
+my_job = BusinessAnalyst()
+my_job.set_start_year(start_year_value)
+my_job.set_level(level_value)
+my_job.print_title()
+my_job.display()
