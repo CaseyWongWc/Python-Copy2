@@ -786,6 +786,7 @@ while command != "q":
 
 Implement an Airplane class that is derived from TransportMode. Airplane should have the methods add_fuel(), and fly(), and a data attribute num_passengers.
 Implement a JetPlane class that is derived from Airplane. Add some methods to JetPlane of your own choosing, such as barrel_roll() or immelman().'''
+#=
 class TransportMode:
     def __init__(self, name, speed):
         self.name = name
