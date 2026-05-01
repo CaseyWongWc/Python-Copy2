@@ -1,4 +1,4 @@
-##########################13.1 Derived classes
+####################################################13.1 Derived classes
 
 '''A class will commonly share attributes with another class, but with some additions or variations. Ex: A store inventory system might use a class called Item, having name and quantity attributes. But for fruits and vegetables, a class Produce might have the attributes name, quantity, and expiration date. Note that Produce is really an Item with an additional feature, so ideally a program could define the Produce class as being the same as the Item class but with the addition of an expiration date attribute.
 
@@ -153,3 +153,4 @@ class Item:
 
 
 '''
+##########################
