@@ -1,3 +1,118 @@
+########################################################################################################
+'''Activity summary for assignment: C_11
+32 / 85 points
+Due: 05/07/2026, 11:59 PM PDT
+
+Completion details
+Section 13.1
+11 / 11 points
+
+P
+Participation activities
+13.1.1
+1 / 1 point
+13.1.2
+1 / 1 point
+13.1.3
+1 / 1 point
+13.1.4
+2 / 2 points
+C
+Challenge activities
+13.1.1
+3 / 3 points
+13.1.2
+3 / 3 points
+Section 13.2
+5 / 5 points
+
+P
+Participation activities
+13.2.1
+3 / 3 points
+C
+Challenge activities
+13.2.1
+2 / 2 points
+Section 13.3
+8 / 8 points
+
+P
+Participation activities
+13.3.1
+4 / 4 points
+C
+Challenge activities
+13.3.1
+1 / 1 point
+13.3.2
+3 / 3 points
+Section 13.4
+6 / 6 points
+
+P
+Participation activities
+13.4.1
+4 / 4 points
+C
+Challenge activities
+13.4.1
+2 / 2 points
+Section 13.5
+2 / 2 points
+
+P
+Participation activities
+13.5.1
+1 / 1 point
+13.5.2
+1 / 1 point
+Section 13.6
+0 / 3 points
+
+P
+Participation activities
+13.6.1
+0 / 3 points
+Next section
+Section 13.7
+0 / 10 points
+
+L
+Lab activities
+13.7.1
+0 / 10 points
+Section 13.8
+0 / 10 points
+
+L
+Lab activities
+13.8.1
+0 / 10 points
+Section 13.9
+0 / 10 points
+
+L
+Lab activities
+13.9.1
+0 / 10 points
+Section 13.10
+0 / 10 points
+
+L
+Lab activities
+13.10.1
+0 / 10 points
+Section 13.11
+0 / 10 points
+
+L
+Lab activities
+13.11.1
+0 / 10 points
+'''
+########################################################################################################
+
 ####################################################13.1 Derived classes
 
 '''A class will commonly share attributes with another class, but with some additions or variations. Ex: A store inventory system might use a class called Item, having name and quantity attributes. But for fruits and vegetables, a class Produce might have the attributes name, quantity, and expiration date. Note that Produce is really an Item with an additional feature, so ideally a program could define the Produce class as being the same as the Item class but with the addition of an expiration date attribute.
@@ -2059,4 +2174,148 @@ f.go(100)
     "class HoverCraft(DrivingMixin, FlyingMixin, TransportMode)": "display(), drive(), fly(), change_tire(), roll(), eject(), check_oil()",
     "class Motorcycle(DrivingMixin, TransportMode)": "display(), drive(), change_tire(), check_oil()"
 }
-1+1
+####################################################13.6 Testing your code The unittest module
+'''13.6 Testing your code: The unittest module
+A critical part of software development is testing that a program behaves correctly. For large projects, changing code in one file or class may create new bugs in other parts of the program that import or inherit from the changed code. Maintaining a test suite, or a set of repeatable tests, that run after changing the source code of a program is critical.
+
+A programmer commonly performs unit testing, or testing the individual components of a program, such as specific methods, class interfaces, data structures, and so on. The Python standard library unittest module implements unit testing functionality.
+
+Figure 13.6.1: Unit testing with the unittest module.
+import unittest
+
+# User-defined class
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def compute_area(self):
+        return 3.14 * self.radius**2
+
+
+# Class to test Circle
+class TestCircle(unittest.TestCase):
+    def test_compute_area(self):
+        c = Circle(0)
+        self.assertEqual(c.compute_area(), 0.0)
+
+        c = Circle(5)
+        self.assertEqual(c.compute_area(), 78.5)
+
+    def test_will_fail(self):
+        c = Circle(5)
+        self.assertLess(c.compute_area(), 0)
+
+if __name__ == "__main__":
+    unittest.main()
+.F
+======================================================================
+FAIL: test_will_fail (__main__.TestCircle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "area.py", line 23, in test_will_fail
+    self.assertLess(c.compute_area(), 0)
+AssertionError: 78.5 not less than 0
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (failures=1)
+
+Feedback?
+The program above implements a unit test for the Circle.compute_area() method. A new class, TestCircle, is defined that inherits from unittest.TestCase. Methods within the TestCircle class that begin with "test_" are the unit tests to be run. A unit test performs assertions to check if a computed value meets certain requirements. Above, self.assertEqual( c.compute_area(), 78.5 ) asserts that the result of c.compute_area() is equal to 78.5. If the assertion is not true, then an AssertionError will be raised and the current test will report as a failure. Executing the unittest.main() function begins the test process. After all tests have completed, a report is automatically printed.
+
+Assertions for many types of relationships exist, for example assertEqual() tests equality, assertIn tests if a value is in a container, etc. The below table (from docs.python.org) lists common assertions.
+
+Table 13.6.1: Assertion methods.
+Method	Checks that
+assertEqual(a, b)	a == b
+assertNotEqual(a,b)	a != b
+assertTrue(x)	bool(x) is True
+assertFalse(x)	bool(x) is False
+assertIs(a, b)	a is b
+assertIsNot(a,b)	a is not b
+assertIsNone(x)	x is None
+assertIsNotNone(x)	x is not None
+assertIn(a, b)	a in b
+assertNotIn(a, b)	a not in b
+assertAlmostEqual(a, b)	round(a - b, 7) == 0
+assertGreater(a, b)	a > b
+assertGreaterEqual(a, b)	a >= b
+assertLess(a, b)	a < b
+assertLessEqual(a, b)	a <= b
+
+Feedback?
+Try 13.6.1: Writing unit tests.
+
+Full screen
+Complete the unit tests for testing the evens() and odds() methods. Each unit test should call either odds() or evens(), passing in a known array of values, and then testing the result to ensure only the correct values are in the array.
+
+
+Model Solution
+
+Feedback?
+participation activity
+13.6.1: Unit testing.
+1)
+What is the Python standard library module that allows the definition of unit tests?
+
+Check
+
+Show answer
+2)
+Write an assertion that checks if c.valid is True.
+def test_a(self):
+    c = Widget()
+    self.
+
+ 
+
+Check
+
+Show answer
+3)
+Write an assertion that checks if c.sprockets is less than 5.
+def test_b(self):
+    c = Widget()
+    self.
+
+ 
+
+Check
+
+Show answer
+
+Feedback?
+How was this section?
+
+|
+
+
+Provide section feedback'''
+##########################Figure 13.6.1: Unit testing with the unittest module.
+import unittest
+
+# User-defined class
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def compute_area(self):
+        return 3.14 * self.radius**2
+
+
+# Class to test Circle
+class TestCircle(unittest.TestCase):
+    def test_compute_area(self):
+        c = Circle(0)
+        self.assertEqual(c.compute_area(), 0.0)
+
+        c = Circle(5)
+        self.assertEqual(c.compute_area(), 78.5)
+
+    def test_will_fail(self):
+        c = Circle(5)
+        self.assertLess(c.compute_area(), 0)
+
+if __name__ == "__main__":
+    unittest.main()
