@@ -2426,3 +2426,717 @@ class TestHI(unittest.TestCase):
         self.assertLess(c.sprockets, 5)
 if __name__ == "__main__":
     unittest.main()
+##############################################################################
+'''## 13.7 LAB: Pet information (derived classes)
+
+### LAB ACTIVITY: LAB: Pet information (derived classes)
+
+The base class `Pet` has attributes name and age. The derived class `Cat` inherits attributes from the base class (`Pet`) and includes a breed attribute. Complete the program to:
+- Create a generic pet, and print the pet's information using print_info().- Create a `Cat` pet, use print_info() to print the cat's information, and add a statement to print the cat's breed attribute.Ex: If the input is:
+
+```
+Dobby
+2
+Kreacher
+3
+Scottish Fold
+```
+the output is:
+
+```
+Pet Information: 
+   Name: Dobby
+   Age: 2
+Pet Information: 
+   Name: Kreacher
+   Age: 3
+   Breed: Scottish Fold
+```
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `Dobby\n2\nKreacher\n3\nScottish Fold\n` | `Pet Information:\n   Name: Dobby\n   Age: 2\nPet Information:\n   Name: Kreacher\n   Age: 3\n   Breed: Scottish Fold` | 2 |
+| 2 | `Mittens\n4\nBolt\n2\nMaine Coon\n` | `Pet Information:\n   Name: Mittens\n   Age: 4\nPet Information:\n   Name: Bolt\n   Age: 2\n   Breed: Maine Coon` | 2 |
+| 3 | `Coco\n1\nSimba\n2\nRagdoll\n` | `Pet Information:\n   Name: Coco\n   Age: 1\nPet Information:\n   Name: Simba\n   Age: 2\n   Breed: Ragdoll` | 2 |
+| 4 | `Bojangles\n3\nEclair\n1\nSiamese\n` | `Pet Information:\n   Name: Bojangles\n   Age: 3\nPet Information:\n   Name: Eclair\n   Age: 1\n   Breed: Siamese` | 2 |
+| 5 | `Whiskers\n5\nRiley\n8\nBengal\n` | `Pet Information:\n   Name: Whiskers\n   Age: 5\nPet Information:\n   Name: Riley\n   Age: 8\n   Breed: Bengal` | 2 |
+*Total: 10 points*
+class Pet:
+
+    def __init__(self):
+        self.name = ""
+        self.age = 0
+
+    def print_info(self):
+        print(f"Pet Information:")
+        print(f"   Name: { self.name }")
+        print(f"   Age: { self.age }")
+
+
+class Cat(Pet):
+
+    def __init__(self):
+        Pet.__init__(self)
+        self.breed = ""
+
+
+my_pet = Pet()
+my_cat = Cat()
+
+pet_name = input()
+pet_age = int(input())
+cat_name = input()
+cat_age = int(input())
+cat_breed = input()
+
+# TODO: Create generic pet (using pet_name, pet_age) and then call print_info()
+
+# TODO: Create cat pet (using cat_name, cat_age, cat_breed) and then call print_info()
+
+# TODO: Use my_cat.breed to output the breed of the cat
+'''
+class Pet:
+
+    def __init__(self):
+        self.name = ""
+        self.age = 0
+
+    def print_info(self):
+        print(f"Pet Information:")
+        print(f"   Name: { self.name }")
+        print(f"   Age: { self.age }")
+
+
+class Cat(Pet):
+
+    def __init__(self):
+        Pet.__init__(self)
+        self.breed = ""
+
+
+my_pet = Pet()
+my_cat = Cat()
+
+pet_name = input()
+pet_age = int(input())
+cat_name = input()
+cat_age = int(input())
+cat_breed = input()
+
+# TODO: Create generic pet (using pet_name, pet_age) and then call print_info()
+
+# TODO: Create cat pet (using cat_name, cat_age, cat_breed) and then call print_info()
+
+# TODO: Use my_cat.breed to output the breed of the cat
+my_pet.name = pet_name
+my_pet.age = pet_age
+my_pet.print_info()
+my_cat.name = cat_name
+my_cat.age = cat_age
+my_cat.breed = cat_breed
+my_cat.print_info()
+print(f"   Breed: { my_cat.breed }")    
+####################################################
+'''## 13.8 LAB: Instrument information (derived classes)
+
+### LAB ACTIVITY: LAB: Instrument information (derived classes)
+
+Given the base class `Instrument`, define a derived class `StringInstrument` for string instruments with a constructor that initializes the attributes of the `Instrument` class as well as new attributes of the following types
+- integer to store the number of strings- integer to store the number of frets- boolean to store whether the instrument is bowedEx. If the input is:
+
+```
+Drums
+Zildjian
+2015
+2500
+Guitar
+Gibson
+2002
+1200
+6
+19
+False
+```
+the output is:
+
+```
+Instrument Information: 
+   Name: Drums
+   Manufacturer: Zildjian
+   Year built: 2015
+   Cost: 2500
+Instrument Information: 
+   Name: Guitar
+   Manufacturer: Gibson
+   Year built: 2002
+   Cost: 1200
+   Number of strings: 6
+   Number of frets: 19
+   Is bowed: False
+```
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `Drums\nZildjian\n2015\n2500\nGuitar\nGibson\n2002\n1200\n6\n19\nFalse\n` | `Instrument Information:\n   Name: Drums\n   Manufacturer: Zildjian\n   Year built: 2015\n   Cost: 2500\nInstrument Information:\n   Name: Guitar\n   Manufacturer: Gibson\n   Year built: 2002\n   Cost: 1200\n   Number of strings: 6\n   Number of frets: 19\n   Is bowed: False` | 1 |
+| 2 | `Piano\nYamaha\n1979\n10000\nCello\nKnilling\n2021\n6899\n4\n0\nTrue\n` | `Instrument Information:\n   Name: Piano\n   Manufacturer: Yamaha\n   Year built: 1979\n   Cost: 10000\nInstrument Information:\n   Name: Cello\n   Manufacturer: Knilling\n   Year built: 2021\n   Cost: 6899\n   Number of strings: 4\n   Number of frets: 0\n   Is bowed: True` | 2 |
+| 3 | `Clarinet\nYamaha\n2017\n1371\nUkulele\nKala\n2018\n50\n6\n12\nFalse\n` | `Instrument Information:\n   Name: Clarinet\n   Manufacturer: Yamaha\n   Year built: 2017\n   Cost: 1371\nInstrument Information:\n   Name: Ukulele\n   Manufacturer: Kala\n   Year built: 2018\n   Cost: 50\n   Number of strings: 6\n   Number of frets: 12\n   Is bowed: False` | 1 |
+| 4 | `(none)` | `` | 2 |
+| 5 | `(none)` | `` | 2 |
+| 6 | `(none)` | `` | 2 |
+*Total: 10 points*'''
+class Instrument:
+
+    def __init__(self, name, manufacturer, year_built, cost):
+        self.name = name
+        self.manufacturer = manufacturer
+        self.year_built = year_built
+        self.cost = cost
+
+    def print_info(self):
+        print(f"Instrument Information:")
+        print(f"   Name: { self.name }")
+        print(f"   Manufacturer: { self.manufacturer }")
+        print(f"   Year built: { self.year_built }")
+        print(f"   Cost: { self.cost }")
+
+
+class StringInstrument(Instrument):
+    # TODO: Define constructor with attributes:
+    #       name, manufacturer, year_built, cost, num_strings, num_frets, is_bowed 
+    def __init__(self, name, manufacturer, year_built, cost, num_strings, num_frets, is_bowed):
+        Instrument.__init__(self, name, manufacturer, year_built, cost)
+        self.num_strings = num_strings
+        self.num_frets = num_frets
+        self.is_bowed = is_bowed
+
+    def print_info(self):
+        super().print_info()
+        print(f"   Number of strings: { self.num_strings }")
+        print(f"   Number of frets: { self.num_frets }")
+        print(f"   Is bowed: { self.is_bowed }")
+
+if __name__ == "__main__":
+    instrument_name = input()
+    manufacturer_name = input()
+    year_built = int(input())
+    cost = int(input())
+    string_instrument_name = input()
+    string_manufacturer = input()
+    string_year_built = int(input())
+    string_cost = int(input())
+    num_strings = int(input())
+    num_frets = int(input())
+    is_bowed = input() == "True"
+
+    my_instrument = Instrument(instrument_name, manufacturer_name, year_built,
+                               cost)
+    my_string_instrument = StringInstrument(
+        string_instrument_name,
+        string_manufacturer,
+        string_year_built,
+        string_cost,
+        num_strings,
+        num_frets,
+        is_bowed,
+    )
+
+    my_instrument.print_info()
+    my_string_instrument.print_info()
+
+    print(f"   Number of strings: { my_string_instrument.num_strings}")
+    print(f"   Number of frets: { my_string_instrument.num_frets}")
+    print(f"   Is bowed: { my_string_instrument.is_bowed}")
+'''Compare output
+
+Input
+Piano
+Yamaha
+1979
+10000
+Cello
+Knilling
+2021
+6899
+4
+0
+True
+Your output
+Expected output ends with
+Instrument Information:
+   Name: Piano
+   Manufacturer: Yamaha
+   Year built: 1979
+   Cost: 10000
+Instrument Information:
+   Name: Cello
+   Manufacturer: Knilling
+   Year built: 2021
+   Cost: 6899
+   Number of strings: 4
+   Number of frets: 0
+   Is bowed: True
+   Number of strings: 4
+   Number of frets: 0
+   Is bowed: True
+Instrument Information:
+   Name: Piano
+   Manufacturer: Yamaha
+   Year built: 1979
+   Cost: 10000
+Instrument Information:
+   Name: Cello
+   Manufacturer: Knilling
+   Year built: 2021
+   Cost: 6899
+   Number of strings: 4
+   Number of frets: 0
+   Is bowed: True
+ 
+ 
+ 
+Output is nearly correct, but whitespace differs. See highlights above.
+Special character legend'''
+class Instrument:
+
+    def __init__(self, name, manufacturer, year_built, cost):
+        self.name = name
+        self.manufacturer = manufacturer
+        self.year_built = year_built
+        self.cost = cost
+
+    def print_info(self):
+        print(f"Instrument Information:")
+        print(f"   Name: { self.name }")
+        print(f"   Manufacturer: { self.manufacturer }")
+        print(f"   Year built: { self.year_built }")
+        print(f"   Cost: { self.cost }")
+class StringInstrument(Instrument):
+    def __init__(self, name, manufacturer, year_built, cost, num_strings, num_frets, is_bowed):
+        Instrument.__init__(self, name, manufacturer, year_built, cost)
+        self.num_strings = num_strings
+        self.num_frets = num_frets
+        self.is_bowed = is_bowed
+
+    def print_info(self):
+        super().print_info()
+        print(f"   Number of strings: { self.num_strings }")
+        print(f"   Number of frets: { self.num_frets }")
+        print(f"   Is bowed: { self.is_bowed }")
+if __name__ == "__main__":
+    instrument_name = input()
+    manufacturer_name = input()
+    year_built = int(input())
+    cost = int(input())
+    string_instrument_name = input()
+    string_manufacturer = input()
+    string_year_built = int(input())
+    string_cost = int(input())
+    num_strings = int(input())
+    num_frets = int(input())
+    is_bowed = input() == "True"
+
+    my_instrument = Instrument(instrument_name, manufacturer_name, year_built,
+                               cost)
+    my_string_instrument = StringInstrument(
+        string_instrument_name,
+        string_manufacturer,
+        string_year_built,
+        string_cost,
+        num_strings,
+        num_frets,
+        is_bowed,
+    )
+
+    my_instrument.print_info()
+    my_string_instrument.print_info()
+
+##############################################################################
+'''## 13.9 LAB: Course information (derived classes)
+
+### LAB ACTIVITY: LAB: Course information (derived classes)
+
+Define a `Course` base class with the following attributes:
+- `number` - course number- `title` - course titleDefine a print_info() method in `Course` that displays the course number and title.
+Also define a derived class `OfferedCourse` with the additional attributes:
+- `instructor_name` - instructor name- `location` - class location- `class_time` - class timeEx: If the input is:
+
+```
+ECE287
+Digital Systems Design
+ECE387
+Embedded Systems Design
+Mark Patterson
+Wilson Hall 231
+WF: 2-3:30 pm
+```
+the output is:
+
+```
+Course Information:
+   Course Number: ECE287
+   Course Title: Digital Systems Design
+Course Information:
+   Course Number: ECE387
+   Course Title: Embedded Systems Design
+   Instructor Name: Mark Patterson
+   Location: Wilson Hall 231
+   Class Time: WF: 2-3:30 pm
+```
+*Note: Indentations use 3 spaces.*
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `ECE287\nDigital Systems Design\nECE387\nEmbedded Systems Design\nMark Patterson\nWilson Hall 231\nWF: 2-3:30 pm\n` | `Course Information:\n   Course Number: ECE287\n   Course Title: Digital Systems Design\nCourse Information:\n   Course Number: ECE387\n   Course Title: Embedded Systems Design\n   Instructor Name: Mark Patterson\n   Location: Wilson Hall 231\n   Class Time: WF: 2-3:30 pm` | 1 |
+| 2 | `CSE 174\nSystems I\nCSE 274\nSystems II\nDr. Susan Thomas\nMSE 108\nMWF: 10-10:50 am\n` | `Course Information:\n   Course Number: CSE 174\n   Course Title: Systems I\nCourse Information:\n   Course Number: CSE 274\n   Course Title: Systems II\n   Instructor Name: Dr. Susan Thomas\n   Location: MSE 108\n   Class Time: MWF: 10-10:50 am` | 1 |
+| 3 | `CEC 101\nIntroduction to Computing\nCEC 102\nComputing and beyond\nDr. Rob Adams\nPierce Hall 56\nMWF: 3-4:50 pm\n` | `Course Information:\n   Course Number: CEC 101\n   Course Title: Introduction to Computing\nCourse Information:\n   Course Number: CEC 102\n   Course Title: Computing and beyond\n   Instructor Name: Dr. Rob Adams\n   Location: Pierce Hall 56\n   Class Time: MWF: 3-4:50 pm` | 1 |
+| 4 | `ECE201\nCircuits I\nECE301\nCircuits II\nJeff Peters\nUniv. Center 147\nWF: 12-1:30 pm\n` | `Course Information:\n   Course Number: ECE201\n   Course Title: Circuits I\nCourse Information:\n   Course Number: ECE301\n   Course Title: Circuits II\n   Instructor Name: Jeff Peters\n   Location: Univ. Center 147\n   Class Time: WF: 12-1:30 pm` | 1 |
+| 5 | `CSE101\nAlgorithm I\nCSE102\nAlgorithm II\nTim Allen\nSondheim Hall 333\nWF: 1-2:30 pm\n` | `Course Information:\n   Course Number: CSE101\n   Course Title: Algorithm I\nCourse Information:\n   Course Number: CSE102\n   Course Title: Algorithm II\n   Instructor Name: Tim Allen\n   Location: Sondheim Hall 333\n   Class Time: WF: 1-2:30 pm` | 1 |
+| 6 | `(none)` | `` | 1 |
+| 7 | `(none)` | `` | 1 |
+| 8 | `(none)` | `` | 1 |
+| 9 | `(none)` | `` | 1 |
+| 10 | `(none)` | `` | 1 |
+*Total: 10 points*
+class Course:
+    # TODO: Define constructor with attributes
+
+    # TODO: Define print_info()
+
+
+class OfferedCourse(Course):
+# TODO: Define constructor with attributes
+
+
+if __name__ == "__main__":
+    course_number = input()
+    course_title = input()
+
+    o_course_number = input()
+    o_course_title = input()
+    instructor_name = input()
+    location = input()
+    class_time = input()
+
+    my_course = Course(course_number, course_title)
+    my_course.print_info()
+
+    my_offered_course = OfferedCourse(o_course_number, o_course_title,
+                                      instructor_name, location, class_time)
+    my_offered_course.print_info()
+
+    print(f"   Instructor Name: { my_offered_course.instructor_name }")
+    print(f"   Location: { my_offered_course.location }")
+    print(f"   Class Time: { my_offered_course.class_time }")
+
+'''
+class Course:
+    def __init__(self, number, title):
+        self.number = number
+        self.title = title
+
+    def print_info(self):
+        print(f"Course Information:")
+        print(f"   Course Number: { self.number }")
+        print(f"   Course Title: { self.title }")
+class OfferedCourse(Course):
+    def __init__(self, number, title, instructor_name, location, class_time):
+        Course.__init__(self, number, title)
+        self.instructor_name = instructor_name
+        self.location = location
+        self.class_time = class_time
+
+    def print_info(self):
+        super().print_info()
+        print(f"   Instructor Name: { self.instructor_name }")
+        print(f"   Location: { self.location }")
+        print(f"   Class Time: { self.class_time }")
+if __name__ == "__main__":
+    course_number = input()
+    course_title = input()
+
+    o_course_number = input()
+    o_course_title = input()
+    instructor_name = input()
+    location = input()
+    class_time = input()
+
+    my_course = Course(course_number, course_title)
+    my_course.print_info()
+
+    my_offered_course = OfferedCourse(o_course_number, o_course_title,
+                                      instructor_name, location, class_time)
+    my_offered_course.print_info()
+####################################################
+'''## 13.10 LAB: Book information (overriding member methods)
+
+### LAB ACTIVITY: LAB: Book information (overriding member methods)
+
+Given a `Book` base class, define a derived class called `Encyclopedia` with a constructor that initializes the attributes of the `Book` class as well as new attributes of the following types:
+- string to store the edition- int to store the number of pagesWithin the derived `Encyclopedia` class, define a print_info() method that overrides the `Book` class' print_info() method by printing the title, author, publisher, publication date, edition, and number of pages.
+Ex: If the input is:
+
+```
+The Hobbit
+J. R. R. Tolkien
+George Allen & Unwin
+21 September 1937
+The Illustrated Encyclopedia of the Universe
+Ian Ridpath
+Watson-Guptill
+2001
+2nd
+384
+```
+the output is:
+
+```
+Book Information:
+   Book Title: The Hobbit
+   Author: J. R. R. Tolkien
+   Publisher: George Allen & Unwin
+   Publication Date: 21 September 1937
+Book Information:
+   Book Title: The Illustrated Encyclopedia of the Universe
+   Author: Ian Ridpath
+   Publisher: Watson-Guptill
+   Publication Date: 2001
+   Edition: 2nd
+   Number of Pages: 384
+```
+*Note: Indentations use 3 spaces.*
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `The Hobbit\nJ. R. R. Tolkien\nGeorge Allen & Unwin\n21 September 1937\nThe Illustrated Encyclopedia of the Universe\nIan Ridpath\nWatson-Guptill\n2001\n2nd\n384\n` | `Book Information:\n   Book Title: The Hobbit\n   Author: J. R. R. Tolkien\n   Publisher: George Allen & Unwin\n   Publication Date: 21 September 1937\nBook Information:\n   Book Title: The Illustrated Encyclopedia of the Universe\n   Author: Ian Ridpath\n   Publisher: Watson-Guptill\n   Publication Date: 2001\n   Edition: 2nd\n   Number of Pages: 384` | 2 |
+| 2 | `The Catcher in the Rye\nJ. D. Salinger\nLittle, Brown and Company\nJuly 16, 1951\nEncyclopaedia Britannica\nN/A\nBenton Foundation\n2010\n15th\n32640\n` | `Book Information:\n   Book Title: The Catcher in the Rye\n   Author: J. D. Salinger\n   Publisher: Little, Brown and Company\n   Publication Date: July 16, 1951\nBook Information:\n   Book Title: Encyclopaedia Britannica\n   Author: N/A\n   Publisher: Benton Foundation\n   Publication Date: 2010\n   Edition: 15th\n   Number of Pages: 32640` | 2 |
+| 3 | `Jane Eyre\nCharlotte Brontë\nSmith, Elder & Co.\nOctober 16, 1847\nEncyclopedia of Animals\nMcGhee, Karen, and George McKay\nNational Geographic Society\n2007\n2nd\n192\n` | `Book Information:\n   Book Title: Jane Eyre\n   Author: Charlotte Brontë\n   Publisher: Smith, Elder & Co.\n   Publication Date: October 16, 1847\nBook Information:\n   Book Title: Encyclopedia of Animals\n   Author: McGhee, Karen, and George McKay\n   Publisher: National Geographic Society\n   Publication Date: 2007\n   Edition: 2nd\n   Number of Pages: 192` | 2 |
+| 4 | `(none)` | `` | 2 |
+| 5 | `(none)` | `` | 2 |
+*Total: 10 points*
+class Book:
+
+    def __init__(self, title, author, publisher, publication_date):
+        self.title = title
+        self.author = author
+        self.publisher = publisher
+        self.publication_date = publication_date
+
+    def print_info(self):
+        print("Book Information:")
+        print(f"   Book Title: {self.title}")
+        print(f"   Author: {self.author}")
+        print(f"   Publisher: {self.publisher}")
+        print(f"   Publication Date: {self.publication_date}")
+
+
+class Encyclopedia(Book):
+# TODO: Define constructor with attributes:
+#       title, author, publisher, publication_date, edition, num_pages
+
+# TODO: Define a print_info() method that overrides the print_info()
+#       in the Book class
+
+
+if __name__ == "__main__":
+    title = input()
+    author = input()
+    publisher = input()
+    publication_date = input()
+
+    e_title = input()
+    e_author = input()
+    e_publisher = input()
+    e_publication_date = input()
+    edition = input()
+    num_pages = int(input())
+
+    my_book = Book(title, author, publisher, publication_date)
+    my_book.print_info()
+
+    my_encyclopedia = Encyclopedia(e_title, e_author, e_publisher,
+                                   e_publication_date, edition, num_pages)
+    my_encyclopedia.print_info()
+
+'''
+class Book:
+
+    def __init__(self, title, author, publisher, publication_date):
+        self.title = title
+        self.author = author
+        self.publisher = publisher
+        self.publication_date = publication_date
+
+    def print_info(self):
+        print("Book Information:")
+        print(f"   Book Title: {self.title}")
+        print(f"   Author: {self.author}")
+        print(f"   Publisher: {self.publisher}")
+        print(f"   Publication Date: {self.publication_date}")
+class Encyclopedia(Book):
+    def __init__(self, title, author, publisher, publication_date, edition, num_pages):
+        Book.__init__(self, title, author, publisher, publication_date)
+        self.edition = edition
+        self.num_pages = num_pages
+
+    def print_info(self):
+        super().print_info()
+        print(f"   Edition: { self.edition }")
+        print(f"   Number of Pages: { self.num_pages }")
+if __name__ == "__main__":
+    title = input()
+    author = input()
+    publisher = input()
+    publication_date = input()
+
+    e_title = input()
+    e_author = input()
+    e_publisher = input()
+    e_publication_date = input()
+    edition = input()
+    num_pages = int(input())
+
+    my_book = Book(title, author, publisher, publication_date)
+    my_book.print_info()
+
+    my_encyclopedia = Encyclopedia(e_title, e_author, e_publisher,
+                                   e_publication_date, edition, num_pages)
+    my_encyclopedia.print_info()
+    ####################################################
+    '''## 13.11 LAB: Plant information
+
+### LAB ACTIVITY: LAB: Plant information
+
+Given a base `Plant` class and a derived `Flower` class, write a program to create a list called `my_garden`. Store objects that belong to the `Plant` class or the `Flower` class in the list. Create a function called print_list(), that uses the print_info() instance methods defined in the respective classes and prints each element in `my_garden`. The program should read plants or flowers from input (ending with -1), add each `Plant` or `Flower` to the `my_garden` list, and output each element in `my_garden` using the print_info() function.
+Note: A list can contain different data types and also different objects.
+Ex. If the input is:
+
+```
+plant Spirea 10 
+flower Hydrangea 30 false lilac 
+flower Rose 6 false white
+plant Mint 4
+-1
+```
+the output is:
+
+```
+Plant 1 Information:
+   Plant name: Spirea
+   Cost: 10
+
+Plant 2 Information:
+   Plant name: Hydrangea
+   Cost: 30
+   Annual: false
+   Color of flowers: lilac
+
+Plant 3 Information:
+   Plant name: Rose
+   Cost: 6
+   Annual: false
+   Color of flowers: white
+
+Plant 4 Information:
+   Plant name: Mint
+   Cost: 4
+```
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `plant Spirea 10 \nflower Hydrangea 30 false lilac \nflower Rose 6 false white\nplant Mint 4\n-1\n` | `Plant 1 Information:\n   Plant name: Spirea\n   Cost: 10\n\nPlant 2 Information:\n   Plant name: Hydrangea\n   Cost: 30\n   Annual: false\n   Color of flowers: lilac\n\nPlant 3 Information:\n   Plant name: Rose\n   Cost: 6\n   Annual: false\n   Color of flowers: white\n\nPlant 4 Information:\n   Plant name: Mint\n   Cost: 4` | 2 |
+| 2 | `plant Basil 4 \nplant Thyme 4\nflower Peony 30 false pink\nflower Marigold 6 false orange\nplant Juniper 10\n-1\n` | `Plant 1 Information:\n   Plant name: Basil\n   Cost: 4\n\nPlant 2 Information:\n   Plant name: Thyme\n   Cost: 4\n\nPlant 3 Information:\n   Plant name: Peony\n   Cost: 30\n   Annual: false\n   Color of flowers: pink\n\nPlant 4 Information:\n   Plant name: Marigold\n   Cost: 6\n   Annual: false\n   Color of flowers: orange\n\nPlant 5 Information:\n   Plant name: Juniper\n   Cost: 10` | 2 |
+| 3 | `plant Chives 10 \nflower Daisy 6 true white \n-1\n` | `Plant 1 Information:\n   Plant name: Chives\n   Cost: 10\n\nPlant 2 Information:\n   Plant name: Daisy\n   Cost: 6\n   Annual: true\n   Color of flowers: white` | 2 |
+| 4 | `plant Pine 40 \nplant Succulent 4\n-1\n` | `Plant 1 Information:\n   Plant name: Pine\n   Cost: 40\n\nPlant 2 Information:\n   Plant name: Succulent\n   Cost: 4` | 2 |
+| 5 | `flower Daffodil 12 false yellow\nflower Phlox 20 false purple \n-1\n` | `Plant 1 Information:\n   Plant name: Daffodil\n   Cost: 12\n   Annual: false\n   Color of flowers: yellow\n\nPlant 2 Information:\n   Plant name: Phlox\n   Cost: 20\n   Annual: false\n   Color of flowers: purple` | 2 |
+*Total: 10 points*
+class Plant:
+
+    def __init__(self, plant_name, plant_cost):
+        self.plant_name = plant_name
+        self.plant_cost = plant_cost
+
+    def print_info(self):
+        print(f"   Plant name: { self.plant_name }")
+        print(f"   Cost: { self.plant_cost }")
+
+
+class Flower(Plant):
+
+    def __init__(self, plant_name, plant_cost, is_annual, color_of_flowers):
+        Plant.__init__(self, plant_name, plant_cost)
+        self.is_annual = is_annual
+        self.color_of_flowers = color_of_flowers
+
+    def print_info(self):
+        print(f"   Plant name: { self.plant_name }")
+        print(f"   Cost: { self.plant_cost }")
+        print(f"   Annual: { self.is_annual }")
+        print(f"   Color of flowers: { self.color_of_flowers }")
+
+
+# TODO:  Define the print_list() function that prints a list of plant (or flower) objects
+
+if __name__ == "__main__":
+
+    # TODO: Declare a list called my_garden that can hold object of type plant
+
+    user_string = input()
+
+    while user_string != "-1":
+        # TODO: Check if input is a plant or flower
+        #       Split the user_string input into variables - plant_name, plant_cost, is_annual, color_of_flowers
+        #       Store as a plant object or flower object
+        #       Add to the list my_garden
+        user_string = input()
+
+    # TODO: Call the print_list() function to print my_garden
+
+'''
+class Plant:
+
+    def __init__(self, plant_name, plant_cost):
+        self.plant_name = plant_name
+        self.plant_cost = plant_cost
+
+    def print_info(self):
+        print(f"   Plant name: { self.plant_name }")
+        print(f"   Cost: { self.plant_cost }")
+class Flower(Plant):
+
+    def __init__(self, plant_name, plant_cost, is_annual, color_of_flowers):
+        Plant.__init__(self, plant_name, plant_cost)
+        self.is_annual = is_annual
+        self.color_of_flowers = color_of_flowers
+
+    def print_info(self):
+        print(f"   Plant name: { self.plant_name }")
+        print(f"   Cost: { self.plant_cost }")
+        print(f"   Annual: { self.is_annual }")
+        print(f"   Color of flowers: { self.color_of_flowers }")
+def print_list(garden):
+    for i in range(len(garden)):
+        print(f"Plant {i + 1} Information:")
+        garden[i].print_info()
+        print()
+if __name__ == "__main__":
+
+    my_garden = []
+
+    user_string = input()
+
+    while user_string != "-1":
+        if user_string.startswith("plant"):
+            _, plant_name, plant_cost = user_string.split()
+            my_garden.append(Plant(plant_name, int(plant_cost)))
+        elif user_string.startswith("flower"):
+            _, plant_name, plant_cost, is_annual, color_of_flowers = user_string.split()
+            my_garden.append(Flower(plant_name, int(plant_cost), is_annual, color_of_flowers))
+        user_string = input()
+
+    print_list(my_garden)
+    ####################################################
