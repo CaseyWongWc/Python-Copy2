@@ -960,3 +960,49 @@ my_vehicle = Boat("Tim", "C65874")
     "tag",
     "info()"
 }
+##########################
+'''challenge activity
+13.2.1: Accessing base class attributes.
+712910.5105864.qx3zqy7
+Jump to level 1
+Determine the order of search when my_pet.info() is evaluated.class Property:
+    def __init__(self, owner):
+        self.owner = owner
+
+    def info(self):
+        print(f"Owner is {self.owner}.")
+
+
+class Van(Property):
+    def __init__(self, owner, tag):
+        Property.__init__(self, owner)
+        self.tag = tag
+
+    def info(self):
+        print(f"{self.owner}'s van has tag {self.tag}.")
+
+
+class Cat(Property):
+    def __init__(self, owner, age):
+        Property.__init__(self, owner)
+        self.age = age
+
+    def info(self):
+        print(f"{self.owner}'s cat is {self.age} years old.")
+
+
+my_pet = Cat("Rae", 5)
+my_pet.info()PropertyVanCat
+Pick
+
+Pick
+
+Pick
+1
+2
+Check
+Next
+1
+2
+
+Feedback?'''
