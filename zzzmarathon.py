@@ -2412,4 +2412,15 @@ if __name__ == "__main__":
 
 ##########################scratch work
 import unittest
-class 
+class HI():
+    def __init__(self):
+        self.valid = True
+        self.sprockets = 3
+class TestHI(unittest.TestCase):
+    def test_a(self):
+        c = HI()
+        self.assertTrue(c.valid)
+
+    def test_b(self):
+        c = HI()
+        self.assertLess(c.sprockets, 5)
