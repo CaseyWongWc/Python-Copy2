@@ -846,6 +846,7 @@ while command != "q":
     command = input(menu)
 #=
 #-=
+
 class TransportMode:
     def __init__(self, name, speed):
         self.name = name
