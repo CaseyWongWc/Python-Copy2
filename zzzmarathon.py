@@ -933,4 +933,24 @@ Feedback?'''
 class Property:
     def __init__(self, owner):
         self.owner = owner
-        
+
+
+class Scarf(Property):
+    def __init__(self, owner, color):
+        Property.__init__(self, owner)
+        self.color = color
+
+    def info(self):
+        print(f"{self.owner}'s scarf is {self.color}.")
+
+
+class Boat(Property):
+    def __init__(self, owner, tag):
+        Property.__init__(self, owner)
+        self.tag = tag
+
+    def info(self):
+        print(f"{self.owner}'s boat has tag {self.tag}.")
+
+
+my_vehicle = Boat("Tim", "C65874")
