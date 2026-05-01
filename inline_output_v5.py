@@ -53,16 +53,21 @@ VAL_PREFIX = "# val:"
 ERR_PREFIX = "# !err:"
 
 DEFAULT_SECTION_MARKER = "⭐"
-DEFAULT_CLEAR_MARKER   = "##"
+DEFAULT_CLEAR_MARKER = "❌"
 
 
 # ── helpers (identical to v3) ────────────────────────────────────────────────
+
 
 def _strip_old_annotations(src: str) -> str:
     keep = []
     for line in src.splitlines(keepends=True):
         s = line.lstrip()
-        if s.startswith(OUT_PREFIX) or s.startswith(VAL_PREFIX) or s.startswith(ERR_PREFIX):
+        if (
+            s.startswith(OUT_PREFIX)
+            or s.startswith(VAL_PREFIX)
+            or s.startswith(ERR_PREFIX)
+        ):
             continue
         keep.append(line)
     return "".join(keep)
@@ -157,7 +162,9 @@ def _build_shim(src_path: Path, bare_lines: set) -> str:
 def _run_shim(src_path: Path, shim_src: str) -> tuple:
     proc = subprocess.run(
         [sys.executable, "-c", shim_src],
-        capture_output=True, text=True, timeout=30,
+        capture_output=True,
+        text=True,
+        timeout=30,
     )
     out_map: dict[int, list[str]] = {}
     val_map: dict[int, list[str]] = {}
@@ -177,6 +184,7 @@ def _run_shim(src_path: Path, shim_src: str) -> tuple:
 
 # ── marker helpers ────────────────────────────────────────────────────────────
 
+
 def _marker_line(line: str, marker: str) -> bool:
     """True if this line consists solely of the marker token."""
     return line.strip() == marker
@@ -189,7 +197,7 @@ def _mask_markers(src: str, section_marker: str, clear_marker: str):
     All line numbers are 1-indexed.
     """
     section_lnos: set[int] = set()
-    clear_lnos:   set[int] = set()
+    clear_lnos: set[int] = set()
     out: list[str] = []
     for lno, line in enumerate(src.splitlines(keepends=True), start=1):
         if _marker_line(line, section_marker):
@@ -274,14 +282,16 @@ def _extract_section_blocks(
     return blocks, remaining
 
 
-def _extract_clear_block(
-    lines: list[str], clear_marker: str
-) -> tuple[bool, list[str]]:
+def _extract_clear_block(lines: list[str], clear_marker: str) -> tuple[bool, list[str]]:
     """
     Check for a clear marker.  If found, return (True, lines_without_marker).
     """
     found = False
-    remaining = [l for l in lines if not _marker_line(l, clear_marker) or (found := True) and False]
+    remaining = [
+        l
+        for l in lines
+        if not _marker_line(l, clear_marker) or (found := True) and False
+    ]
     # Simpler:
     found = any(_marker_line(l, clear_marker) for l in lines)
     remaining = [l for l in lines if not _marker_line(l, clear_marker)]
@@ -297,6 +307,7 @@ def _append_to_log(log_path: Path, content_lines: list[str], label: str) -> None
 
 
 # ── main entry point ──────────────────────────────────────────────────────────
+
 
 def run_and_annotate(
     path: str,
@@ -331,7 +342,7 @@ def run_and_annotate(
 
     src_path = Path(path)
     original = src_path.read_text()
-    cleaned  = _strip_old_annotations(original)
+    cleaned = _strip_old_annotations(original)
 
     # Replace marker lines with blank lines so the file is valid Python.
     runnable, section_lnos, clear_lnos = _mask_markers(
@@ -344,12 +355,18 @@ def run_and_annotate(
     out_map, val_map, err_lines = _run_shim(src_path, shim)
 
     if not out_map and not val_map and not err_lines:
-        src_path.write_text(original)   # restore with markers intact
+        src_path.write_text(original)  # restore with markers intact
         return "No output captured. (File ran clean with no prints/expressions, or fatal error before any output.)"
 
     annotated = _build_annotated_lines(
-        runnable, out_map, val_map, err_lines,
-        section_lnos, clear_lnos, section_marker, clear_marker,
+        runnable,
+        out_map,
+        val_map,
+        err_lines,
+        section_lnos,
+        clear_lnos,
+        section_marker,
+        clear_marker,
     )
 
     # ── process markers ───────────────────────────────────────────────────────
@@ -406,24 +423,35 @@ if __name__ == "__main__":
     skip_none = False
     append_to = None
     section_marker = DEFAULT_SECTION_MARKER
-    clear_marker   = DEFAULT_CLEAR_MARKER
+    clear_marker = DEFAULT_CLEAR_MARKER
 
     for a in list(args):
         if a == "--skip-none":
-            skip_none = True; args.remove(a)
+            skip_none = True
+            args.remove(a)
         elif a.startswith("--append="):
-            append_to = a.split("=", 1)[1]; args.remove(a)
+            append_to = a.split("=", 1)[1]
+            args.remove(a)
         elif a.startswith("--section="):
-            section_marker = a.split("=", 1)[1]; args.remove(a)
+            section_marker = a.split("=", 1)[1]
+            args.remove(a)
         elif a.startswith("--clear="):
-            clear_marker = a.split("=", 1)[1]; args.remove(a)
+            clear_marker = a.split("=", 1)[1]
+            args.remove(a)
 
     if not args:
-        print("Usage: python inline_output_v5.py <file.py> "
-              "[--append=log.py] [--section=⭐] [--clear=##] [--skip-none]")
+        print(
+            "Usage: python inline_output_v5.py <file.py> "
+            "[--append=log.py] [--section=⭐] [--clear=##] [--skip-none]"
+        )
         sys.exit(1)
 
-    print(run_and_annotate(
-        args[0], skip_none=skip_none, append_to=append_to,
-        section_marker=section_marker, clear_marker=clear_marker,
-    ))
+    print(
+        run_and_annotate(
+            args[0],
+            skip_none=skip_none,
+            append_to=append_to,
+            section_marker=section_marker,
+            clear_marker=clear_marker,
+        )
+    )
