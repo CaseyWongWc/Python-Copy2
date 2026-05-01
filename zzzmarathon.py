@@ -782,3 +782,7 @@ while command != "q":
     command = input(menu)
 
     ##########################Try 13.2.1: Extending the transportation modes class hierarchy.
+    '''Extend the above example with the following additional modes of transportation:
+
+Implement an Airplane class that is derived from TransportMode. Airplane should have the methods add_fuel(), and fly(), and a data attribute num_passengers.
+Implement a JetPlane class that is derived from Airplane. Add some methods to JetPlane of your own choosing, such as barrel_roll() or immelman().'''
