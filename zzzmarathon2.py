@@ -482,11 +482,145 @@ Check
 Show answer
 
 Feedback?'''
-{
-    {
-        '''my_file = open("readme.txt")''': "Correct! The open() function opens the specified file and returns a new file object.",
-        '''contents = my_file.read(500)''': "Correct! The optional argument to the file.read() method limits the number of bytes read.",
-        '''lines[1]''': "Correct! The readlines() method reads the contents of readme.txt and stores each line as an element in a list. Accessing lines[1] retrieves the second line."  
-    
-    }
-}
+
+
+
+
+import sys
+import time
+from pathlib import Path
+from inline_output_v4 import run_and_annotate, _strip_old_annotations
+
+[
+# val: [{'a': 1}, {'b': 2}]
+    {"a": 1},
+    {"b": 2},
+]
+#my_file = open("readme.txt")
+#contents = my_file.read()
+#print(lines[1])
+
+from Helpers.helpings import *
+make_file("readme.txt", "Because he's the hero Gotham deserves,\nbut not the one it needs right now.\n")
+# val: PosixPath('/workspaces/Python-Copy2/readme.txt')
+###1:
+my_file = open("readme.txt")
+###2:
+contents = my_file.read(500)
+contents
+# val: Because he's the hero Gotham deserves,
+# val: but not the one it needs right now.
+###3:
+my_file = open("readme.txt") 
+lines = my_file.readlines()
+print(lines[1])
+# out: but not the one it needs right now.
+remove_path("readme.txt")
+# val: PosixPath('/workspaces/Python-Copy2/readme.txt')
+##########################
+'''activity
+12.1.1: Reading files.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+Complete the assignment of beet_data by calling beet_file's readlines() to read beet_file's contents as a list of strings, where each string is a line in beet_file.
+
+Click here for example
+Ex: If the input is data1.txt and:
+Contents of file data1.txt
+Taj 31
+Eve 14
+Fay 34
+
+then the output is:
+
+['Taj 31\n', 'Eve 14\n', 'Fay 34']
+
+main.py
+beet_file = open(input())
+
+beet_data = beet_file.readlines()
+
+beet_file.close()
+
+print(beet_data)
+data1.txt
+Taj 31
+Eve 14
+Fay 34
+data2.txt
+Jan 8
+Bob 6
+data3.txt
+Abe 27
+Mel 38
+Ana 23
+Del 18
+'''
+def temp():
+    beet_file = open(input())
+
+    beet_data = beet_file.readlines()
+
+    beet_file.close()
+
+    print(beet_data)
+1
+# val: 1
+##########################
+'''challenge activity
+12.1.1: Reading files.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+Variable src_name is assigned with a file's name read from input. Perform the following tasks:
+
+Open the file named src_name, and assign tie_file with the file object.
+Use tie_file's read() to read the contents of src_name and assign tie_data with the string read.
+Close tie_file.
+Click here for example
+
+main.py
+src_name = input()
+
+""" Your code goes here """
+
+print(tie_data)
+data1.txt
+Ana violet
+Dan brown
+Gus sienna
+data2.txt
+Rob brick
+Ben brown
+data3.txt
+Dan magenta
+Aya indigo
+Abe brown
+Val tan
+1
+
+2
+
+3
+
+4
+
+Check
+
+Next level
+1
+2
+3
+'''
+
+make_file("data1.txt", "Ana violet\nDan brown\nGus sienna\n")
+make_file("data2.txt", "Rob brick\nBen brown\n")
+make_file("data3.txt", "Dan magenta\nAya indigo\nAbe brown\nVal tan\n")
+make_file("temp.py", '''
+src_name = input()
+tie_file = open(src_name)
+tie_data = tie_file.read()
+tie_file.close()
+print(tie_data)
+''')

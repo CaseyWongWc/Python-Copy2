@@ -1,0 +1,12 @@
+def _strip_old_annotations(text: str) -> str:
+    lines = text.splitlines()
+    clean_lines = [l for l in lines if not (l.startswith("⚠️") or l.startswith("# !err:"))]
+    return "\n".join(clean_lines)
+
+def run_once() -> str:
+    # Re-import to reset state and re-run the main script.
+    if "main" in sys.modules:
+        del sys.modules["main"]
+    import main
+    result = _strip_old_annotations(Path(TARGET).read_text())
+    return result

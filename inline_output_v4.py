@@ -154,12 +154,64 @@ def _find_bare_expr_lines(src: str) -> set:
     return bare
 
 
+def _parse_setin_inputs(src: str) -> list[str]:
+    """
+    Parse optional #setin directives from the source.
+
+    Supported forms:
+      #setin("a", "b")
+      #setin a, b, c
+      #setin
+      # a
+      # b
+    """
+    lines = src.splitlines()
+    for i, line in enumerate(lines):
+        m = re.match(r"^\s*#\s*setin\b(.*)$", line)
+        if not m:
+            continue
+
+        tail = m.group(1).strip()
+        if tail:
+            # Python-style tuple/list payload
+            if tail.startswith("(") or tail.startswith("["):
+                try:
+                    value = ast.literal_eval(tail)
+                    if isinstance(value, (list, tuple)):
+                        return [str(v) for v in value]
+                    return [str(value)]
+                except Exception:
+                    pass
+
+            # Fallback CSV-style payload
+            parts = [p.strip() for p in tail.split(",")]
+            return [p.strip("\"'") for p in parts if p]
+
+        # Block form: consecutive comment lines after #setin
+        gathered = []
+        j = i + 1
+        while j < len(lines):
+            comment = re.match(r"^\s*#(.*)$", lines[j])
+            if not comment:
+                break
+            body = comment.group(1).strip()
+            if not body:
+                break
+            if re.match(r"^(zy:|fig:|quick:|note:|save:|setin\b)", body):
+                break
+            gathered.append(body)
+            j += 1
+        return gathered
+
+    return []
+
+
 # ---------- shim builder ----------
 
 skip_none_flag = False
 
 
-def _build_shim(src_path: Path, bare_lines: set) -> str:
+def _build_shim(src_path: Path, bare_lines: set, setin_inputs: list[str]) -> str:
     bare_lines_repr = repr(sorted(bare_lines))
     return (
         "import sys, builtins, inspect, ast, io\n"
@@ -175,6 +227,20 @@ def _build_shim(src_path: Path, bare_lines: set) -> str:
         "        sys.stdout.write(f'__OUT__{lineno}__{piece}\\n')\n"
         "    sys.stdout.flush()\n"
         "builtins.print = _tagged_print\n"
+        f"_SETIN = {repr(setin_inputs)}\n"
+        "if _SETIN:\n"
+        "    _setin_iter = iter(_SETIN)\n"
+        "    def _setin_input(prompt=''):\n"
+        "        frame = inspect.currentframe().f_back\n"
+        "        lineno = frame.f_lineno\n"
+        "        try:\n"
+        "            value = str(next(_setin_iter))\n"
+        "        except StopIteration:\n"
+        "            raise EOFError('No more #setin inputs')\n"
+        "        sys.stdout.write(f'__OUT__{lineno}__{prompt}{value}\\n')\n"
+        "        sys.stdout.flush()\n"
+        "        return value\n"
+        "    builtins.input = _setin_input\n"
         "\n"
         "def _show_val(value, lineno):\n"
         f"    if {repr(skip_none_flag)} and value is None:\n"
@@ -248,7 +314,8 @@ def run_and_annotate(path: str, skip_none: bool = False) -> str:
     src_path.write_text(cleaned)
 
     bare_lines = _find_bare_expr_lines(cleaned)
-    shim = _build_shim(src_path, bare_lines)
+    setin_inputs = _parse_setin_inputs(cleaned)
+    shim = _build_shim(src_path, bare_lines, setin_inputs)
     out_map, val_map, err_lines = _run_shim(shim)
 
     # Splice annotations
@@ -265,7 +332,9 @@ def run_and_annotate(path: str, skip_none: bool = False) -> str:
                 new_lines.append(f"{indent}{VAL_PREFIX} {val}")
 
     if err_lines:
-        new_lines.append("")
+        # Keep error block anchored: avoid drifting downward through trailing blanks.
+        while new_lines and new_lines[-1].strip() == "":
+            new_lines.pop()
         for el in err_lines:
             new_lines.append(f"{ERR_PREFIX} {el}")
 
