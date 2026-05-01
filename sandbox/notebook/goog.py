@@ -716,7 +716,7 @@ with Scratch as a:
         tie_data = tie_file.read()
         tie_file.close()
         print(tie_data)
-    with open("/workspaces/Python-Copy2/sandbox/files/main.py", "r") as f:
+    with open("main.py", "r") as f:
         f.read()
 # !err: --- ERROR ---
 # !err: Traceback (most recent call last):
