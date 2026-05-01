@@ -885,7 +885,7 @@ Feedback?'''
     },
     {
         "Evaluating bike.wheelie() searches TransportMode, then MotorVehicle, then finally MotorCycle for the wheelie() method.",
-        "True"
+        "False"
     },
     {
         "When adding a new derived class, a programmer has to change the base class as well.",
