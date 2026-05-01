@@ -2319,3 +2319,95 @@ class TestCircle(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+##########################Try 13.6.1: Writing unit tests.
+#Complete the unit tests for testing the evens() and odds() methods. Each unit test should call either odds() or evens(), passing in a known array of values, and then testing the result to ensure only the correct values are in the array.
+import unittest
+
+def evens(numbers):
+    """Return the even values in numbers"""
+    return [i for i in numbers if (i % 2 == 0)]
+
+def odds(numbers):
+    """Return the odd values in numbers"""
+    return [i for i in numbers if (i % 2 == 1)]
+
+class TestNumbers(unittest.TestCase):
+    test_nums = [1, 3, 5, 6, 8, 2, 1]
+
+    def test_evens(self):
+        self.assertEqual(evens(self.test_nums), [6, 8, 2])
+
+    def test_odds(self):
+        self.assertEqual(odds(self.test_nums), [1, 3, 5, 1])
+
+if __name__ == "__main__":
+    unittest.main()
+##########################Participation activity
+# 13.6.1: Unit testing.
+'''participation activity
+13.6.1: Unit testing.
+1)
+What is the Python standard library module that allows the definition of unit tests?
+
+Check
+
+Show answer
+2)
+Write an assertion that checks if c.valid is True.
+def test_a(self):
+    c = Widget()
+    self.
+
+ 
+
+Check
+
+Show answer
+3)
+Write an assertion that checks if c.sprockets is less than 5.
+def test_b(self):
+    c = Widget()
+    self.
+
+ 
+
+Check
+
+Show answer'''
+
+{
+    {
+        "What is the Python standard library module that allows the definition of unit tests?",
+        "unittest"
+    },
+    {
+        "Write an assertion that checks if c.valid is True.\ndef test_a(self):\n    c = Widget()\n    self.",
+        "assertTrue(c.valid)"
+    },
+    {
+        "Write an assertion that checks if c.sprockets is less than 5.\ndef test_b(self):\n    c = Widget()\n    self.",
+        "assertLess(c.sprockets, 5)"
+    }
+}
+#?
+#unit test
+import unittest
+# User-defined class
+class Widget:
+    def __init__(self):
+        self.valid = True
+        self.sprockets = 3
+# Class to test Widget
+class TestWidget(unittest.TestCase):
+    def test_a(self):
+        c = Widget()
+        self.assertTrue(c.valid)
+
+    def test_b(self):
+        c = Widget()
+        self.assertLess(c.sprockets, 5)
+if __name__ == "__main__":
+    unittest.main()
+#?
+
+

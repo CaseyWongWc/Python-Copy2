@@ -1,30 +1,25 @@
-from Helpers.helpings import *
+class Vehicle:
+  def __init__(self):
+      self.speed = 0
 
-import unittest
+  def set_speed(self, speed_to_set):
+      self.speed = speed_to_set
 
-
-# User-defined class
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-
-    def compute_area(self):
-        return 3.14 * self.radius**2
+  def print_speed(self):
+      print(self.speed)
+      # out: 55
 
 
-# Class to test Circle
-class TestCircle(unittest.TestCase):
-    def test_compute_area(self):
-        c = Circle(0)
-        self.assertEqual(c.compute_area(), 0.0)
-
-        c = Circle(5)
-        self.assertEqual(c.compute_area(), 78.5)
-
-    def test_will_fail(self):
-        c = Circle(5)
-        self.assertLess(c.compute_area(), 0)
+class Car(Vehicle):
+  def print_car_speed(self):
+      print("Speed: ", end = "")
+      # out: Speed: 
+      self.print_speed()
+      # val: None
 
 
-if __name__ == "__main__":
-    unittest.main()
+myCar = Car()
+myCar.set_speed(55)
+# val: None
+myCar.print_car_speed()
+# val: None
