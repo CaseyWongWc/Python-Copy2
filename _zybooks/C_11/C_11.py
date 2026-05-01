@@ -112,104 +112,104 @@ Item Class Pseudocode:
 
     Methods: 
 
-        
+
             - def set_name(self, nm):
             - def set_quantity(self, qnty):
             - def display(self):
-        
+
     Data Attributes:
 
-        
+
             - self.name
             - self.quantity
-        
+
 Produce Class Pseudocode:
 
     Methods: 
 
-        
+
             - All methods of the Item class are inherited.
             - def set_expiration(self, expir):
             - def get_expiration(self):
-        
+
     Data Attributes:
 
-        
+
             - All data attributes of the Item class are inherited.
             - self.expiration
-        
+
 Book Class Pseudocode:
 
     Methods: 
 
-        
+
             - All methods of the Item class are inherited.
             - def set_title(self, ttl):
             - def get_title(self):
-        
+
     Data Attributes:
 
-        
+
             - All data attributes of the Item class are inherited.
             - self.title
-        
+
 Produce Class Pseudocode:
 
     Methods: 
 
-        
+
             - All methods of the Produce class are inherited, including those inherited from the Item class.
             - def set_has_seeds(self, sds):
             - def get_has_seeds(self):
-        
+
     Data Attributes:
 
-        
+
             - All data attributes of the Produce class class are inherited, including those inherited from the Item class.
             - self.has_seeds
-        
+
 Dairy Class Pseudocode:
 
     Methods: 
 
-        
+
             - All methods of the Produce class are inherited, including those inherited from the Item class.
             - def set_percent_fat(self, percent_fat):
             - def get_percent_fat(self):
-        
+
     Data Attributes:
 
-        
+
             - All data attributes of the Produce class class are inherited, including those inherited from the Item class.
             - self.percent_fat
-        
+
 Textbook Class Pseudocode:
 
     Methods: 
 
-        
+
             - All methods of the Book class are inherited, including those inherited from the Item class.
             - def set_edition(self, edition):
             - def get_edition(self):
-        
+
     Data Attributes:
 
-        
+
             - All data attributes of the Book class class are inherited, including those inherited from the Item class.
             - self.edition
-            
+
 Audiobook Class Pseudocode:
 
     Methods: 
 
-        
+
             - All methods of the Book class are inherited, including those inherited from the Item class.
             - def set_reader(self, reader):
             - def get_reader(self):
-        
+
     Data Attributes:
 
-        
+
             - All data attributes of the Book class class are inherited, including those inherited from the Item class.
             - self.reader
 

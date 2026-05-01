@@ -1,5 +1,5 @@
 """
-inline_output_v2.py
+inline_output_v3.py
 Casey's phone-shell-fix v2 — now Jupyter-style!
 
 What's new in v2:
@@ -53,12 +53,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-OUT_PREFIX = "# out:"   # from print()
-VAL_PREFIX = "# val:"   # from bare expressions (Jupyter-style)
+OUT_PREFIX = "# out:"  # from print()
+VAL_PREFIX = "# val:"  # from bare expressions (Jupyter-style)
 ERR_PREFIX = "# !err:"  # tracebacks
 
 
 # ---------- helpers ----------
+
 
 def _strip_old_annotations(src: str) -> str:
     """Remove lines that start with our annotation prefixes (after whitespace)."""
@@ -114,6 +115,7 @@ def _find_bare_expr_lines(src: str, skip_none: bool) -> set:
 
 # ---------- the main run ----------
 
+
 def _build_shim(src_path: Path, bare_lines: set) -> str:
     """
     Build a Python shim that:
@@ -154,8 +156,8 @@ def _build_shim(src_path: Path, bare_lines: set) -> str:
         f"_BARE_LINES = set({bare_lines_repr})\n"
         "\n"
         f"_src = open(r'{src_path}').read()\n"
-        "_tree = ast.parse(_src, filename=r'{path}')\n".replace("{path}", str(src_path)) +
-        "\n"
+        "_tree = ast.parse(_src, filename=r'{path}')\n".replace("{path}", str(src_path))
+        + "\n"
         "# Walk module + nested bodies, replace bare Expr nodes with a call to _show_val\n"
         "import builtins as _bi\n"
         "_bi._show_val = _show_val\n"
@@ -257,7 +259,9 @@ def run_and_annotate(path: str, skip_none: bool = False) -> str:
     if val_map:
         counts.append(f"{sum(len(v) for v in val_map.values())} expression values")
     summary = ", ".join(counts) if counts else "no output"
-    return f"✅ Annotated {src_path.name} → {summary}. Open the file to see them inlined."
+    return (
+        f"✅ Annotated {src_path.name} → {summary}. Open the file to see them inlined."
+    )
 
 
 # ---------- CLI ----------
