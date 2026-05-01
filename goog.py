@@ -1,15 +1,25 @@
 class Vehicle:
   def __init__(self):
-    self.medium = "terrestrial"
-    self.engine = None
+      self.speed = 0
 
-class Bus(Vehicle):
-  def __init__(self):
-    Vehicle.__init__(self)
-    self.num_wheels = 6
-    self.fuel_type = "diesel"
+  def set_speed(self, speed_to_set):
+      self.speed = speed_to_set
 
-class Engine:
-  def __init__(self):
-    self.fuel_type = "gas"
-    self.num_cylinders = 8
+  def print_speed(self):
+      print(self.speed)
+      # out: 55
+
+
+class Car(Vehicle):
+  def print_car_speed(self):
+      print("Speed: ", end = "")
+      # out: Speed: 
+      self.print_speed()
+      # val: None
+
+
+myCar = Car()
+myCar.set_speed(55)
+# val: None
+myCar.print_car_speed()
+# val: None
