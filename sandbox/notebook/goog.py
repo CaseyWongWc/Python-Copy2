@@ -2699,3 +2699,23 @@ with Scratch as a:
     print(f"\nnum1: {num1}")
     print(f"num2: {num2}")
     print(f"num1 + num2: {num1 + num2}")
+
+with Scratch as e:
+    with "Fig_12_5_1.py":
+        print("This will not work because the file is not being run as a script with command-line arguments.")
+    try:
+        import sys
+        print(sys.argv)
+        # out: ['Fig_12_5_1.py']
+    except Exception as e:
+        print("Error:", e)
+        # out: Error: name 'sys' is not defined
+with Scratch as e:
+    #not native
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    import sys
+    print(sys.argv)
+    # out: ['<ipython-input-...>']
+    #✅ Note: The output may vary based on the actual environment where this code is run.
+    #✅⭐ sys.argv is typically used when running a Python script from the command line, and may not behave as expected in an interactive environment like this one.
