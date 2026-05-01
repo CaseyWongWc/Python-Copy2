@@ -67,7 +67,8 @@ string-splitting fix) carry over.
 - Casey edits on phone often, so keep formatting predictable and avoid huge
   reflows.
 - Pasted ZyBooks problem statements can be huge docstrings — the v6
-  preprocessor only acts on the specific `with "..."` / `with Scratch` /
-  `# in:` patterns above, so docstrings are left alone.
+  preprocessor uses Python's `tokenize` module to find REAL `with`
+  statements, so identical-looking text inside triple-quoted docstrings
+  is left completely alone (no file extraction, no scope rewriting).
 - The sandbox folder is intentionally isolated from the root v3/v4/v5 setup;
   experimenting in `sandbox/notebook/goog.py` cannot break the root tools.

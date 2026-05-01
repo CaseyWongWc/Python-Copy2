@@ -32,10 +32,12 @@ Everything else from v4 still applies:
 """
 
 import ast
+import io
 import re
 import shutil
 import subprocess
 import sys
+import tokenize
 from pathlib import Path
 
 OUT_PREFIX = "# out:"
@@ -123,6 +125,70 @@ WITH_SCRATCH_RE = re.compile(
 )
 
 
+def _find_magic_with_lines(src: str):
+    """
+    Tokenize the source and return two sets of line numbers (1-based) where
+    REAL magic `with` statements appear:
+      - str_lines:     `with "X":`         (file-extraction form)
+      - scratch_lines: `with Scratch:` etc. (sandbox-scope form)
+
+    Patterns inside docstrings or other string literals are NOT included
+    because the tokenizer reports them as part of a STRING token, not as
+    a `with` keyword.
+
+    On tokenize failure, falls back to permissive matching (every line
+    that looks like the pattern), so users still get magic behavior even
+    when their file has unrelated tokenize-incompatible content. The
+    tradeoff (rare false positive in a docstring) is preferable to
+    silently disabling the feature.
+    """
+    str_lines: set = set()
+    scratch_lines: set = set()
+
+    try:
+        toks = list(tokenize.generate_tokens(io.StringIO(src).readline))
+    except (tokenize.TokenizeError, IndentationError, SyntaxError):
+        for ln_idx, line in enumerate(src.splitlines(), start=1):
+            if WITH_STR_RE.match(line):
+                str_lines.add(ln_idx)
+            if WITH_SCRATCH_RE.match(line):
+                scratch_lines.add(ln_idx)
+        return str_lines, scratch_lines
+
+    skip_types = {
+        tokenize.NL, tokenize.NEWLINE, tokenize.COMMENT,
+        tokenize.ENCODING, tokenize.INDENT, tokenize.DEDENT,
+        tokenize.ENDMARKER,
+    }
+    code = [t for t in toks if t.type not in skip_types]
+
+    for i, t in enumerate(code):
+        if not (t.type == tokenize.NAME and t.string == "with"):
+            continue
+        if i + 2 >= len(code):
+            continue
+        a = code[i + 1]
+        b = code[i + 2]
+
+        if a.type == tokenize.STRING and b.type == tokenize.OP and b.string == ":":
+            str_lines.add(t.start[0])
+            continue
+
+        if a.type == tokenize.NAME and a.string in ("Scratch", "_", "__"):
+            if b.type == tokenize.OP and b.string == ":":
+                scratch_lines.add(t.start[0])
+            elif (
+                b.type == tokenize.NAME and b.string == "as"
+                and i + 4 < len(code)
+                and code[i + 3].type == tokenize.NAME
+                and code[i + 4].type == tokenize.OP
+                and code[i + 4].string == ":"
+            ):
+                scratch_lines.add(t.start[0])
+
+    return str_lines, scratch_lines
+
+
 def _resolve_file_path(path_str: str, files_dir: Path, notebook_dir: Path) -> Path:
     """
     Bare name      -> files_dir / name
@@ -192,11 +258,14 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
     out = list(lines)
     files_written = []
 
+    str_lines, scratch_lines = _find_magic_with_lines(src)
+
     i = 0
     while i < len(lines):
         line = lines[i]
+        line_num = i + 1
 
-        m = WITH_STR_RE.match(line.rstrip("\n"))
+        m = WITH_STR_RE.match(line.rstrip("\n")) if line_num in str_lines else None
         if m:
             indent_str = m.group(1)
             with_indent = len(indent_str)
@@ -228,7 +297,7 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
             i = body_end
             continue
 
-        m = WITH_SCRATCH_RE.match(line.rstrip("\n"))
+        m = WITH_SCRATCH_RE.match(line.rstrip("\n")) if line_num in scratch_lines else None
         if m:
             indent = m.group(1)
             as_part = m.group(3) or ""
