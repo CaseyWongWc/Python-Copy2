@@ -3,9 +3,14 @@
 # Usage: bash push_replit.sh
 # Optional message: bash push_replit.sh "my commit message"
 
-REMOTE="origin"
+REMOTE="replit"
 BRANCH="main"
 MSG="${1:-📤 manual push @ $(date +"%H:%M:%S")}"
+
+# Prefer a dedicated replit remote; fall back to origin if missing.
+if ! git remote get-url "$REMOTE" >/dev/null 2>&1; then
+    REMOTE="origin"
+fi
 
 echo "📦 Staging all changes..."
 git add .
