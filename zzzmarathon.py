@@ -360,3 +360,4 @@ chariot.print_animal_speed()
 #Output:
 '''Driving at: 20
 Donkey speed: 12
+'''
