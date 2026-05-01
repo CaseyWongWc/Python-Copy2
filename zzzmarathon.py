@@ -1018,3 +1018,31 @@ Solution
 Feedback?
 
 \~ [Section 13.2 - CS 2520: Python for Programmers | zyBooks](<https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/13/section/2?content_resource_id=122585380>)'''
+Determine the order of search when my_pet.info() is evaluated.class Property:
+    def __init__(self, owner):
+        self.owner = owner
+
+    def info(self):
+        print(f"Owner is {self.owner}.")
+
+
+class Van(Property):
+    def __init__(self, owner, tag):
+        Property.__init__(self, owner)
+        self.tag = tag
+
+    def info(self):
+        print(f"{self.owner}'s van has tag {self.tag}.")
+
+
+class Cat(Property):
+    def __init__(self, owner, age):
+        Property.__init__(self, owner)
+        self.age = age
+
+    def info(self):
+        print(f"{self.owner}'s cat is {self.age} years old.")
+
+
+my_pet = Cat("Rae", 5)
+my_pet.info()
