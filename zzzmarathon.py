@@ -423,3 +423,35 @@ then the output is:
 
 Daffodil
 Quantity: 250, Price: $85.00'''
+class FlowerOrder:
+    def __init__(self):
+        self.quantity = 0
+        self.price = 0
+
+    def set_quantity(self, quantity_value):
+        self.quantity = quantity_value
+
+    def set_price(self, price_value):
+        self.price = price_value
+
+    def display(self):
+        print(f"Quantity: {self.quantity}, Price: ${self.price:.2f}")
+
+
+""" Your code goes here """
+class Daffodil(FlowerOrder):
+    def __init__(self):
+        FlowerOrder.__init__(self)
+
+    def print_order(self):
+        print("Daffodil")
+
+
+quantity_value = int(input())
+price_value = float(input())
+
+bouquet_order = Daffodil()
+bouquet_order.set_quantity(quantity_value)
+bouquet_order.set_price(price_value)
+bouquet_order.print_order()
+bouquet_order.display()
