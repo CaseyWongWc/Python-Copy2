@@ -505,3 +505,36 @@ my_job.set_start_year(start_year_value)
 my_job.set_level(level_value)
 my_job.print_title()
 my_job.display()
+##########################
+'''activity
+13.1.2: Defining a derived class.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+Complete the definition of the Ageratum class as follows:
+
+The Ageratum class is derived from the FlowerOrder class.
+The Ageratum class's __init__ method explicitly calls the FlowerOrder class's __init__ method and then initializes the instance attribute named id with value 0.
+Click here for example
+Ex: If the input is:
+150
+185.00
+465
+then the output is:
+
+Order ID: 0
+Quantity: 150, Price: $185.00
+Order ID: 465
+class FlowerOrder:
+    def __init__(self):
+        self.quantity = 0
+        self.price = 0
+
+    def set_quantity(self, quantity_value):
+        self.quantity = quantity_value
+
+    def set_price(self, price_value):
+        self.price = price_value
+
+    def display(self):
+        print(f"Quantity: {self.quantity}, Price: ${self.price:.2f}")'''
