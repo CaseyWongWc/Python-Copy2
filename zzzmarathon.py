@@ -962,34 +962,836 @@ my_vehicle = Boat("Tim", "C65874")
 }
 ##########################
 '''challenge activity
+13.2.1: Accessing base class attributes.
+712910.5105864.qx3zqy7
+Jump to level 1
+Determine the order of search
+when my_clothes.info() is evaluated.class Property:
+    def __init__(self, owner):
+        self.owner = owner
+
+    def info(self):
+        print(f"Owner is {self.owner}.")
+
+
+class Clothes(Property):
+    def __init__(self, owner, count):
+        Property.__init__(self, owner)
+        self.count = count
+
+    def info(self):
+        print(f"{self.owner} has {self.count} items of clothing.")
+
+
+class Shirt(Clothes):
+    def __init__(self, owner, count, color):
+        Clothes.__init__(self, owner, count)
+        self.color = color
+
+
+my_clothes = Shirt("Ike", 7, "red")
+my_clothes.info()PropertyClothesShirt
+Pick
+
+Pick
+
+Pick
+1
+2
+Check
+Next
+1
+'''
+
+class Property:
+    def __init__(self, owner):
+        self.owner = owner
+
+    def info(self):
+        print(f"Owner is {self.owner}.")
+
+
+class Clothes(Property):
+    def __init__(self, owner, count):
+        Property.__init__(self, owner)
+        self.count = count
+
+    def info(self):
+        print(f"{self.owner} has {self.count} items of clothing.")
+
+
+class Shirt(Clothes):
+    def __init__(self, owner, count, color):
+        Clothes.__init__(self, owner, count)
+        self.color = color
+
+
+my_clothes = Shirt("Ike", 7, "red")
+my_clothes.info()
+
+# The search order is Shirt, then Clothes, and finally Property is  Not searched.
+{
+    "Shirt",
+    "Clothes",
+    "Property Not searched",
+}
+####################################################13.3 Overriding base class attributes
+'''13.3 Overriding class methods
+A derived class may define a method having the same name as a method in the base class. Such a member function overrides the method of the base class. The following example shows the earlier Item/Produce example where the Produce class has its own display() method that overrides the display() method of the Item class.
+
+Figure 13.3.1: Produce's display() function overrides Item's display() function.
+class Item:
+   def __init__(self):
+       self.name = ""
+       self.quantity = 0
+
+   def set_name(self, nm):
+       self.name = nm
+
+   def set_quantity(self, qnty):
+       self.quantity = qnty
+
+   def display(self):
+       print(self.name, self.quantity)
+
+
+class Produce(Item):  # Derived from Item
+   def __init__(self):
+       Item.__init__(self)  # Call base class constructor
+       self.expiration = ""
+
+   def set_expiration(self, expir):
+       self.expiration = expir
+
+   def get_expiration(self):
+       return self.expiration
+
+   def display(self):
+       print(self.name, self.quantity, end=" ")
+       print(f"  (Expires: {self.expiration})")
+
+
+item1 = Item()
+item1.set_name("Smith Cereal")
+item1.set_quantity(9)
+item1.display()  # Will call Item's display()
+
+item2 = Produce()
+item2.set_name("Apples")
+item2.set_quantity(40)
+item2.set_expiration("May 5, 2012")
+item2.display()  # Will call Produce's display()
+Smith Cereal 9
+Apples 40   (Expires: May 5, 2012)
+
+Feedback?
+When the derived class defines the method being overwritten, that method is placed in the class's namespace. Because attribute references search the inheritance tree by starting with the derived class and then recursively searching base classes, the method called will always be the method defined in the instance's class.
+
+A programmer will often want to extend, rather than replace, the base class method. The base class method can be explicitly called at the start of the method, with the derived class then performing additional operations:
+
+Figure 13.3.2: Method calling overridden method of base class.
+class Produce(Item):
+    # ...
+    def display(self):
+        Item.display(self)
+        print(f"  (Expires: {self.expiration})")
+    # ...
+
+Feedback?
+Above, the display() method of Produce calls the display() method of Item, passing self as the first argument. Thus, when Item's display() executes, the name and quantity instance attributes from the Produce instance are retrieved and printed.
+
+participation activity
+13.3.1: Overriding base class methods.
+Assume my_item is an instance of Item, and my_produce is an instance of Produce, with classes Item and Produce defined as above.
+
+1)
+Will my_item.display() call the display() function for Item or for Produce?
+
+Check
+
+Show answer
+2)
+Will my_produce.display() call the display() function for Item or for Produce?
+
+Check
+
+Show answer
+3)
+Provide a statement within the display() method of the Produce class to call the display() method of Produce's base class.
+
+Check
+
+Show answer
+4)
+If Produce did NOT have its own display() method defined, the display method of which class would be called in the following code? Type "ERROR" if appropriate.
+p = Produce()
+p.display()
+
+Check
+
+Show answer
+
+Feedback?
+challenge activity
+13.3.1: Basic derived class member override.
+
+Full screen
+712910.5105864.qx3zqy7
+Organize the lines of code to define a member method print_all() for class PetData. Make use of the base class's print_all() method.
+
+Ex: If the input is:
+
+Fluffy
+5
+4444
+
+then the output is:
+
+Name: Fluffy
+Age: 5
+ID: 4444
+
+Note: Not all lines of code on the left should be used in the final solution.
+
+
+How to use this tool
+Unused
+main.py
+
+Load default template...
+    
+    
+
+Check
+
+Feedback?
+challenge activity
+13.3.2: Overriding class methods.
+712910.5105864.qx3zqy7
+
+Start
+In the SalesRepresentative class, complete the definition of the method that overrides the Job class's display() method.
+
+Click here for example
+ 
+
+1
+
+2
+
+3
+
+Check
+
+Next level
+1
+2
+3
+
+Feedback?
+How was this section?
+
+|
+
+
+Provide section feedback'''
+##########################Figure 13.3.1: Produce's display() function overrides Item's display() function.
+class Item:
+   def __init__(self):
+       self.name = ""
+       self.quantity = 0
+
+   def set_name(self, nm):
+       self.name = nm
+
+   def set_quantity(self, qnty):
+       self.quantity = qnty
+
+   def display(self):
+       print(self.name, self.quantity)
+
+
+class Produce(Item):  # Derived from Item
+   def __init__(self):
+       Item.__init__(self)  # Call base class constructor
+       self.expiration = ""
+
+   def set_expiration(self, expir):
+       self.expiration = expir
+
+   def get_expiration(self):
+       return self.expiration
+
+   def display(self):
+       print(self.name, self.quantity, end=" ")
+       print(f"  (Expires: {self.expiration})")
+
+
+item1 = Item()
+item1.set_name("Smith Cereal")
+item1.set_quantity(9)
+item1.display()  # Will call Item's display()
+
+item2 = Produce()
+item2.set_name("Apples")
+item2.set_quantity(40)
+item2.set_expiration("May 5, 2012")
+item2.display()  # Will call Produce's display()
+##########################Figure 13.3.2: Method calling overridden method of base class.
+class Produce(Item):
+    # ...
+    def display(self):
+        Item.display(self)
+        print(f"  (Expires: {self.expiration})")
+    # ...
+##########################
+'''participation activity
+13.3.1: Overriding base class methods.
+Assume my_item is an instance of Item, and my_produce is an instance of Produce, with classes Item and Produce defined as above.
+
+1)
+Will my_item.display() call the display() function for Item or for Produce?
+
+Check
+
+Show answer
+2)
+Will my_produce.display() call the display() function for Item or for Produce?
+
+Check
+
+Show answer
+3)
+Provide a statement within the display() method of the Produce class to call the display() method of Produce's base class.
+
+Check
+
+Show answer
+4)
+If Produce did NOT have its own display() method defined, the display method of which class would be called in the following code? Type "ERROR" if appropriate.
+p = Produce()
+p.display()
+
+Check
+
+Show answer
+
+Feedback?'''
+{
+    {
+        "Will my_item.display() call the display() function for Item or for Produce?",
+        "Item"
+    },
+    {
+        "Will my_produce.display() call the display() function for Item or for Produce?",
+        "Produce"
+    },
+    {
+        "Provide a statement within the display() method of the Produce class to call the display() method of Produce's base class.",
+        "Item.display(self)"
+    },
+    {
+        "If Produce did NOT have its own display() method defined, the display method of which class would be called in the following code? Type \"ERROR\" if appropriate.\np = Produce()\np.display()",
+        "Item"
+    }
+}
+##########################
+'''challenge activity
+13.3.1: Basic derived class member override.
+
+Full screen
+712910.5105864.qx3zqy7
+Organize the lines of code to define a member method print_all() for class PetData. Make use of the base class's print_all() method.
+
+Ex: If the input is:
+
+Fluffy
+5
+4444
+
+then the output is:
+
+Name: Fluffy
+Age: 5
+ID: 4444
+
+Note: Not all lines of code on the left should be used in the final solution.
+
+
+How to use this tool
+Unused
+main.py
+
+Load default template...
+    
+    
+#### main.py
+
+Load default template...
+
+class AnimalData: def \_\_init\_\_(self): self.full\_name = "" self.age\_years = 0 def set\_name(self, given\_name): self.full\_name = given\_name def set\_age(self, num\_years): self.age\_years = num\_years \# Other parts omitted def print\_all(self): print(f"Name: {self.full\_name}") print(f"Age: {self.age\_years}") class PetData(AnimalData): def \_\_init\_\_(self): AnimalData.\_\_init\_\_(self) self.id\_num = 0 def set\_id(self, pet\_id): self.id\_num = pet\_id \# FIXME: Add print\_all() member method
+
+user\_pet = PetData() user\_pet.set\_name(input()) user\_pet.set\_age(int(input())) user\_pet.set\_id(int(input())) user\_pet.print\_all()
+
+Check
+
+Feedback?
+Check
+
+Feedback?'''
+class AnimalData:
+    def __init__(self):
+        self.full_name = ""
+        self.age_years = 0
+
+    def set_name(self, given_name):
+        self.full_name = given_name
+
+    def set_age(self, num_years):
+        self.age_years = num_years
+
+    # Other parts omitted
+    def print_all(self):
+        print(f"Name: {self.full_name}")
+        print(f"Age: {self.age_years}")
+class PetData(AnimalData):
+    def __init__(self):
+        AnimalData.__init__(self)
+        self.id_num = 0
+
+    def set_id(self, pet_id):
+        self.id_num = pet_id
+
+    def print_all(self):
+        AnimalData.print_all(self)
+        print(f"ID: {self.id_num}")
+##########################
+'''challenge activity
+13.3.2: Overriding class methods.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+In the SalesRepresentative class, complete the definition of the method that overrides the Job class's display() method.
+
+Click here for example
+Ex: If the input is:
+2013
+1
+
+then the output is:
+
+Job title: Sales Representative, Start year: 2013, Level: 1
+class Job:
+    def __init__(self):
+        self.start_year = 0
+        self.level = 0
+
+    def set_start_year(self, start_year_value):
+        self.start_year = start_year_value
+
+    def set_level(self, level_value):
+        self.level = level_value
+
+    def display(self):
+        print(f"Start year: {self.start_year}, Level: {self.level}")
+
+
+class SalesRepresentative(Job):
+    def __init__(self):
+        Job.__init__(self)
+
+    """ Your code goes here """:
+        print(f"Job title: Sales Representative, Start year: {self.start_year}, Level: {self.level}")
+
+
+start_year_value = int(input())
+level_value = int(input())
+
+current_job = SalesRepresentative()
+current_job.set_start_year(start_year_value)
+current_job.set_level(level_value)
+current_job.display()
+'''
+class Job:
+    def __init__(self):
+        self.start_year = 0
+        self.level = 0
+
+    def set_start_year(self, start_year_value):
+        self.start_year = start_year_value
+
+    def set_level(self, level_value):
+        self.level = level_value
+
+    def display(self):
+        print(f"Start year: {self.start_year}, Level: {self.level}")
+
+
+class SalesRepresentative(Job):
+    def __init__(self):
+        Job.__init__(self)
+
+    def display(self):
+        print(f"Job title: Sales Representative, Start year: {self.start_year}, Level: {self.level}")
+
+
+start_year_value = int(input())
+level_value = int(input())
+
+current_job = SalesRepresentative()
+current_job.set_start_year(start_year_value)
+current_job.set_level(level_value)
+current_job.display()
+##########################
+'''challenge activity
+13.3.2: Overriding class methods.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+In the class SpeechTherapist's display() method:
+
+Output "Job title: Speech Therapist".
+Call the Job class's display() method.
+Click here for example
+Ex: If the input is:
+2008
+1
+
+then the output is:
+
+Job title: Speech Therapist
+Start year: 2008, Level: 1
+class Job:
+    def __init__(self):
+        self.start_year = 0
+        self.level = 0
+
+    def set_start_year(self, start_year_value):
+        self.start_year = start_year_value
+
+    def set_level(self, level_value):
+        self.level = level_value
+
+    def display(self):
+        print(f"Start year: {self.start_year}, Level: {self.level}")
+
+
+class SpeechTherapist(Job):
+    def __init__(self):
+        Job.__init__(self)
+
+    def display(self):
+
+        """ Your code goes here """
+
+
+start_year_value = int(input())
+level_value = int(input())
+
+your_job = SpeechTherapist()
+your_job.set_start_year(start_year_value)
+your_job.set_level(level_value)
+your_job.display()
+'''
+class Job:
+    def __init__(self):
+        self.start_year = 0
+        self.level = 0
+
+    def set_start_year(self, start_year_value):
+        self.start_year = start_year_value
+
+    def set_level(self, level_value):
+        self.level = level_value
+
+    def display(self):
+        print(f"Start year: {self.start_year}, Level: {self.level}")
+
+
+class SpeechTherapist(Job):
+    def __init__(self):
+        Job.__init__(self)
+
+    def display(self):
+        """ Your code goes here """
+        print(f"Job title: Speech Therapist")
+        Job.display(self)
+
+
+start_year_value = int(input())
+level_value = int(input())
+
+your_job = SpeechTherapist()
+your_job.set_start_year(start_year_value)
+your_job.set_level(level_value)
+your_job.display()
+##########################
+'''challenge activity
+13.3.2: Overriding class methods.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+In the class Immunology, define a output() method to override the Course class's output() method and:
+
+Call the Course class's output() method.
+Output "Course name: Immunology".
+Click here for example
+Ex: If the input is:
+9
+2
+
+then the output is:
+
+Duration: 9 weeks, Credits: 2
+Course name: Immunology
+class Course:
+    def __init__(self):
+        self.duration = 0
+        self.credits = 0
+
+    def set_duration(self, duration_value):
+        self.duration = duration_value
+
+    def set_credits(self, credits_value):
+        self.credits = credits_value
+
+    def output(self):
+        print(f"Duration: {self.duration} weeks, Credits: {self.credits}")
+
+
+class Immunology(Course):
+    def __init__(self):
+        Course.__init__(self)
+
+    """ Your code goes here """
+
+
+duration_value = int(input())
+credits_value = int(input())
+
+winter_class = Immunology()
+winter_class.set_duration(duration_value)
+winter_class.set_credits(credits_value)
+winter_class.output()
+'''
+class Course:
+    def __init__(self):
+        self.duration = 0
+        self.credits = 0
+
+    def set_duration(self, duration_value):
+        self.duration = duration_value
+
+    def set_credits(self, credits_value):
+        self.credits = credits_value
+
+    def output(self):
+        print(f"Duration: {self.duration} weeks, Credits: {self.credits}")
+
+
+class Immunology(Course):
+    def __init__(self):
+        Course.__init__(self)
+
+    """ Your code goes here """
+    def output(self):
+        Course.output(self)
+        print(f"Course name: Immunology")
+
+
+duration_value = int(input())
+credits_value = int(input())
+
+winter_class = Immunology()
+winter_class.set_duration(duration_value)
+winter_class.set_credits(credits_value)
+winter_class.output()
+####################################################13.4 Is-a versus has-a relationships
+'''13.4 Is-a versus has-a relationships
+The concept of inheritance is often confused with composition. Composition is the idea that one object may be made up of other objects. For instance, a "mother" class can be made up of objects like "name" (possibly a string object), "children" (which may be a list of Child objects), etc. Defining that "mother" class does not involve inheritance, but rather just composing the sub-objects in the class.
+
+Figure 13.4.1: Composition.
+The 'has-a' relationship. A Mother object 'has-a' string object and 'has' child objects, but no inheritance is involved.
+
+class Child:
+    def __init__(self):
+        self.name = ""
+        self.birthdate = ""
+        self.schoolname = ""
+    # ...
+
+class Mother:
+    def __init__(self):
+        self.name = ""
+        self.birthdate = ""
+        self.spouse_name = ""
+        self.children = []
+    # ...
+
+Feedback?
+In contrast, a programmer may note that a mother and a child are both a kind of person, and all persons have a name and birthdate. So the programmer may decide to better organize the program by defining a Person class, and then by creating the Mother and Child classes as derived from Person.
+
+Figure 13.4.2: Inheritance.
+The 'is-a' relationship. A Mother object 'is a' kind of Person. The Mother class thus inherits from the Person class. Likewise for the Child class.
+
+class Person:
+    def __init__(self):
+        self.name = ""
+        self.birthdate = ""
+    # ...
+
+class Child(Person):
+    def __init__(self):
+        Person.__init__(self)
+        self.schoolname = ""
+    # ...
+
+class Mother(Person):
+    def __init__(self):
+        Person.__init__(self)
+        self.spousename = ""
+        self.children = []
+    # ...
+
+Feedback?
+participation activity
+13.4.1: Is-a vs. has-a relationships.
+Indicate whether the relationship of the everyday items is an is-a or has-a relationship. Derived classes and inheritance are related to is-a relationships, not has-a relationships.
+
+1)
+Pear / Fruit
+2)
+House / Door
+3)
+Dog / Owner
+4)
+Mug / Cup
+
+Feedback?
+challenge activity
+13.4.1: Is-a versus has-a relationships.
+712910.5105864.qx3zqy7
+Start
+Indicate the relationship each of the following items have with Vehicle.CarVehicleTruckVehicleVehicleSeatVehicleWheel
+Pick
+
+Pick
+
+Pick
+
+Pick
+1
+2
+Check
+Next
+1
+2
+
+Feedback?
+How was this section?
+
+|
+
+
+Provide section feedback'''
+##########################Figure 13.4.1: Composition.
+"The 'has-a' relationship. A Mother object 'has-a' string object and 'has' child objects, but no inheritance is involved."
+class Child:
+    def __init__(self):
+        self.name = ""
+        self.birthdate = ""
+        self.schoolname = ""
+    # ...
+
+class Mother:
+    def __init__(self):
+        self.name = ""
+        self.birthdate = ""
+        self.spouse_name = ""
+        self.children = []
+    # ...
+
+##########################Figure 13.4.2: Inheritance.
+"The 'is-a' relationship. A Mother object 'is a' kind of Person. The Mother class thus inherits from the Person class. Likewise for the Child class."
+class Person:
+    def __init__(self):
+        self.name = ""
+        self.birthdate = ""
+    # ...
+
+class Child(Person):
+    def __init__(self):
+        Person.__init__(self)
+        self.schoolname = ""
+    # ...
+
+class Mother(Person):
+    def __init__(self):
+        Person.__init__(self)
+        self.spousename = ""
+        self.children = []
+    # ...
+
+##########################
+# participation activity
+# 13.4.1: Is-a vs. has-a relationships.
+# Indicate whether the relationship of the everyday items is an is-a or has-a relationship. Derived classes and inheritance are related to is-a relationships, not has-a relationships.
+{
+    {
+        "Pear / Fruit",
+        "is-a"
+    },
+    {
+        "House / Door",
+        "has-a"
+    },
+    {
+        "Dog / Owner",
+        "has-a"
+    },
+    {
+        "Mug / Cup",
+        "is-a"
+    }
+}
+##########################
+'''challenge activity
 
 ## 
 
-13.2.1: Accessing base class attributes.
+13.4.1: Is-a versus has-a relationships.
 
 712910.5105864.qx3zqy7
 
-.zyante-bold\{font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-weight:300\}.zyante-section-bold\{font-family:Helvetica;font-weight:300\}.progressionTool\{min-width:425px\}.progressionTool div.zyante-progression-start-reset-buttons-container\{height:45px;margin-bottom:10px\}.progressionTool button.zyante-progression-next-button,.progressionTool button.zyante-progression-try-again,.progressionTool button.zyante-progression-show-solution\{margin-left:30px\}.progressionTool button.zyante-progression-reset-button,.progressionTool button.zyante-progression-show-solution\{background-color:#fff;color:#0072b3\}.progressionTool button.zyante-progression-reset-button:hover:not(.disabled),.progressionTool button.zyante-progression-show-solution:hover:not(.disabled)\{background-color:#fff\}.progressionTool div.zyante-progression-tool-specific-outlet\{margin-bottom:10px\}.progressionTool div.zyante-progression-tool-specific-outlet.is-exam\{margin-bottom:25px\}.progressionTool div.zyante-progression-status-bar\{align-items:stretch;background-color:#eee;border:1px solid #0072b3;display:flex;height:30px\}.progressionTool div.zyante-progression-status-bar div\{align-items:center;color:#999;display:flex;font-size:10px;justify-content:center;width:100%\}.progressionTool div.zyante-progression-status-bar div.filled\{background-color:#87add2;color:#eee\}.progressionTool div.zyante-progression-status-bar div.highlighted\{border:0;font-weight:700;font-size:15px;outline:3px solid #576E91;z-index:1\}.progressionTool div.zyante-progression-status-bar div.highlighted:not(.filled)\{color:gray\}.progressionTool div.zyante-progression-status-bar div:not(:last-child)\{border-right:1px dashed #0072b3\}.progressionTool div.zyante-progression-status-bar div:not(:last-child).highlighted\{border:0\}.progressionTool span.zyante-progression-x-mark\{color:#bb0404;font-size:18px;font-style:normal\}.progressionTool span.zyante-progression-hint\{font-size:18px;font-style:italic;font-weight:700\}.progressionTool span.hint\_symbols\{color:#bb0404;font-size:22px\}.progressionTool div.specific-hint\{align-items:center;display:flex;padding:5px\}.progressionTool div.check-next-container\{display:flex;margin-top:10px\}.progressionTool div.zyante-progression-is-done\{align-self:center\}.progressionTool div.zyante-progression-explanation-area\{margin-top:15px\}.progressionTool div.zyante-progression-spinner\{display:inline-block;height:40px;margin-left:30px;position:relative;vertical-align:top;width:20px\}.progressionTool.progression-started div.zyante-progression-status-bar div\{cursor:pointer\}.progressionTool div.zyante-progression-solution-area\{align-items:center;display:flex;margin-top:25px\}.progressionTool div.zyante-progression-solution-area .solution\{margin-left:20px\}.progressionTool .glow\{animation:glow-grey 8s linear infinite\}@keyframes glow-grey\{0%\{box-shadow:inset 0 0 1px 0 #5c5c5c,inset 0 0 1px 0 #5c5c5c;border-color:#5c5c5c\}8%\{box-shadow:inset 0 0 3px 1px #5c5c5c,inset 0 0 3px 1px #5c5c5c;border-color:#5c5c5c\}90%\{box-shadow:inset 0 0 3px 1px #5c5c5c,0 0 inset 3px 1px #5c5c5c;border-color:#5c5c5c\}92%\{box-shadow:inset 0 0 1px 0 #5c5c5c,inset 0 0 1px 0 #5c5c5c;border-color:#5c5c5c\}\} .zyante-bold\{font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-weight:300\}.zyante-section-bold\{font-family:Helvetica;font-weight:300\}.ProgressionPlayer div.question-area .element\{font-family:Roboto,sans-serif;font-weight:300\}.ProgressionPlayer div.question-area .element \[aria-invalid=true\]\{outline:2px solid #bb0404\}.ProgressionPlayer div.question-area.show-grid::before\{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:var(--grid-vertical,linear-gradient(90deg,#000 1px,transparent 1px)),var(--grid-horizontal,linear-gradient(#000 1px,transparent 1px));background-size:var(--grid-size,20px) var(--grid-size,20px);border-left:var(--border-left,none);border-top:var(--border-top,none);border-right:var(--border-right,1px solid #000);border-bottom:var(--border-bottom,1px solid #000);opacity:var(--grid-opacity,.2)\}.ProgressionPlayer .zyante-progression-explanation-area p\{font-family:Roboto,sans-serif;font-weight:300;margin:0 0 10px\}.ProgressionPlayer .white-space-pre\{white-space:pre-wrap\}.ProgressionPlayer div.zyante-progression-explanation-area .element\{white-space:normal\}.ProgressionPlayer div.zyante-progression-explanation-area ul\{white-space:wrap\}.zyante-bold\{font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-weight:300\}.zyante-section-bold\{font-family:Helvetica;font-weight:300\}div.question-area .zyante-progression-explanation p,div.zyante-progression-explanation-area .zyante-progression-explanation p,div.preview-container .zyante-progression-explanation p\{margin-bottom:0\}div.question-area .zyante-progression-explanation p:first-child,div.zyante-progression-explanation-area .zyante-progression-explanation p:first-child,div.preview-container .zyante-progression-explanation p:first-child\{display:inline\}div.question-area .zyante-progression-explanation img,div.zyante-progression-explanation-area .zyante-progression-explanation img,div.preview-container .zyante-progression-explanation img\{display:block;max-width:100%\}div.question-area .zyante-progression-explanation .MathJax\_SVG\_Display,div.zyante-progression-explanation-area .zyante-progression-explanation .MathJax\_SVG\_Display,div.preview-container .zyante-progression-explanation .MathJax\_SVG\_Display\{padding-left:0;padding-right:0\}div.question-area .element,div.zyante-progression-explanation-area .element,div.preview-container .element\{font-family:Roboto,sans-serif\}div.question-area .element input,div.zyante-progression-explanation-area .element input,div.preview-container .element input\{font-family:Roboto,sans-serif;font-weight:300\}div.question-area .element table,div.zyante-progression-explanation-area .element table,div.preview-container .element table\{background:#f5f5f5;border:2px solid #bdbdbd;border-collapse:collapse;height:100%;line-height:1;margin:0 auto;white-space:pre;width:100%\}div.question-area .element table.dbTable caption,div.zyante-progression-explanation-area .element table.dbTable caption,div.preview-container .element table.dbTable caption\{caption-side:top;font-weight:700;text-align:center\}div.question-area .element table.fix-width,div.zyante-progression-explanation-area .element table.fix-width,div.preview-container .element table.fix-width\{table-layout:fixed\}div.question-area .element table th,div.zyante-progression-explanation-area .element table th,div.preview-container .element table th,div.question-area .element table td,div.zyante-progression-explanation-area .element table td,div.preview-container .element table td\{border:1px solid #bdbdbd;box-sizing:border-box;width:auto\}div.question-area .element table td,div.zyante-progression-explanation-area .element table td,div.preview-container .element table td\{padding:8px\}div.question-area .element table th,div.zyante-progression-explanation-area .element table th,div.preview-container .element table th\{background-color:#e0e0e0;font-weight:300;padding:5px\}div.question-area .element.as-spreadsheet>table,div.zyante-progression-explanation-area .element.as-spreadsheet>table,div.preview-container .element.as-spreadsheet>table\{table-layout:fixed\}div.question-area .element.as-spreadsheet>table td,div.zyante-progression-explanation-area .element.as-spreadsheet>table td,div.preview-container .element.as-spreadsheet>table td\{background-color:#fff\}div.question-area .element.as-spreadsheet>table th,div.zyante-progression-explanation-area .element.as-spreadsheet>table th,div.preview-container .element.as-spreadsheet>table th,div.question-area .element.as-spreadsheet>table td,div.zyante-progression-explanation-area .element.as-spreadsheet>table td,div.preview-container .element.as-spreadsheet>table td\{height:1em;text-align:center;vertical-align:bottom\}div.question-area .element.as-spreadsheet>table tr>th:first-child,div.zyante-progression-explanation-area .element.as-spreadsheet>table tr>th:first-child,div.preview-container .element.as-spreadsheet>table tr>th:first-child\{width:8%\}div.question-area .element.as-spreadsheet>table th,div.zyante-progression-explanation-area .element.as-spreadsheet>table th,div.preview-container .element.as-spreadsheet>table th\{color:#666;font-weight:700\}div.question-area\{position:relative\}div.question-area .element\{position:absolute\}div.question-area .element img\{height:100%;width:100%\}div.question-area .element .keep-height-ratio\{height:auto\}div.question-area .element .keep-width-ratio\{width:auto\}div.question-area .element input:not(\[type=checkbox\]):not(\[type=radio\])\{width:100%\}div.question-area .element .multiple-choice-label\{display:block;padding-left:1em;text-indent:-1em\}div.question-area .element .multiple-choice-label.contains-image\{display:flex;align-items:center;padding-left:0;text-indent:0\}div.question-area .element .multiple-choice-label.contains-image img\{margin-left:8px;vertical-align:middle\}div.question-area .element.zb-checkbox\{align-items:center;display:flex\}div.question-area .element.zb-checkbox input\{border:2px solid #757575;margin:0;margin-right:4px;padding:0\}div.question-area .element.zb-checkbox label\{margin:0;white-space:pre-wrap;width:fit-content\}div.question-area .element.as-spreadsheet>button\{font-size:16px\}div.question-area .element.text-element\{line-height:1.4;white-space:pre-wrap\}div.question-area .element.text-element ul\{white-space:wrap\}div.question-area .dropdown,div.question-area .short-answer\{padding:5px\}div.question-area .dropdown select,div.question-area .short-answer select\{-webkit-appearance:none;appearance:none;background-repeat:no-repeat;background-position-x:calc(97%);background-position-y:center;background-size:12px;border-radius:3px;font-weight:300;padding:1.5px 16px 1.5px 4px\}div.question-area .short-answer input\[type=text\]:not(\[type=range\]):not(\[type=radio\]):not(\[type=checkbox\]),div.question-area .short-answer input\[type=number\]:not(\[type=range\]):not(\[type=radio\]):not(\[type=checkbox\])\{box-sizing:content-box;padding:1px\}div.question-area .short-answer.symbolic-give-units\{display:flex\}
+ 
 
 Start Jump to level 1
 
-![](<blob:https://learn.zybooks.com/43825272-3d31-4054-b595-587529d2d064>)
+Indicate the relationship each of the following items have with Vehicle.
 
-Determine the order of search when my\_pet.info() is evaluated.
+Car
 
-`class Property: def __init__(self, owner): self.owner = owner def info(self): print(f"Owner is {self.owner}.") class Van(Property): def __init__(self, owner, tag): Property.__init__(self, owner) self.tag = tag def info(self): print(f"{self.owner}'s van has tag {self.tag}.") class Cat(Property): def __init__(self, owner, age): Property.__init__(self, owner) self.age = age def info(self): print(f"{self.owner}'s cat is {self.age} years old.") my_pet = Cat("Rae", 5) my_pet.info()`
+Vehicle
 
-Property
+Truck
 
-Van
+Vehicle
 
-Cat
+Vehicle
 
-Pick First Second Third Not searched
+Seat
 
-Pick First Second Third Not searched
+Vehicle
 
-Pick First Second Third Not searched
+Wheel
+
+Pick has-a is-a
+
+Pick has-a is-a
+
+Pick has-a is-a
+
+Pick has-a is-a
 
 1
 
@@ -1007,7 +1809,7 @@ Show solution
 
 **Done**. Click any level to practice more. Completion is preserved.
 
-✖ ![Correct](<https://zytools.zybooks.com/zyBooks2/fingerprinted/e6ed6b01-5dff-40e3-82f5-77f61bbe09cd/utilities/resource/checkmark.png>)
+✖ ![Correct](https://zytools.zybooks.com/zyBooks2/fingerprinted/e6ed6b01-5dff-40e3-82f5-77f61bbe09cd/utilities/resource/checkmark.png)
 
 Solution
 
@@ -1016,39 +1818,245 @@ Solution
 2
 
 Feedback?
+CarVehicleTruckVehicleVehicleSeatVehicleWheel
+'''
 
-\~ [Section 13.2 - CS 2520: Python for Programmers | zyBooks](<https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/13/section/2?content_resource_id=122585380>)'''
-class Property:
-    def __init__(self, owner):
-        self.owner = owner
-
-    def info(self):
-        print(f"Owner is {self.owner}.")
-
-
-class Van(Property):
-    def __init__(self, owner, tag):
-        Property.__init__(self, owner)
-        self.tag = tag
-
-    def info(self):
-        print(f"{self.owner}'s van has tag {self.tag}.")
-
-
-class Cat(Property):
-    def __init__(self, owner, age):
-        Property.__init__(self, owner)
-        self.age = age
-
-    def info(self):
-        print(f"{self.owner}'s cat is {self.age} years old.")
-
-
-my_pet = Cat("Rae", 5)
-my_pet.info()
 {
-    {"cat", "first"},
-    {"van", "second"},
-    {"property", "third"}
+    "Car / Vehicle": "is-a",
+    "Truck / Vehicle": "is-a",
+    "Vehicle / Vehicle": "is-a",
+    "Seat / Vehicle": "has-a",
+    "Wheel / Vehicle": "has-a"
+    
+}
+##########################
+'''challenge activity
+13.4.1: Is-a versus has-a relationships.
+712910.5105864.qx3zqy7
+Jump to level 1
+Indicate the relationship each of the following items have with Animal.AnimalAnimalCatAnimalBowlCageAnimalOwner
+Pick
+
+Pick
+
+Pick
+
+Pick
+1
+2
+Check
+Next
+1
+2
+
+Feedback?
+How was this section?
+
+|
+
+
+Provide section feedback'''
+{
+    "Animal / Animal": "is-a",
+    "Cat / Animal": "is-a",
+    "Bowl / Animal": "has-a",
+    "Cage / Animal": "has-a",
+    "Owner / Animal": "has-a"
 }
 
+#A,B
+#A,C
+#C,A
+#A,O
+{
+    "Animal / Bowl": "has-a",
+    "Animal / Cage": "has-a",
+    "Cat / Animal": "is-a",
+    "Animal / Owner": "has-a",
+}
+####################################################13.5 Mixin classes and multiple inheritance
+'''13.5 Mixin classes and multiple inheritance
+A class can inherit from more than one base class, a concept known as multiple inheritance. The derived class inherits all of the class attributes and methods of every base class.
+
+participation activity
+13.5.1: Multiple inheritance.
+
+
+1
+
+2
+
+VampireBat can access methods of WingedAnimal and Mammal.
+VampireBatwingspanflap_wings()breathe()give_birth()WingedAnimalwingspanflap_wings()Mammalbreathe()give_birth()WingedAnimalMammalVampire bat
+Static figure: WingedAnimal has data member wingspan and method flap_wings(). Mammal has methods breathe() and give_birth(). VampireBat inherits from both WingedAnimal and Mammal, so VampireBat has data member wingspan and methods flap_wings(), breathe(), and give_birth(). Step 1: Vampire bats are both winged animals and mammals. WingedAnimal has data member wingspan and method flap_wings(). Mammal has methods breathe() and give_birth(). Step 2: VampireBat can access methods of WingedAnimal and Mammal. VampireBat has data member wingspan and methods flap_wings(), breathe(), and give_birth().
+
+Captions
+Vampire bats are both winged animals and mammals.
+VampireBat can access methods of WingedAnimal and Mammal.
+Playing step 2: VampireBat can access methods of WingedAnimal and Mammal. Step finished playing
+
+Feedback?
+A class can inherit from multiple base classes by specifying multiple items in the inheritance list:
+
+Figure 13.5.1: Inheriting from multiple base classes.
+class VampireBat(WingedAnimal, Mammal):  # Inherit from WingedAnimal, Mammal classes
+    # ...
+
+Feedback?
+A common use of multiple inheritance is extending the functionality of a class using mixins. Mixins are classes that provide some additional behavior, by "mixin in" new methods, but are not meant to be instantiated.
+
+Figure 13.5.2: Using mixins to extend a class's functionality with new methods.
+class DrivingMixin:
+    def drive(self, distance):
+        # ...
+
+    def change_tire(self):
+        # ...
+
+    def check_oil(self):
+        # ...
+
+class FlyingMixin:
+    def fly(self, distance, altitude):
+        # ...
+
+    def roll(self):
+        # ...
+
+    def eject(self):
+        # ...
+
+class TransportMode:
+    def __init__(self, name, speed):
+        self.name = name
+        self.speed = speed
+
+    def display(self):
+        print(f"{self.name} can go {self.speed} mph")
+
+class SemiTruck(TransportMode, DrivingMixin):
+    def __init__(self, name, speed, cargo):
+        TransportMode.__init__(self, name, speed)
+        self.cargo = cargo
+
+    def go(self, distance):
+        self.drive(distance)
+        # ...
+
+class FlyingCar(TransportMode, FlyingMixin, DrivingMixin):
+    def __init__(self, name, speed, max_altitude):
+        TransportMode.__init__(self, name, speed)
+        self.max_altitude = max_altitude
+
+    def go(self, distance):
+        self.fly(distance / 2, self.max_altitude)
+        # ...
+        self.drive(distance / 2)
+
+s = SemiTruck("MacTruck", 85, "Frozen beans")
+f = FlyingCar("Jetson35K", 325, 15000)
+
+s.go(100)
+f.go(100)
+
+Feedback?
+Above, the DrivingMixin and FlyingMixin classes each define a set of methods. Any class can be derived from one or both of the mixins. Note that the resolution order by which the base classes are searched for an attribute is related to the order in which classes appear in the inheritance list parentheses. The resolution order is from left to right, so in the FlyingCar class, TransportMode is searched first, then FlyingMixin, and finally DrivingMixin. When using a mixin class, a programmer should be careful to either avoid clashing names, or carefully choose the order of classes in the inheritance list.
+
+participation activity
+13.5.2: Mixin classes and multiple inheritance.
+Consider the above program and class inheritance tree. Match the new class definitions with methods that would be inherited by instances of that class.
+
+How to use this tool
+class Camel(TransportMode):
+class Jet(TransportMode, FlyingMixin):
+class HoverCraft(DrivingMixin, FlyingMixin, TransportMode):
+class Motorcycle(DrivingMixin, TransportMode):
+display()
+display(), fly(), roll(), eject()
+display(), drive(), change_tire(), check_oil()
+display(), drive(), fly(), change_tire(), roll(), eject(), check_oil()
+
+Reset
+
+Feedback?
+How was this section?
+
+|
+
+
+Provide section feedback'''
+##########################Figure 13.5.1: Inheriting from multiple base classes.
+class VampireBat(WingedAnimal, Mammal):  # Inherit from WingedAnimal, Mammal classes
+    # ...
+    pass
+##########################Figure 13.5.2: Using mixins to extend a class's functionality with new methods.
+class DrivingMixin:
+    def drive(self, distance):
+        # ...
+        pass
+
+    def change_tire(self):
+        # ...
+        pass
+
+
+    def check_oil(self):
+        # ...
+        pass
+
+class FlyingMixin:
+    def fly(self, distance, altitude):
+        # ...
+        pass  
+
+    def roll(self):
+        # ...
+        pass
+
+    def eject(self):
+        # ...
+        pass
+
+class TransportMode:
+    def __init__(self, name, speed):
+        self.name = name
+        self.speed = speed
+
+    def display(self):
+        print(f"{self.name} can go {self.speed} mph")
+
+class SemiTruck(TransportMode, DrivingMixin):
+    def __init__(self, name, speed, cargo):
+        TransportMode.__init__(self, name, speed)
+        self.cargo = cargo
+
+    def go(self, distance):
+        self.drive(distance)
+        # ...
+
+class FlyingCar(TransportMode, FlyingMixin, DrivingMixin):
+    def __init__(self, name, speed, max_altitude):
+        TransportMode.__init__(self, name, speed)
+        self.max_altitude = max_altitude
+
+    def go(self, distance):
+        self.fly(distance / 2, self.max_altitude)
+        # ...
+        self.drive(distance / 2)
+
+s = SemiTruck("MacTruck", 85, "Frozen beans")
+f = FlyingCar("Jetson35K", 325, 15000)
+
+s.go(100)
+f.go(100)
+##########################Participation activity
+# 13.5.2: Mixin classes and multiple inheritance.
+# Consider the above program and class inheritance tree. Match the new class definitions
+# with methods that would be inherited by instances of that class.
+{
+    "class Camel(TransportMode)": "display()",
+    "class Jet(TransportMode, FlyingMixin)": "display(), fly(), roll(), eject()",
+    "class HoverCraft(DrivingMixin, FlyingMixin, TransportMode)": "display(), drive(), fly(), change_tire(), roll(), eject(), check_oil()",
+    "class Motorcycle(DrivingMixin, TransportMode)": "display(), drive(), change_tire(), check_oil()"
+}
+1+1
