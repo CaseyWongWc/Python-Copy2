@@ -181,7 +181,10 @@ Feedback?'''
     ]
 }
 #?
-#
+#-base class ex
+class Dwelling:
+    def open_door(self):
+        pass
 #
 #?
 class Dwelling:
