@@ -82,3 +82,9 @@ string-splitting fix) carry over.
   git.
 - The sandbox folder is intentionally isolated from the root v3/v4/v5 setup;
   experimenting in `sandbox/notebook/goog.py` cannot break the root tools.
+- An "empty" `with Scratch:` (or `with _:` / `with __:` / `... as a:`)
+  block is fine — v6 quietly emits `with __nb_Scratch__(): pass` so the
+  notebook still parses and the rest of the file gets annotated. The
+  same is true when a Scratch block's only body is one or more
+  `with "X":` blocks (those get extracted to disk first, leaving the
+  Scratch block effectively empty — v6 handles that too).

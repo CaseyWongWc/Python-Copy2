@@ -255,59 +255,100 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
     Returns (runnable_src, files_written).
     """
     lines = src.splitlines(keepends=True)
-    out = list(lines)
     files_written = []
 
     str_lines, scratch_lines = _find_magic_with_lines(src)
 
+    # ---- Pass 1: extract `with "X":` blocks ----
+    # Replace the `with` line and its body with blank lines so the surviving
+    # source has identical line numbering. Doing this BEFORE pass 2 means
+    # pass 2's empty-body detection sees the post-blanking state, which
+    # matters when a Scratch block's only body is a nested `with "X":`.
+    pass1 = list(lines)
     i = 0
     while i < len(lines):
         line = lines[i]
         line_num = i + 1
 
         m = WITH_STR_RE.match(line.rstrip("\n")) if line_num in str_lines else None
-        if m:
-            indent_str = m.group(1)
-            with_indent = len(indent_str)
-            path_str = m.group(3)
-
-            block_end = _gather_block_end(lines, i, with_indent)
-
-            # Trim trailing blank lines from the body
-            body_end = block_end
-            while body_end > i + 1 and lines[body_end - 1].strip() == "":
-                body_end -= 1
-
-            body_lines = lines[i + 1:body_end]
-            # Use the smallest indent on any non-blank body line as the dedent
-            # amount, so 2-space, 4-space, and tab indents all work.
-            real_indent = _smallest_indent(body_lines, with_indent)
-            dedented = _dedent_body(body_lines, real_indent)
-
-            target = _resolve_file_path(path_str, files_dir, notebook_dir)
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text("".join(dedented))
-            files_written.append(str(target))
-
-            # Replace with-line + body (up to body_end) with empty lines so
-            # original line numbers are preserved.
-            for k in range(i, body_end):
-                end = "\n" if lines[k].endswith("\n") else ""
-                out[k] = end
-            i = body_end
-            continue
-
-        m = WITH_SCRATCH_RE.match(line.rstrip("\n")) if line_num in scratch_lines else None
-        if m:
-            indent = m.group(1)
-            as_part = m.group(3) or ""
-            new_line = f"{indent}with __nb_Scratch__(){as_part}:"
-            if line.endswith("\n"):
-                new_line += "\n"
-            out[i] = new_line
+        if not m:
             i += 1
             continue
 
+        indent_str = m.group(1)
+        with_indent = len(indent_str)
+        path_str = m.group(3)
+
+        block_end = _gather_block_end(lines, i, with_indent)
+
+        # Trim trailing blank lines from the body
+        body_end = block_end
+        while body_end > i + 1 and lines[body_end - 1].strip() == "":
+            body_end -= 1
+
+        body_lines = lines[i + 1:body_end]
+        # Use the smallest indent on any non-blank body line as the dedent
+        # amount, so 2-space, 4-space, and tab indents all work.
+        real_indent = _smallest_indent(body_lines, with_indent)
+        dedented = _dedent_body(body_lines, real_indent)
+
+        target = _resolve_file_path(path_str, files_dir, notebook_dir)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("".join(dedented))
+        files_written.append(str(target))
+
+        for k in range(i, body_end):
+            end = "\n" if lines[k].endswith("\n") else ""
+            pass1[k] = end
+        i = body_end
+
+    # ---- Pass 2: rewrite `with Scratch:` blocks ----
+    # Operate on the pass1 source so empty-body detection accounts for
+    # already-blanked nested string-extraction blocks.
+    out = list(pass1)
+    i = 0
+    while i < len(pass1):
+        line = pass1[i]
+        line_num = i + 1
+
+        m = WITH_SCRATCH_RE.match(line.rstrip("\n")) if line_num in scratch_lines else None
+        if not m:
+            i += 1
+            continue
+
+        indent = m.group(1)
+        as_part = m.group(3) or ""
+        with_indent = len(indent)
+
+        # Detect an empty body (no non-blank line indented deeper than
+        # the with-line) on the pass1 source. Without this, a Scratch
+        # block whose only body is a string-extraction block (now blanked
+        # in pass1) would rewrite to `with __nb_Scratch__():` and Python
+        # would refuse to parse the whole file with an IndentationError,
+        # killing all annotations on the rest of the notebook.
+        scratch_block_end = _gather_block_end(pass1, i, with_indent)
+        has_body = False
+        for k in range(i + 1, scratch_block_end):
+            bl = pass1[k]
+            if bl.strip() == "":
+                continue
+            bl_indent = len(bl) - len(bl.lstrip())
+            if bl_indent > with_indent:
+                has_body = True
+                break
+
+        if has_body:
+            new_line = f"{indent}with __nb_Scratch__(){as_part}:"
+        else:
+            # Effectively empty body — emit a one-line `... : pass` so
+            # the file still parses and the rest of the notebook gets
+            # annotated normally. The block does nothing (no captures,
+            # no isolation work to do).
+            new_line = f"{indent}with __nb_Scratch__(){as_part}: pass"
+
+        if line.endswith("\n"):
+            new_line += "\n"
+        out[i] = new_line
         i += 1
 
     return "".join(out), files_written

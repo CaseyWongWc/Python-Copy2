@@ -503,6 +503,7 @@ from ast import Del
 
 
 [
+# val: [{'a': 1}, {'b': 2}]
     {"a": 1},
     {"b": 2},
 ]
@@ -555,6 +556,7 @@ def temp():
 
     print(beet_data)
 1
+# val: 1
 ##########################
 '''challenge activity
 12.1.1: Reading files.
@@ -714,12 +716,3 @@ with Scratch as a:
         tie_data = tie_file.read()
         tie_file.close()
         print(tie_data)
-# !err: --- ERROR ---
-# !err: Traceback (most recent call last):
-# !err:   File "<string>", line 59, in <module>
-# !err:   File "/home/codespace/.python/current/lib/python3.12/ast.py", line 52, in parse
-# !err:     return compile(source, filename, mode, flags,
-# !err:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-# !err:   File "/workspaces/Python-Copy2/sandbox/notebook/goog.py", line 718
-# !err:     print(tie_data)
-# !err: IndentationError: expected an indented block after 'with' statement on line 700
