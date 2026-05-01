@@ -191,15 +191,22 @@ def _find_magic_with_lines(src: str):
 
 def _resolve_file_path(path_str: str, files_dir: Path, notebook_dir: Path) -> Path:
     """
-    Bare name      -> files_dir / name
-    Path with /    -> notebook_dir / path
-    Absolute       -> as-is
+    Resolve the target path for a `with "X":` block.
+
+    Rule (kept simple on purpose so it matches what `open()` does at
+    runtime, since the runner chdirs to `files_dir`):
+
+      Absolute path (`/tmp/foo`, `C:\\...`)  -> exact path, untouched
+      Anything else                          -> files_dir / path
+
+    `notebook_dir` is accepted for backwards compatibility but no longer
+    used; a `with "sub/foo.txt":` block now lives at
+    `sandbox/files/sub/foo.txt`, so `open("sub/foo.txt")` from the
+    notebook reads the same file.
     """
     p = Path(path_str)
     if p.is_absolute():
         return p
-    if "/" in path_str or "\\" in path_str:
-        return notebook_dir / p
     return files_dir / p
 
 

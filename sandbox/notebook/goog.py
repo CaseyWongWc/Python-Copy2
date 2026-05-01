@@ -718,8 +718,11 @@ with Scratch as a:
         print(tie_data)
     with open("/workspaces/Python-Copy2/sandbox/files/main.py", "r") as f:
         f.read()
-        # val: src_name = input()
-        # val: tie_file = open(src_name)
-        # val: tie_data = tie_file.read()
-        # val: tie_file.close()
-        # val: print(tie_data)
+# !err: --- ERROR ---
+# !err: Traceback (most recent call last):
+# !err:   File "<string>", line 130, in <module>
+# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 698, in <module>
+# !err:     pass
+# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 717, in __sc_1__
+# !err:     tie_file.close()
+# !err: FileNotFoundError: [Errno 2] No such file or directory: '/workspaces/Python-Copy2/sandbox/files/main.py'

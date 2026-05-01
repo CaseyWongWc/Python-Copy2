@@ -44,10 +44,13 @@ Self-contained "notebook" version. Run via `python sandbox/notebook/main.py`
 features Casey actually uses:
 
   - `with "filename.ext":`  body becomes that file's raw contents
-        - bare name (`"input.txt"`)  -> `sandbox/files/input.txt`
-        - path with `/` (`"data/in.txt"`) -> relative to `sandbox/notebook/`
-        - absolute path -> exact path
+        - any relative path (`"in.txt"`, `"sub/in.txt"`) -> resolved
+          inside `sandbox/files/`
+        - absolute path (`"/tmp/x"`, `"C:\\..."`) -> exact path
         - body does NOT have to be valid Python
+        - `main.py` chdirs into `sandbox/files/` before running, so
+          `open("name.txt")` reads from the EXACT same place
+          `with "name.txt":` writes to — no `../files/` dance.
 
   - `with Scratch:` (or `with _:` / `with __:`)
         body runs as Python and gets annotated, but every variable assigned

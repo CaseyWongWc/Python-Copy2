@@ -13,9 +13,13 @@
 #   with Scratch as a:       -> same, but captures vars onto `a`
 #   # in: <value>            -> queues a value for the next input() call
 #
-# Bare names like "name.txt" land in sandbox/files/.
-# Paths with a slash are relative to sandbox/notebook/.
-# Absolute paths go exactly where you write them.
+# Path rules (kept simple on purpose):
+#   "name.txt"        -> sandbox/files/name.txt
+#   "sub/name.txt"    -> sandbox/files/sub/name.txt
+#   "/abs/path.txt"   -> exactly that absolute path
+#
+# `open("name.txt")` reads from the SAME place `with "name.txt":` writes
+# to, because the runner cd's into sandbox/files/ before running you.
 
 
 # --- 1. Inline file creation -------------------------------------------------
@@ -25,7 +29,7 @@ with "names.txt":
     Lynn
     Ravi
 
-contents = open("../files/names.txt").read()
+contents = open("names.txt").read()
 contents
 # val: Tia
 # val: Lynn
