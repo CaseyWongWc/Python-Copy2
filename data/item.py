@@ -18,4 +18,7 @@ with "file.txt":
   h e l l o
   h e l l o
 
-with "o"
+with "o":
+    print("Apples")
+
+raise yes as yes:

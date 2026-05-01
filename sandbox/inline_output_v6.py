@@ -1,0 +1,635 @@
+"""
+inline_output_v6.py
+Casey's sandbox notebook — v4 + magic `with` blocks + `# in:` inputs.
+
+What's NEW in v6 (on top of v4):
+
+1.  `with "filename.ext":`
+        The indented block becomes the file's CONTENTS (raw text, dedented).
+        The block does NOT have to be valid Python.
+        Bare name (e.g. "input.txt") -> goes to <sandbox>/files/<name>.
+        Path containing /            -> relative to the notebook directory.
+        Absolute path                -> exact path.
+
+2.  `with Scratch:`  (or `with _:` / `with __:`)
+        The indented block runs as Python and gets the normal annotations,
+        but every variable assigned inside DISAPPEARS after the block ends.
+
+3.  `with Scratch as a:` (or `with _ as a:` / `with __ as a:`)
+        Same isolation, but each variable defined inside is captured onto `a`.
+        After the block, `a.x`, `a.y`, ... are available.
+
+4.  `# in: <value>` comments anywhere in the file
+        Build a queue that feeds `input()` calls in source order.
+        (Old `# setin` directives still work and feed the same queue.)
+        Once the queue is empty, real stdin is used.
+
+Everything else from v4 still applies:
+  -  print()                       -> `# out:`
+  -  bare expressions              -> `# val:`  (with v4 string-splitting fix)
+  -  errors                        -> `# !err:`
+  -  # zy: / # fig: / # quick: / # note: / # save: magic auto-save
+"""
+
+import ast
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+OUT_PREFIX = "# out:"
+VAL_PREFIX = "# val:"
+ERR_PREFIX = "# !err:"
+
+
+# ---------- magic comment parsing (auto-save) ----------
+
+def _parse_magic(src: str):
+    """Look at the first 5 non-blank lines for a magic save comment."""
+    lines = src.splitlines()
+    checked = 0
+    for line in lines:
+        if checked >= 5:
+            break
+        stripped = line.strip()
+        if not stripped:
+            continue
+        checked += 1
+
+        m = re.match(r"#\s*zy:\s*(\d+)\.(\d+)\s+(\S+)", stripped)
+        if m:
+            chap, sub, name = m.group(1), m.group(2), m.group(3)
+            return Path(f"_zybooks/C_{chap}/{chap}.{sub}/{name}.py")
+
+        m = re.match(r"#\s*fig:\s*(\d+)\.(\d+)\.(\d+)", stripped)
+        if m:
+            chap, sub, num = m.group(1), m.group(2), m.group(3)
+            return Path(f"_zybooks/C_{chap}/Figure_{chap}_{sub}_{num}.py")
+
+        m = re.match(r"#\s*quick:\s*(\S+)", stripped)
+        if m:
+            name = m.group(1)
+            if not name.endswith((".py", ".md", ".txt")):
+                name += ".py"
+            return Path(f"scratch/{name}")
+
+        m = re.match(r"#\s*note:\s*(\S+)", stripped)
+        if m:
+            name = m.group(1)
+            if not name.endswith((".md", ".txt")):
+                name += ".md"
+            return Path(f"notes/{name}")
+
+        m = re.match(r"#\s*save:\s*(\S+)", stripped)
+        if m:
+            return Path(m.group(1))
+
+    return None
+
+
+def _auto_save(src_path: Path):
+    """If the source file has a magic comment, copy the (annotated) file there."""
+    src = src_path.read_text()
+    dest = _parse_magic(src)
+    if dest is None:
+        return None
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(src_path, dest)
+    return str(dest)
+
+
+# ---------- annotation strip ----------
+
+def _strip_old_annotations(src: str) -> str:
+    keep = []
+    for line in src.splitlines(keepends=True):
+        stripped = line.lstrip()
+        if (
+            stripped.startswith(OUT_PREFIX)
+            or stripped.startswith(VAL_PREFIX)
+            or stripped.startswith(ERR_PREFIX)
+        ):
+            continue
+        keep.append(line)
+    return "".join(keep)
+
+
+# ---------- v6 preprocessor: magic `with` blocks ----------
+
+WITH_STR_RE = re.compile(r'^(\s*)with\s+(["\'])(.+?)\2\s*:\s*$')
+WITH_SCRATCH_RE = re.compile(
+    r'^(\s*)with\s+(Scratch|__|_)(\s+as\s+\w+)?\s*:\s*$'
+)
+
+
+def _resolve_file_path(path_str: str, files_dir: Path, notebook_dir: Path) -> Path:
+    """
+    Bare name      -> files_dir / name
+    Path with /    -> notebook_dir / path
+    Absolute       -> as-is
+    """
+    p = Path(path_str)
+    if p.is_absolute():
+        return p
+    if "/" in path_str or "\\" in path_str:
+        return notebook_dir / p
+    return files_dir / p
+
+
+def _dedent_body(body_lines, base_indent: int):
+    """Remove up to `base_indent` chars of leading whitespace from each line."""
+    out = []
+    for line in body_lines:
+        if line.strip() == "":
+            out.append(line)
+            continue
+        head = line[:base_indent]
+        if head.strip() == "":
+            out.append(line[base_indent:])
+        else:
+            out.append(line)
+    return out
+
+
+def _gather_block_end(lines, start_idx: int, with_indent: int) -> int:
+    """
+    Return the index of the first line that ENDS the block (line whose indent
+    is <= with_indent and which is non-blank), or len(lines) if EOF.
+    Trailing blank lines INSIDE the block are still included up to the
+    boundary; the caller can trim them as needed.
+    """
+    j = start_idx + 1
+    while j < len(lines):
+        line = lines[j]
+        if line.strip() == "":
+            j += 1
+            continue
+        line_indent = len(line) - len(line.lstrip())
+        if line_indent <= with_indent:
+            break
+        j += 1
+    return j
+
+
+def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
+    """
+    Walk the source line by line.
+
+    For every `with "filename":` block:
+      - extract the body, dedent, write to disk
+      - replace the `with` line + body lines with blank lines (line numbers
+        in the rest of the file are preserved exactly)
+
+    For every `with Scratch:` / `with _:` / `with __:` block:
+      - rewrite the `with` line so it calls a runtime context manager:
+            `with __nb_Scratch__():`         (or `... as a:`)
+        Body lines are left untouched (line numbers preserved).
+
+    Returns (runnable_src, files_written).
+    """
+    lines = src.splitlines(keepends=True)
+    out = list(lines)
+    files_written = []
+
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+
+        m = WITH_STR_RE.match(line.rstrip("\n"))
+        if m:
+            indent_str = m.group(1)
+            with_indent = len(indent_str)
+            path_str = m.group(3)
+
+            block_end = _gather_block_end(lines, i, with_indent)
+
+            # Trim trailing blank lines from the body
+            body_end = block_end
+            while body_end > i + 1 and lines[body_end - 1].strip() == "":
+                body_end -= 1
+
+            body_lines = lines[i + 1:body_end]
+            # Use the smallest indent on any non-blank body line as the dedent
+            # amount, so 2-space, 4-space, and tab indents all work.
+            real_indent = _smallest_indent(body_lines, with_indent)
+            dedented = _dedent_body(body_lines, real_indent)
+
+            target = _resolve_file_path(path_str, files_dir, notebook_dir)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text("".join(dedented))
+            files_written.append(str(target))
+
+            # Replace with-line + body (up to body_end) with empty lines so
+            # original line numbers are preserved.
+            for k in range(i, body_end):
+                end = "\n" if lines[k].endswith("\n") else ""
+                out[k] = end
+            i = body_end
+            continue
+
+        m = WITH_SCRATCH_RE.match(line.rstrip("\n"))
+        if m:
+            indent = m.group(1)
+            as_part = m.group(3) or ""
+            new_line = f"{indent}with __nb_Scratch__(){as_part}:"
+            if line.endswith("\n"):
+                new_line += "\n"
+            out[i] = new_line
+            i += 1
+            continue
+
+        i += 1
+
+    return "".join(out), files_written
+
+
+def _smallest_indent(body_lines, with_indent: int) -> int:
+    """Find the smallest indentation (in spaces) on any non-blank body line."""
+    smallest = None
+    for line in body_lines:
+        if line.strip() == "":
+            continue
+        ind = len(line) - len(line.lstrip())
+        if ind <= with_indent:
+            # Shouldn't happen for a valid block, but be defensive.
+            continue
+        if smallest is None or ind < smallest:
+            smallest = ind
+    return smallest if smallest is not None else with_indent + 4
+
+
+# ---------- AST helpers ----------
+
+def _is_print_call(node):
+    if not isinstance(node, ast.Call):
+        return False
+    func = node.func
+    return isinstance(func, ast.Name) and func.id == "print"
+
+
+def _is_docstring(node):
+    return isinstance(node.value, ast.Constant) and isinstance(node.value.value, str)
+
+
+def _find_bare_expr_lines(src: str) -> set:
+    try:
+        tree = ast.parse(src)
+    except SyntaxError:
+        return set()
+    bare = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Expr):
+            if _is_print_call(node.value):
+                continue
+            if _is_docstring(node):
+                continue
+            bare.add(node.lineno)
+    return bare
+
+
+# ---------- input directive parsing ----------
+
+def _parse_all_inputs(src: str):
+    """
+    Walk the source in order. Collect:
+      - `# in: <value>`        -> one value
+      - `# setin(...)`         -> tuple/list payload
+      - `# setin a, b, c`      -> CSV payload
+      - `# setin` then `# x`   -> block-style payload
+    Returns the combined list in source order.
+    """
+    inputs = []
+    lines = src.splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+
+        m = re.match(r"^\s*#\s*in:\s*(.*)$", line)
+        if m:
+            inputs.append(m.group(1))
+            i += 1
+            continue
+
+        m = re.match(r"^\s*#\s*setin\b(.*)$", line)
+        if m:
+            tail = m.group(1).strip()
+            if tail:
+                if tail.startswith("(") or tail.startswith("["):
+                    try:
+                        value = ast.literal_eval(tail)
+                        if isinstance(value, (list, tuple)):
+                            inputs.extend(str(v) for v in value)
+                        else:
+                            inputs.append(str(value))
+                    except Exception:
+                        parts = [p.strip().strip("\"'") for p in tail.split(",")]
+                        inputs.extend(p for p in parts if p)
+                else:
+                    parts = [p.strip().strip("\"'") for p in tail.split(",")]
+                    inputs.extend(p for p in parts if p)
+                i += 1
+                continue
+
+            # Block form
+            j = i + 1
+            while j < len(lines):
+                comment = re.match(r"^\s*#(.*)$", lines[j])
+                if not comment:
+                    break
+                body = comment.group(1).strip()
+                if not body:
+                    break
+                if re.match(r"^(zy:|fig:|quick:|note:|save:|setin\b|in:)", body):
+                    break
+                inputs.append(body)
+                j += 1
+            i = j
+            continue
+
+        i += 1
+
+    return inputs
+
+
+# ---------- shim builder ----------
+
+skip_none_flag = False
+
+
+def _build_shim(read_path: Path, file_attr_path: Path,
+                bare_lines: set, inputs: list) -> str:
+    """
+    `read_path`        — file the shim opens to read source (the temp runnable)
+    `file_attr_path`   — what the user's code sees as `__file__` and what
+                         appears in tracebacks (the original goog.py)
+    """
+    bare_lines_repr = repr(sorted(bare_lines))
+    return (
+        "import sys, builtins, inspect, ast, io\n"
+        "_orig_print = builtins.print\n"
+        "_orig_input = builtins.input\n"
+        "def _tagged_print(*args, **kwargs):\n"
+        "    frame = inspect.currentframe().f_back\n"
+        "    lineno = frame.f_lineno\n"
+        "    buf = io.StringIO()\n"
+        "    kwargs2 = dict(kwargs); kwargs2['file'] = buf; kwargs2.pop('flush', None)\n"
+        "    _orig_print(*args, **kwargs2)\n"
+        "    text = buf.getvalue().rstrip('\\n')\n"
+        "    for piece in text.split('\\n'):\n"
+        "        sys.stdout.write(f'__OUT__{lineno}__{piece}\\n')\n"
+        "    sys.stdout.flush()\n"
+        "builtins.print = _tagged_print\n"
+        "\n"
+        f"_INPUTS = {repr(inputs)}\n"
+        "_input_iter = iter(_INPUTS)\n"
+        "def _piped_input(prompt=''):\n"
+        "    frame = inspect.currentframe().f_back\n"
+        "    lineno = frame.f_lineno\n"
+        "    try:\n"
+        "        value = str(next(_input_iter))\n"
+        "    except StopIteration:\n"
+        "        return _orig_input(prompt)\n"
+        "    sys.stdout.write(f'__OUT__{lineno}__{prompt}{value}\\n')\n"
+        "    sys.stdout.flush()\n"
+        "    return value\n"
+        "builtins.input = _piped_input\n"
+        "builtins._original_input_backup = _orig_input\n"
+        "\n"
+        "def _show_val(value, lineno):\n"
+        f"    if {repr(skip_none_flag)} and value is None:\n"
+        "        return\n"
+        "    if isinstance(value, str):\n"
+        "        pieces = value.splitlines() or ['']\n"
+        "    else:\n"
+        "        pieces = repr(value).split('\\n')\n"
+        "    for piece in pieces:\n"
+        "        sys.stdout.write(f'__VAL__{lineno}__{piece}\\n')\n"
+        "    sys.stdout.flush()\n"
+        "\n"
+        # Namespace object that wraps a dict (the function's locals()).
+        "class __NB_NS__:\n"
+        "    def __init__(self, d=None):\n"
+        "        if d:\n"
+        "            for k, v in d.items():\n"
+        "                if not k.startswith('__'):\n"
+        "                    object.__setattr__(self, k, v)\n"
+        "    def __repr__(self):\n"
+        "        items = ', '.join(f'{k}={v!r}' for k, v in vars(self).items())\n"
+        "        return f'Scratch({items})'\n"
+        "\n"
+        # Fallback runtime class: only invoked if the AST transform somehow
+        # misses a `with __nb_Scratch__():` call. Same shape as a real CM so
+        # nothing crashes; behaves like an identity passthrough.
+        "class __nb_Scratch__:\n"
+        "    def __enter__(self): return __NB_NS__()\n"
+        "    def __exit__(self, *exc): return False\n"
+        "\n"
+        f"_BARE_LINES = set({bare_lines_repr})\n"
+        "\n"
+        f"_src = open(r'{read_path}').read()\n"
+        "_tree = ast.parse(_src, filename=r'{path}')\n".replace("{path}", str(file_attr_path)) +
+        "\n"
+        "import builtins as _bi\n"
+        "_bi._show_val = _show_val\n"
+        "\n"
+        # Pass 1: turn `with __nb_Scratch__():` (with optional `as` capture)
+        # into a real nested function definition + call. This gives true
+        # scope isolation at any nesting level (module, function, class)
+        # because Python's function scope already isolates locals.
+        "class _ScratchTransform(ast.NodeTransformer):\n"
+        "    def __init__(self):\n"
+        "        self.counter = 0\n"
+        "    def _is_scratch(self, ctx_expr):\n"
+        "        return (isinstance(ctx_expr, ast.Call)\n"
+        "                and isinstance(ctx_expr.func, ast.Name)\n"
+        "                and ctx_expr.func.id == '__nb_Scratch__')\n"
+        "    def visit_With(self, node):\n"
+        "        node = self.generic_visit(node)\n"
+        "        if len(node.items) != 1:\n"
+        "            return node\n"
+        "        item = node.items[0]\n"
+        "        if not self._is_scratch(item.context_expr):\n"
+        "            return node\n"
+        "        self.counter += 1\n"
+        "        fname = f'__sc_{self.counter}__'\n"
+        "        return_locals = ast.Return(value=ast.Call(\n"
+        "            func=ast.Name(id='locals', ctx=ast.Load()),\n"
+        "            args=[], keywords=[]))\n"
+        "        ast.copy_location(return_locals, node)\n"
+        "        func = ast.FunctionDef(\n"
+        "            name=fname,\n"
+        "            args=ast.arguments(posonlyargs=[], args=[], vararg=None,\n"
+        "                               kwonlyargs=[], kw_defaults=[],\n"
+        "                               kwarg=None, defaults=[]),\n"
+        "            body=node.body + [return_locals],\n"
+        "            decorator_list=[], returns=None)\n"
+        "        ast.copy_location(func, node)\n"
+        "        call = ast.Call(func=ast.Name(id=fname, ctx=ast.Load()),\n"
+        "                        args=[], keywords=[])\n"
+        "        if item.optional_vars is not None:\n"
+        "            wrapped = ast.Call(\n"
+        "                func=ast.Name(id='__NB_NS__', ctx=ast.Load()),\n"
+        "                args=[call], keywords=[])\n"
+        "            target = item.optional_vars\n"
+        "            target.ctx = ast.Store()\n"
+        "            assign = ast.Assign(targets=[target], value=wrapped)\n"
+        "            ast.copy_location(assign, node)\n"
+        "            return [func, assign]\n"
+        "        else:\n"
+        "            wrapped = ast.Call(\n"
+        "                func=ast.Name(id='__NB_NS__', ctx=ast.Load()),\n"
+        "                args=[call], keywords=[])\n"
+        "            expr = ast.Expr(value=wrapped)\n"
+        "            ast.copy_location(expr, node)\n"
+        "            return [func, expr]\n"
+        "\n"
+        # Pass 2: rewrite bare expressions to _show_val(expr, line). Same as v4.
+        "class _Rewriter(ast.NodeTransformer):\n"
+        "    def visit_Expr(self, node):\n"
+        "        if node.lineno not in _BARE_LINES:\n"
+        "            return node\n"
+        "        new_call = ast.Call(\n"
+        "            func=ast.Name(id='_show_val', ctx=ast.Load()),\n"
+        "            args=[node.value, ast.Constant(value=node.lineno)],\n"
+        "            keywords=[]\n"
+        "        )\n"
+        "        new_expr = ast.Expr(value=new_call)\n"
+        "        return ast.copy_location(new_expr, node)\n"
+        "\n"
+        "_tree = _ScratchTransform().visit(_tree)\n"
+        "_tree = _Rewriter().visit(_tree)\n"
+        "ast.fix_missing_locations(_tree)\n"
+        f"_code = compile(_tree, r'{file_attr_path}', 'exec')\n"
+        "_globals = {'__name__': '__main__', '__file__': r'" + str(file_attr_path) + "',\n"
+        "            '__nb_Scratch__': __nb_Scratch__,\n"
+        "            '__NB_NS__': __NB_NS__}\n"
+        "exec(_code, _globals)\n"
+    )
+
+
+def _run_shim(shim_src: str):
+    proc = subprocess.run(
+        [sys.executable, "-c", shim_src],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    out_map, val_map = {}, {}
+    for line in proc.stdout.splitlines():
+        m = re.match(r"__OUT__(\d+)__(.*)", line)
+        if m:
+            out_map.setdefault(int(m.group(1)), []).append(m.group(2))
+            continue
+        m = re.match(r"__VAL__(\d+)__(.*)", line)
+        if m:
+            val_map.setdefault(int(m.group(1)), []).append(m.group(2))
+    err_lines = []
+    if proc.returncode != 0 and proc.stderr.strip():
+        err_lines = ["--- ERROR ---"] + proc.stderr.splitlines()
+    return out_map, val_map, err_lines
+
+
+# ---------- main ----------
+
+def run_and_annotate(path: str, *, skip_none: bool = False,
+                     files_dir: Path = None) -> str:
+    global skip_none_flag
+    skip_none_flag = bool(skip_none)
+
+    src_path = Path(path).resolve()
+    notebook_dir = src_path.parent
+    if files_dir is None:
+        # Default: <sandbox-root>/files, where sandbox-root is the parent of
+        # the notebook directory.
+        files_dir = notebook_dir.parent / "files"
+    files_dir = Path(files_dir)
+    files_dir.mkdir(parents=True, exist_ok=True)
+
+    original = src_path.read_text()
+    cleaned = _strip_old_annotations(original)
+
+    # PRE-PROCESS the magic `with` blocks
+    runnable, files_written = _preprocess_with_blocks(
+        cleaned, files_dir, notebook_dir
+    )
+
+    # Inputs (combine `# in:` and `# setin` in source order)
+    inputs = _parse_all_inputs(runnable)
+
+    # Bare expressions: parse the RUNNABLE source (it's valid Python now).
+    bare_lines = _find_bare_expr_lines(runnable)
+
+    # Write runnable to a SIBLING temp file so the user's file is never
+    # overwritten until we have annotations to splice in. Tracebacks still
+    # show the original goog.py path because we pass file_attr_path.
+    runnable_path = src_path.with_name(src_path.name + ".__v6run__")
+    runnable_path.write_text(runnable)
+    try:
+        shim = _build_shim(runnable_path, src_path, bare_lines, inputs)
+        out_map, val_map, err_lines = _run_shim(shim)
+    finally:
+        try:
+            runnable_path.unlink()
+        except FileNotFoundError:
+            pass
+
+    # Splice annotations back into CLEANED (so user keeps their original
+    # `with "..."`/`with Scratch:` syntax).
+    new_lines = []
+    for idx, line in enumerate(cleaned.splitlines(), start=1):
+        new_lines.append(line)
+        m = re.match(r"\s*", line)
+        indent = m.group(0) if m else ""
+        if idx in out_map:
+            for out in out_map[idx]:
+                new_lines.append(f"{indent}{OUT_PREFIX} {out}")
+        if idx in val_map:
+            for val in val_map[idx]:
+                new_lines.append(f"{indent}{VAL_PREFIX} {val}")
+
+    if err_lines:
+        while new_lines and new_lines[-1].strip() == "":
+            new_lines.pop()
+        for el in err_lines:
+            new_lines.append(f"{ERR_PREFIX} {el}")
+
+    final = "\n".join(new_lines) + "\n"
+    src_path.write_text(final)
+
+    # Auto-save based on magic comment (unchanged from v4)
+    saved_to = _auto_save(src_path)
+
+    counts = []
+    if out_map:
+        counts.append(f"{sum(len(v) for v in out_map.values())} print outputs")
+    if val_map:
+        counts.append(f"{sum(len(v) for v in val_map.values())} expression values")
+    summary = ", ".join(counts) if counts else "no output"
+
+    msg = f"✅ Annotated {src_path.name} → {summary}."
+    if files_written:
+        msg += f"\n📝 Wrote {len(files_written)} file(s):"
+        for f in files_written:
+            msg += f"\n   - {f}"
+    if saved_to:
+        msg += f"\n💾 Auto-saved to: {saved_to}"
+    if err_lines:
+        msg += "\n⚠️  Had an error — see # !err: at bottom of file."
+    return msg
+
+
+# ---------- CLI ----------
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    skip_none = False
+    if "--skip-none" in args:
+        skip_none = True
+        args.remove("--skip-none")
+
+    if not args:
+        print("Usage: python inline_output_v6.py <your_file.py> [--skip-none]")
+        sys.exit(1)
+
+    print(run_and_annotate(args[0], skip_none=skip_none))
