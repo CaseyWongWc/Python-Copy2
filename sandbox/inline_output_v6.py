@@ -147,7 +147,7 @@ def _find_magic_with_lines(src: str):
 
     try:
         toks = list(tokenize.generate_tokens(io.StringIO(src).readline))
-    except (tokenize.TokenizeError, IndentationError, SyntaxError):
+    except (tokenize.TokenError, IndentationError, SyntaxError):
         for ln_idx, line in enumerate(src.splitlines(), start=1):
             if WITH_STR_RE.match(line):
                 str_lines.add(ln_idx)
