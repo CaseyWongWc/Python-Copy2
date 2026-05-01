@@ -36,10 +36,10 @@ contents
 
 x = 100
 with Scratch:
-    x = 5  # local to the block
+    x = 5            # local to the block
     helper = "temp"  # also local to the block
 
-x  # still 100 — Scratch reverted it
+x                   # still 100 — Scratch reverted it
 # val: 100
 
 
