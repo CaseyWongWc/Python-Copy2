@@ -1047,5 +1047,7 @@ class Cat(Property):
 my_pet = Cat("Rae", 5)
 my_pet.info()
 {
-    
+    "Cat",
+    "Property",
+    "Van",
 }
