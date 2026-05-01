@@ -190,4 +190,4 @@ class House(Dwelling):
     def open_basement(self):
         pass
 h = House()
-#
+# h can call open_door(), open_window(), and open_basement()
