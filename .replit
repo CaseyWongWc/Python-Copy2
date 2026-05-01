@@ -37,5 +37,9 @@ author = "agent"
 task = "shell.exec"
 args = "python main.py"
 
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python goog.py"
+
 [workflows.workflow.metadata]
 outputType = "console"
