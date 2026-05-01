@@ -1,5 +1,5 @@
 ########################################################################################################
-'''Activity summary for assignment: C_12
+"""Activity summary for assignment: C_12
 1 / 70 points
 Due: 05/07/2026, 11:59 PM PDT
 
@@ -97,7 +97,8 @@ L
 Lab activities
 12.12.1
 0 / 10 points
-'''
+"""
+
 ##################################################################################################################################
 '''## 12.1 Reading files
 
@@ -446,7 +447,7 @@ if not main.___.read_called:
 ```
 '''
 ##########################
-'''participation activity
+"""participation activity
 12.1.2: Opening files and reading text.
 1)
 Complete the statement to open the file "readme.txt" for reading.
@@ -481,9 +482,7 @@ Check
 
 Show answer
 
-Feedback?'''
-
-
+Feedback?"""
 
 
 import sys
@@ -492,17 +491,21 @@ from pathlib import Path
 from inline_output_v4 import run_and_annotate, _strip_old_annotations
 
 [
-# val: [{'a': 1}, {'b': 2}]
+    # val: [{'a': 1}, {'b': 2}]
     {"a": 1},
     {"b": 2},
 ]
-#my_file = open("readme.txt")
-#contents = my_file.read()
-#print(lines[1])
+# my_file = open("readme.txt")
+# contents = my_file.read()
+# print(lines[1])
 
 from Helpers.helpings import *
-make_file("readme.txt", "Because he's the hero Gotham deserves,\nbut not the one it needs right now.\n")
-# val: PosixPath('/workspaces/Python-Copy2/readme.txt')
+
+make_file(
+    "readme.txt",
+    "Because he's the hero Gotham deserves,\nbut not the one it needs right now.\n",
+)
+# val: PosixPath('/home/runner/workspace/readme.txt')
 ###1:
 my_file = open("readme.txt")
 ###2:
@@ -511,14 +514,14 @@ contents
 # val: Because he's the hero Gotham deserves,
 # val: but not the one it needs right now.
 ###3:
-my_file = open("readme.txt") 
+my_file = open("readme.txt")
 lines = my_file.readlines()
 print(lines[1])
 # out: but not the one it needs right now.
 remove_path("readme.txt")
-# val: PosixPath('/workspaces/Python-Copy2/readme.txt')
+# val: PosixPath('/home/runner/workspace/readme.txt')
 ##########################
-'''activity
+"""activity
 12.1.1: Reading files.
 712910.5105864.qx3zqy7
 
@@ -556,7 +559,9 @@ Abe 27
 Mel 38
 Ana 23
 Del 18
-'''
+"""
+
+
 def temp():
     beet_file = open(input())
 
@@ -565,6 +570,8 @@ def temp():
     beet_file.close()
 
     print(beet_data)
+
+
 1
 # val: 1
 ##########################
@@ -615,27 +622,30 @@ Next level
 '''
 
 make_file("data1.txt", "Ana violet\nDan brown\nGus sienna\n")
-# val: PosixPath('/workspaces/Python-Copy2/data1.txt')
+# val: PosixPath('/home/runner/workspace/data1.txt')
 make_file("data2.txt", "Rob brick\nBen brown\n")
-# val: PosixPath('/workspaces/Python-Copy2/data2.txt')
+# val: PosixPath('/home/runner/workspace/data2.txt')
 make_file("data3.txt", "Dan magenta\nAya indigo\nAbe brown\nVal tan\n")
-# val: PosixPath('/workspaces/Python-Copy2/data3.txt')
-make_file("temp.py", '''
-# val: PosixPath('/workspaces/Python-Copy2/temp.py')
+# val: PosixPath('/home/runner/workspace/data3.txt')
+make_file(
+    "temp.py",
+    """
+# val: PosixPath('/home/runner/workspace/temp.py')
 src_name = input()
 tie_file = open(src_name)
 tie_data = tie_file.read()
 tie_file.close()
 print(tie_data)
-''')
+""",
+)
 remove_path("temp.py")
-# val: PosixPath('/workspaces/Python-Copy2/temp.py')
+# val: PosixPath('/home/runner/workspace/temp.py')
 remove_path("data1.txt")
-# val: PosixPath('/workspaces/Python-Copy2/data1.txt')
+# val: PosixPath('/home/runner/workspace/data1.txt')
 remove_path("data2.txt")
-# val: PosixPath('/workspaces/Python-Copy2/data2.txt')
+# val: PosixPath('/home/runner/workspace/data2.txt')
 remove_path("data3.txt")
-# val: PosixPath('/workspaces/Python-Copy2/data3.txt')
+# val: PosixPath('/home/runner/workspace/data3.txt')
 
 ##########################
 '''challenge activity
@@ -686,3 +696,8 @@ Next level
 
 Feedback?'''
 
+make_file("data1.txt", "Abe teal\nDan green\nJen red\n")
+# val: PosixPath('/home/runner/workspace/data1.txt')
+
+make_file("data2.txt", "Ron yellow\nMia blue\n")
+# val: PosixPath('/home/runner/workspace/data2.txt')
