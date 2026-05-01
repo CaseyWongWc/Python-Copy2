@@ -154,3 +154,29 @@ class Item:
 
 '''
 ##########################
+'''participation activity
+13.1.4: Derived classes basics.
+1)
+A class that can serve as the basis for another class is called a _______ class.
+
+Check
+
+Show answer
+2)
+Class "Dwelling" has the method open_door(). Class "House" is derived from Dwelling and has the methods open_window() and open_basement(). After h = House() executes, how many different methods can h call, ignoring constructors?
+
+Check
+
+Show answer
+
+Feedback?'''
+{
+    [
+        "A class that can serve as the basis for another class is called a _______ class.",
+        "base"
+    ],
+    [
+        "Class \"Dwelling\" has the method open_door(). Class \"House\" is derived from Dwelling and has the methods open_window() and open_basement(). After h = House() executes, how many different methods can h call, ignoring constructors?",
+        "3"
+    ]
+}
