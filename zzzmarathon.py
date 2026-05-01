@@ -408,7 +408,7 @@ myCar.print_battery_level()
 Battery: 5
 '''
 ##########################
-'''activity
+'''challenge activity
 13.1.2: Defining a derived class.
 712910.5105864.qx3zqy7
 
@@ -422,5 +422,4 @@ Ex: If the input is:
 then the output is:
 
 Daffodil
-Quantity: 250, Price: $85.00
-'''
+Quantity: 250, Price: $85.00'''
