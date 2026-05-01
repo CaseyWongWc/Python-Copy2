@@ -1,115 +1,45 @@
 ########################################################################################################
 '''Activity summary for assignment: C_11
-32 / 85 points
+C_11
+85 / 85 points
 Due: 05/07/2026, 11:59 PM PDT
-
-Completion details
-Section 13.1
+P
+C
+13.1 Derived classes
 11 / 11 points
-
 P
-Participation activities
-13.1.1
-1 / 1 point
-13.1.2
-1 / 1 point
-13.1.3
-1 / 1 point
-13.1.4
-2 / 2 points
 C
-Challenge activities
-13.1.1
-3 / 3 points
-13.1.2
-3 / 3 points
-Section 13.2
+13.2 Accessing base class attributes
 5 / 5 points
-
 P
-Participation activities
-13.2.1
-3 / 3 points
 C
-Challenge activities
-13.2.1
-2 / 2 points
-Section 13.3
+13.3 Overriding class methods
 8 / 8 points
-
 P
-Participation activities
-13.3.1
-4 / 4 points
 C
-Challenge activities
-13.3.1
-1 / 1 point
-13.3.2
-3 / 3 points
-Section 13.4
+13.4 Is-a versus has-a relationships
 6 / 6 points
-
 P
-Participation activities
-13.4.1
-4 / 4 points
-C
-Challenge activities
-13.4.1
+13.5 Mixin classes and multiple inheritance
 2 / 2 points
-Section 13.5
-2 / 2 points
-
 P
-Participation activities
-13.5.1
-1 / 1 point
-13.5.2
-1 / 1 point
-Section 13.6
-0 / 3 points
-
-P
-Participation activities
-13.6.1
-0 / 3 points
-Next section
-Section 13.7
-0 / 10 points
-
+13.6 Testing your code: The unittest module
+3 / 3 points
 L
-Lab activities
-13.7.1
-0 / 10 points
-Section 13.8
-0 / 10 points
-
+13.7 LAB: Pet information (derived classes)
+10 / 10 points
 L
-Lab activities
-13.8.1
-0 / 10 points
-Section 13.9
-0 / 10 points
-
+13.8 LAB: Instrument information (derived classes)
+10 / 10 points
 L
-Lab activities
-13.9.1
-0 / 10 points
-Section 13.10
-0 / 10 points
-
+13.9 LAB: Course information (derived classes)
+10 / 10 points
 L
-Lab activities
-13.10.1
-0 / 10 points
-Section 13.11
-0 / 10 points
-
+13.10 LAB: Book information (overriding member methods)
+10 / 10 points
 L
-Lab activities
-13.11.1
-0 / 10 points
+13.11 LAB: Plant information
+10 / 10 points
 '''
 ########################################################################################################
 
