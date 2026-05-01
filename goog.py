@@ -61,3 +61,15 @@ class Temp:
     customer_order.set_last_name(last_name_value)
     customer_order.print_order()
     customer_order.display()
+
+# !err: --- ERROR ---
+# !err: Traceback (most recent call last):
+# !err:   File "<string>", line 46, in <module>
+# !err:   File "goog.py", line 32, in <module>
+# !err:     class Temp:
+# !err:   File "goog.py", line 33, in Temp
+# !err:     class DrinkOrder:
+# !err:   File "goog.py", line 59, in DrinkOrder
+# !err:     customer_order = Milkshake()
+# !err:                      ^^^^^^^^^
+# !err: NameError: name 'Milkshake' is not defined
