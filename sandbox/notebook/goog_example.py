@@ -165,6 +165,48 @@ with RUN: -V
     pass
 
 
+# --- 7b. `with "X" as RUN:` — save AND run in fresh subprocess --------------
+# Combines `with "X":` (write file) + `with RUN:` (fresh-subprocess run)
+# into one block. The body lands on disk verbatim AT the resolved path
+# AND runs in a brand-new `python3` subprocess. Use this when you want
+# a script saved AND executed with full process isolation (no leftover
+# globals, no cached imports). Stronger isolation than `with "X" as
+# Scratch:` (that one just isolates the namespace inside the same
+# Python process). All `with RUN:` rules carry over: stdout/stderr land
+# under the LAST non-blank body line, non-zero exit appends `# !err:
+# subprocess exited with code N`, inline argv (`with "X" as RUN: -O`)
+# works, body's `# in:` directives feed the subprocess's stdin, and
+# the outer notebook's `# in:` queue is NOT shared.
+#
+# Before (two steps — write file, then run with subprocess):
+#   with "demo.py":
+#       a = 5
+#       b = 7
+#       print(a + b)
+#   with RUN:
+#       a = 5             # had to retype the body to actually run it
+#       b = 7
+#       print(a + b)
+#
+# After (one step):
+with "demo.py" as RUN:
+    a = 5
+    b = 7
+    print(a + b)
+# sandbox/files/demo.py exists too, ready to be re-run later.
+
+# Inline argv works just like plain RUN.
+with "vflag.py" as RUN: -V
+    pass
+
+# Comma form `with "X", RUN:` is also accepted.
+with "comma.py", RUN:
+    print("comma form ran")
+
+# Body is invalid Python -> `# !err: SyntaxError` on the header line
+# AND the file is NOT written (mirrors `with "X" as Scratch:`).
+
+
 # --- 8. Magic save still works ----------------------------------------------
 # Add a `# zy: 12.1 MyExample` (or `# quick:`, `# note:`, `# save:`) at the
 # top of this file to auto-save a copy after annotation.

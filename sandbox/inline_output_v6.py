@@ -165,11 +165,28 @@ WITH_BASH_RE = re.compile(r'^(\s*)with\s+bash\s*:\s*$')
 # _find_magic_with_lines for the sanitization step that keeps the rest
 # of the file tokenizable.
 WITH_RUN_RE = re.compile(r'^(\s*)with\s+RUN\s*:\s*(.*?)\s*$')
+# Combined save-and-fresh-subprocess-run header:
+# `with "X" as RUN:`, `with "X" as RUN: <args>`,
+# `with "X", RUN:`, and `with "X", RUN: <args>`.
+# Group meanings:
+#   1: indent
+#   2: open quote (closing must match — handled by \2)
+#   3: path string
+#   4: separator between path and `RUN` (` as RUN` or `, RUN`)
+#   5: optional shell-style argv tail (e.g. `-O`, `--foo bar`)
+# The argv portion is sanitized away before tokenize, same as plain
+# `with RUN:`, so docstring isolation isn't broken when the body has
+# non-Python flag syntax in the header.
+WITH_SAVE_RUN_RUN_RE = re.compile(
+    r'^(\s*)with\s+(["\'])(.+?)\2'
+    r'(\s+as\s+RUN|\s*,\s*RUN)'
+    r'\s*:\s*(.*?)\s*$'
+)
 
 
 def _find_magic_with_lines(src: str):
     """
-    Tokenize the source and return four sets + one dict keyed by 1-based
+    Tokenize the source and return four sets + two dicts keyed by 1-based
     line numbers, marking REAL magic `with` statements:
       - str_lines:     `with "X":`              (file-extraction form)
       - scratch_lines: `with Scratch:` etc.     (sandbox-scope form)
@@ -181,6 +198,12 @@ def _find_magic_with_lines(src: str):
                        and `with "X", Scratch as h:`. `capture` is the
                        optional `as <name>` binding for the locals dict,
                        or None when omitted.)
+      - save_run_run_info: {line: (path, argv)} (combined save-and-fresh-
+                       subprocess-run form: `with "X" as RUN:`,
+                       `with "X" as RUN: <args>`, `with "X", RUN:`, and
+                       `with "X", RUN: <args>`. `argv` is the shell-split
+                       list of tokens after the colon, passed to `python3`
+                       before the temp file at run time.)
 
     Patterns inside docstrings or other string literals are NOT included
     because the tokenizer reports them as part of a STRING token, not as
@@ -197,36 +220,82 @@ def _find_magic_with_lines(src: str):
     bash_lines: set = set()
     run_lines: set = set()
     save_run_info: dict = {}
+    save_run_run_info: dict = {}
 
-    # Sanitize `with RUN: <args>` headers down to `with RUN:` for the
-    # tokenizer pass. The args (e.g. `-O`, `--foo bar`) are a shell-style
-    # argv, not valid Python, and would otherwise make the tokenizer (or
-    # any follow-up parse) choke — taking out docstring isolation with
-    # them. Stripping happens line-by-line so docstring contents that
-    # *look* like `with RUN: ...` remain inside their STRING tokens, just
-    # with shorter text — the tokenizer still classifies them as part of
-    # the string and our token walk skips them.
+    src_lines = src.splitlines()
+
+    # Sanitize `with RUN: <args>` AND `with "X" as RUN: <args>` /
+    # `with "X", RUN: <args>` headers down to their bare-colon form for
+    # the tokenizer pass. The args (e.g. `-O`, `--foo bar`) are a
+    # shell-style argv, not valid Python, and would otherwise make the
+    # tokenizer (or any follow-up parse) choke — taking out docstring
+    # isolation with them. Stripping happens line-by-line so docstring
+    # contents that *look* like these headers remain inside their STRING
+    # tokens, just with shorter text — the tokenizer still classifies
+    # them as part of the string and our token walk skips them.
     sanitized_lines = []
     for line in src.splitlines(keepends=True):
-        m = WITH_RUN_RE.match(line.rstrip("\n"))
+        stripped = line.rstrip("\n")
+        ending = "\n" if line.endswith("\n") else ""
+        m_sr_run = WITH_SAVE_RUN_RUN_RE.match(stripped)
+        if m_sr_run and m_sr_run.group(5):
+            indent = m_sr_run.group(1)
+            quote = m_sr_run.group(2)
+            path = m_sr_run.group(3)
+            sep = m_sr_run.group(4)
+            sanitized_lines.append(
+                f"{indent}with {quote}{path}{quote}{sep}:{ending}"
+            )
+            continue
+        m = WITH_RUN_RE.match(stripped)
         if m and m.group(2):
             indent = m.group(1)
-            ending = "\n" if line.endswith("\n") else ""
             sanitized_lines.append(f"{indent}with RUN:{ending}")
-        else:
-            sanitized_lines.append(line)
+            continue
+        sanitized_lines.append(line)
     sanitized_src = "".join(sanitized_lines)
+
+    def _argv_for_save_run_run(line_idx_1based: int):
+        """Re-read the original line to recover the `with "X" as RUN: <args>`
+        argv tail (sanitization stripped it before tokenize). Returns [] for
+        the bare-colon form or unmatched lines (defensive)."""
+        line_text = (
+            src_lines[line_idx_1based - 1]
+            if 0 < line_idx_1based <= len(src_lines) else ""
+        )
+        m = WITH_SAVE_RUN_RUN_RE.match(line_text)
+        if not m:
+            return []
+        args_str = m.group(5) or ""
+        if not args_str:
+            return []
+        try:
+            return shlex.split(args_str)
+        except ValueError:
+            # Malformed quoting — treat as no args rather than crashing
+            # the whole notebook run.
+            return []
 
     try:
         toks = list(tokenize.generate_tokens(io.StringIO(sanitized_src).readline))
     except (tokenize.TokenError, IndentationError, SyntaxError):
         for ln_idx, line in enumerate(src.splitlines(), start=1):
             stripped_line = line.rstrip("\n")
+            m_srr = WITH_SAVE_RUN_RUN_RE.match(stripped_line)
+            if m_srr:
+                # Save+RUN takes precedence over plain `with "X":` and
+                # plain `with RUN:` so the same line never lands in two
+                # passes.
+                path = m_srr.group(3)
+                save_run_run_info[ln_idx] = (
+                    path, _argv_for_save_run_run(ln_idx)
+                )
+                continue
             m_sr = WITH_SAVE_RUN_RE.match(stripped_line)
             if m_sr:
-                # Save+run takes precedence over plain `with "X":` and
-                # plain `with Scratch:` so the same line never lands in
-                # two passes.
+                # Save+run (Scratch) takes precedence over plain `with
+                # "X":` and plain `with Scratch:` so the same line never
+                # lands in two passes.
                 path = m_sr.group(3)
                 capture = m_sr.group(6)
                 save_run_info[ln_idx] = (path, capture)
@@ -239,7 +308,8 @@ def _find_magic_with_lines(src: str):
                 bash_lines.add(ln_idx)
             if WITH_RUN_RE.match(line):
                 run_lines.add(ln_idx)
-        return str_lines, scratch_lines, bash_lines, run_lines, save_run_info
+        return (str_lines, scratch_lines, bash_lines, run_lines,
+                save_run_info, save_run_run_info)
 
     skip_types = {
         tokenize.NL, tokenize.NEWLINE, tokenize.COMMENT,
@@ -294,6 +364,39 @@ def _find_magic_with_lines(src: str):
                         )
                         continue
 
+        # Save+RUN forms: `with "X" as RUN:` and `with "X", RUN:`.
+        # Checked BEFORE the plain `with "X":` form so the same line
+        # never lands in both `str_lines` and `save_run_run_info`. The
+        # `as RUN` token sequence cannot collide with the save+Scratch
+        # block above (different name token), so order between the two
+        # save+run checks doesn't matter — they're mutually exclusive.
+        # Inline argv (e.g. `with "X" as RUN: -O`) was sanitized away
+        # before tokenize, so we only see the bare-colon form here and
+        # re-derive argv from the original source line.
+        if a.type == tokenize.STRING and i + 4 < len(code):
+            sep = code[i + 2]
+            run_tok = code[i + 3]
+            after_run = code[i + 4]
+            is_as_form = (sep.type == tokenize.NAME and sep.string == "as")
+            is_comma_form = (sep.type == tokenize.OP and sep.string == ",")
+            run_match = (
+                (is_as_form or is_comma_form)
+                and run_tok.type == tokenize.NAME
+                and run_tok.string == "RUN"
+                and after_run.type == tokenize.OP
+                and after_run.string == ":"
+            )
+            if run_match:
+                try:
+                    path_str = ast.literal_eval(a.string)
+                except Exception:
+                    path_str = None
+                if isinstance(path_str, str):
+                    save_run_run_info[t.start[0]] = (
+                        path_str, _argv_for_save_run_run(t.start[0])
+                    )
+                    continue
+
         if a.type == tokenize.STRING and b.type == tokenize.OP and b.string == ":":
             str_lines.add(t.start[0])
             continue
@@ -320,7 +423,8 @@ def _find_magic_with_lines(src: str):
             ):
                 scratch_lines.add(t.start[0])
 
-    return str_lines, scratch_lines, bash_lines, run_lines, save_run_info
+    return (str_lines, scratch_lines, bash_lines, run_lines,
+            save_run_info, save_run_run_info)
 
 
 def _resolve_file_path(path_str: str, files_dir: Path, notebook_dir: Path) -> Path:
@@ -416,6 +520,21 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
         header is rewritten to `: pass` and the body is blanked so the
         rest of the notebook still parses and gets annotated.
 
+    For every save-and-fresh-subprocess-run block (`with "X" as RUN:`
+    / `with "X", RUN:`, with optional inline argv):
+      - dedent the body and write it verbatim to the resolved path
+        (same path rules as `with "X":`)
+      - queue the body in `run_blocks` keyed by its LAST non-blank body
+        line, so `_run_run_blocks` runs it in a fresh `python3` subprocess
+        (same path argv goes to python3, body annotations land on the
+        last body line — same shape as plain `with RUN:`)
+      - blank out the entire block (header + body) so the runnable Python
+        never sees these lines (full process isolation, like plain RUN)
+      - if the body is not valid Python, DO NOT write the file, DO NOT
+        queue the subprocess, and emit a `# !err: SyntaxError` annotation
+        on the header line (mirrors `with "X" as Scratch:`). The body is
+        already blanked so the rest of the notebook still parses.
+
     Returns (runnable_src, files_written, bash_commands, run_blocks,
     save_run_results).
     `bash_commands` is a dict: {body_line_number_1based: command_str}.
@@ -431,7 +550,7 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
     save_run_results: dict = {}
 
     (str_lines, scratch_lines, bash_lines, run_lines,
-     save_run_info) = _find_magic_with_lines(src)
+     save_run_info, save_run_run_info) = _find_magic_with_lines(src)
 
     # ---- Pass 1: extract `with "X":` blocks ----
     # Replace the `with` line and its body with blank lines so the surviving
@@ -598,6 +717,111 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
         if line.endswith("\n"):
             new_header += "\n"
         pass1[i] = new_header
+        i = body_end
+
+    # ---- Pass 1.45: extract `with "X" as RUN:` save+RUN blocks ----
+    # Combined "save the body to disk AND run it in a fresh python3
+    # subprocess" form. Walks the ORIGINAL `lines` (not pass1) so the
+    # file written to disk is the verbatim source the user typed. The
+    # body is queued into `run_blocks` (the same dict that plain
+    # `with RUN:` uses) so `_run_run_blocks` handles it identically:
+    # fresh python3 process, body's `# in:` directives feed stdin, the
+    # outer notebook's `# in:` queue is NOT shared, and stdout / stderr
+    # / non-zero-exit annotations land under the LAST non-blank body
+    # line. Header + body are then blanked in pass1 so the runnable
+    # Python doesn't try to execute the body in the notebook process
+    # (the whole point is process isolation, stronger than Scratch's).
+    #
+    # If the body fails to parse as Python, we DO NOT write the file
+    # and DO NOT queue the subprocess (mirrors `with "X" as Scratch:`);
+    # a `# !err: SyntaxError` annotation is attached to the header line
+    # via `save_run_results`, and the body is blanked so the rest of
+    # the notebook still parses.
+    i = 0
+    while i < len(lines):
+        line_num = i + 1
+        info = save_run_run_info.get(line_num)
+        if info is None:
+            i += 1
+            continue
+
+        path_str, argv = info
+        line = lines[i]
+        leading = len(line) - len(line.lstrip(" \t"))
+        with_indent = leading
+
+        # Body comes from ORIGINAL source — file on disk should match
+        # what the user typed, not the post-string-extraction state.
+        block_end = _gather_block_end(lines, i, with_indent)
+        body_end = block_end
+        while body_end > i + 1 and lines[body_end - 1].strip() == "":
+            body_end -= 1
+
+        body_lines_orig = lines[i + 1:body_end]
+        if body_lines_orig:
+            real_indent = _smallest_indent(body_lines_orig, with_indent)
+            dedented = _dedent_body(body_lines_orig, real_indent)
+        else:
+            dedented = []
+        body_text = "".join(dedented)
+
+        # Validate the body as Python before writing the file.
+        valid = True
+        syntax_err_msg = None
+        if body_text.strip():
+            try:
+                ast.parse(body_text)
+            except SyntaxError as exc:
+                valid = False
+                detail = exc.msg or "invalid syntax"
+                if exc.lineno:
+                    syntax_err_msg = (
+                        f"SyntaxError: {detail} (body line {exc.lineno})"
+                    )
+                else:
+                    syntax_err_msg = f"SyntaxError: {detail}"
+
+        if valid and body_text.strip():
+            target = _resolve_file_path(path_str, files_dir, notebook_dir)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(body_text)
+            files_written.append(str(target))
+
+            # Same `__init__.py` auto-creation as Pass 1, so a save+RUN
+            # block at `with "pkg/util.py" as RUN:` is importable as
+            # `from pkg import util` from elsewhere later. (The body
+            # itself runs in a fresh subprocess, so the helper is
+            # primarily useful to OTHER blocks in the same notebook.)
+            if target.suffix == ".py":
+                try:
+                    rel_parent = target.parent.resolve().relative_to(
+                        files_dir.resolve()
+                    )
+                except ValueError:
+                    rel_parent = None
+                if rel_parent is not None and rel_parent != Path("."):
+                    cur = files_dir.resolve()
+                    for part in rel_parent.parts:
+                        cur = cur / part
+                        init_file = cur / "__init__.py"
+                        if not init_file.exists():
+                            init_file.write_text("")
+
+            # Annotations land under the LAST non-blank body line —
+            # `body_end` is the slice index just past the last body
+            # line, which equals the 1-based line number of that last
+            # body line.
+            last_body_line = body_end
+            run_blocks[last_body_line] = (body_text, argv)
+        elif not valid:
+            save_run_results[line_num] = [("# !err:", syntax_err_msg)]
+
+        # Blank out header + body so the runnable Python never sees
+        # them. Empty-body case also lands here (no file write, no
+        # queue, no annotation — just a blanked-out header).
+        for k in range(i, body_end):
+            end = "\n" if pass1[k].endswith("\n") else ""
+            pass1[k] = end
         i = body_end
 
     # ---- Pass 1.5: extract `with bash:` blocks ----

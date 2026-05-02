@@ -111,6 +111,33 @@ features Casey actually uses:
         re-import fresh, or anything else where leftover notebook state
         would muddy the result.
 
+  - `with "X" as RUN:` (and `with "X", RUN:`, with optional inline argv)
+        Combined "save the body to disk AND run it in a fresh python3
+        subprocess" form. Fuses the two-step `with "X":` + `with RUN:`
+        pattern Casey kept retyping when iterating on a script he wanted
+        both saved AND executed with full process isolation. The body
+        lands on disk verbatim at the resolved path (same path rules as
+        `with "X":`) AND is queued through the same subprocess machinery
+        as plain `with RUN:`. All RUN behaviors carry over: stdout/stderr
+        land as `# out:` / `# err:` under the LAST non-blank body line,
+        non-zero exit appends `# !err: subprocess exited with code N`,
+        inline argv works (`with "X" as RUN: -O`, `with "X", RUN: -V`),
+        the body's own `# in:` directives feed the subprocess's stdin,
+        and the outer notebook's `# in:` queue is NOT shared. Three
+        header shapes are accepted, all interchangeable:
+          `with "name.py" as RUN:`
+          `with "name.py" as RUN: -O`               (inline python3 argv)
+          `with "name.py", RUN:` /
+              `with "name.py", RUN: --foo bar`      (Python's native
+                                                    multi-context-manager
+                                                    comma syntax)
+        If the body is not valid Python the file is NOT written, the
+        subprocess is NOT queued, and the header gets a
+        `# !err: SyntaxError ...` annotation. The body is blanked so the
+        rest of the notebook still parses and gets annotated (mirrors
+        `with "X" as Scratch:`). Stronger isolation than `with "X" as
+        Scratch:` (that one is in-process namespace isolation only).
+
 All v4 features (`# out:` / `# val:` / `# !err:` / magic save comments / v4
 string-splitting fix) carry over.
 
