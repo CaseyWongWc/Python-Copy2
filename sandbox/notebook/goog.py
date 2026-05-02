@@ -168,19 +168,10 @@ with "README.MD":
     - [Section 10.12](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/12)
 
 2+3
-# val: 5
 ######### val: 5
 ##############################################################################
 ##############################################################################
 print(r'''{1
-# out: {1
-# out:       7
-# out:                         9
-# out:       
-# out:       3
-# out: 
-# out:                     5
-# out:            2}
       7
                         9
       
@@ -190,52 +181,32 @@ print(r'''{1
            2}''')
 
 print(1+2)
-# out: 3
 
 2;3
-# val: 2
-# val: 3
 5
-# val: 5
 
 7
-# val: 7
 2
-# val: 2
 4
-# val: 4
 from Helpers.helpings import *
 INFO()
-# val: /home/runner/workspace/sandbox/files
-# val: Sat May  2 12:31:11 PM UTC 2026
-# val: ./names.txt
-# val: ./data1.txt
-# val: ./data2.txt
-# val: ./data3.txt
-# val: ./temp.py
-# val: ./main.py
-# val: ./README.MD
-# val: ./S10_1/README.MD
-# val: ./helpings.py
 #✨️✨️✨️✨️✨️✨️✨️✨️✨️✨️
 
-
+6
 # in: 123
+# in : 744
 user_input = ""
 while user_input != "q":
     weight = int(input("Enter weight (in pounds): "))
     height = int(input("Enter height (in inches): "))
 
-    bmi = (float(weight) / float(height * height)) * 703
-    print(f"BMI: {bmi}")
-    print("(CDC: 18.6-24.9 normal)\n")
+bmi = (float(weight) / float(height * height)) * 703
+print(f"BMI: {bmi}")
+print("(CDC: 18.6-24.9 normal)\n")
     # Source www.cdc.gov
-
-    user_input = input('Enter any key ("q" to quit): ')
+    pass
+# in: 123
+user_input = input('Enter any key ("q" to quit): ')
 # !err: --- ERROR ---
-# !err: Traceback (most recent call last):
-# !err:   File "<string>", line 132, in <module>
-# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 194, in <module>
-# !err:     2;3
-# !err:     ^^^^
-# !err: NameError: name 'cache' is not defined
+# !err: IndentationError on line 207: indented 4 space(s), but the previous line wasn't expecting a new block.
+# !err:   line 206 was indented 4 space(s) — line 207 probably wants the same.
