@@ -86,6 +86,21 @@ greet_helper.greet("Casey")
 # val: hi, Casey!
 
 
-# --- 6. Magic save still works ----------------------------------------------
+# --- 6. Shell commands inline -----------------------------------------------
+# `with bash:` runs each indented body line through `/bin/sh -c`, with cwd
+# at sandbox/files/. After the run:
+#   stdout       -> # out:
+#   stderr       -> # err:    (lowercase, distinct from # !err:)
+#   non-zero rc  -> # !err: exit code N
+# Each line is one independent command. Comments and blank lines in the
+# body are preserved and ignored. A failing command does NOT stop the
+# rest of the notebook.
+
+with bash:
+    cat names.txt
+    cat does-not-exist
+
+
+# --- 7. Magic save still works ----------------------------------------------
 # Add a `# zy: 12.1 MyExample` (or `# quick:`, `# note:`, `# save:`) at the
 # top of this file to auto-save a copy after annotation.

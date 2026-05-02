@@ -62,6 +62,17 @@ features Casey actually uses:
         used once the queue is empty. Old `# setin` directives still work and
         feed the same queue.
 
+  - `with bash:`
+        each indented body line is one shell command, run via `/bin/sh -c`
+        from `sandbox/files/` AFTER the Python notebook finishes (so files
+        written from Python are visible to the shell). Each command's stdout
+        becomes `# out:` annotations on the line, stderr becomes `# err:`
+        (lowercase, distinct from `# !err:`), and a non-zero exit appends
+        `# !err: exit code N`. Blank/comment lines in the body are preserved
+        and ignored. A failing command does NOT abort the rest of the
+        notebook. Default 30s per-command timeout (no knob to tweak).
+        Linux/macOS only — `/bin/sh` is required.
+
 All v4 features (`# out:` / `# val:` / `# !err:` / magic save comments / v4
 string-splitting fix) carry over.
 
