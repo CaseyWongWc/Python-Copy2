@@ -1,6 +1,0 @@
-*
-!.gitkeep
-!.gitignore
-# `.run_blocks/` holds throwaway scripts written by `with RUN:` blocks.
-# Already covered by the `*` line above; listed here just for clarity.
-.run_blocks/

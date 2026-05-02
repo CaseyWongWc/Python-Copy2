@@ -1,0 +1,5 @@
+foodstuffs_file_name = input()
+foodstuff_data = input()
+with open(foodstuffs_file_name, "a") as foodstuffs_file:
+    foodstuffs_file.write(foodstuff_data)
+    foodstuffs_file.write("\n")

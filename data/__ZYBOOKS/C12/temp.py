@@ -1,0 +1,5 @@
+src_name = input()
+tie_file = open(src_name)
+tie_data = tie_file.read()
+tie_file.close()
+print(tie_data)
