@@ -169,6 +169,7 @@ with "README.MD":
 
 2+3
 # val: 5
+######### val: 5
 ##############################################################################
 ##############################################################################
 print(r'''{1
@@ -206,7 +207,7 @@ print(1+2)
 from Helpers.helpings import *
 INFO()
 # val: /home/runner/workspace/sandbox/files
-# val: Sat May  2 12:23:59 PM UTC 2026
+# val: Sat May  2 12:31:11 PM UTC 2026
 # val: ./names.txt
 # val: ./data1.txt
 # val: ./data2.txt
@@ -216,3 +217,25 @@ INFO()
 # val: ./README.MD
 # val: ./S10_1/README.MD
 # val: ./helpings.py
+#✨️✨️✨️✨️✨️✨️✨️✨️✨️✨️
+
+
+# in: 123
+user_input = ""
+while user_input != "q":
+    weight = int(input("Enter weight (in pounds): "))
+    height = int(input("Enter height (in inches): "))
+
+    bmi = (float(weight) / float(height * height)) * 703
+    print(f"BMI: {bmi}")
+    print("(CDC: 18.6-24.9 normal)\n")
+    # Source www.cdc.gov
+
+    user_input = input('Enter any key ("q" to quit): ')
+# !err: --- ERROR ---
+# !err: Traceback (most recent call last):
+# !err:   File "<string>", line 132, in <module>
+# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 194, in <module>
+# !err:     2;3
+# !err:     ^^^^
+# !err: NameError: name 'cache' is not defined
