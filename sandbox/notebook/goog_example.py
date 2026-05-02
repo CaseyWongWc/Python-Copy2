@@ -86,6 +86,16 @@ greet_helper.greet("Casey")
 # val: hi, Casey!
 
 
+# --- 5a. Sibling packages next to goog.py are also importable ---------------
+# Drop a folder like `Helpers/` (with `helpings.py` inside) right next to
+# `goog.py` in `sandbox/notebook/`, and any import works the same way it
+# did at the project root. `with RUN:` subprocesses inherit this too via
+# PYTHONPATH, so imports work in fresh-process mode as well.
+#
+#   from Helpers.helpings import *
+#   INFO()
+
+
 # --- 5b. `with "X" as Scratch:` — save AND run in one block -----------------
 # Combines `with "X":` (write file) + `with Scratch:` (run isolated). The
 # body lands on disk verbatim AND runs in-process; vars defined inside

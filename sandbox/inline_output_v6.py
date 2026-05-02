@@ -1075,7 +1075,8 @@ skip_none_flag = False
 
 def _build_shim(read_path: Path, file_attr_path: Path,
                 bare_lines: set, inputs: list,
-                files_dir: Path) -> str:
+                files_dir: Path,
+                notebook_dir: Path) -> str:
     """
     `read_path`        — file the shim opens to read source (the temp runnable)
     `file_attr_path`   — what the user's code sees as `__file__` and what
@@ -1085,16 +1086,21 @@ def _build_shim(read_path: Path, file_attr_path: Path,
                          `import helper` from the notebook in the same run.
                          Each notebook run is a fresh subprocess, so cached
                          modules from a previous run are gone automatically.
+    `notebook_dir`     — sandbox/notebook/, also prepended to sys.path so any
+                         sibling package next to goog.py (e.g. `Helpers/`,
+                         `Stuff/`, etc.) is importable. Matches Python's
+                         "module next to script" intuition.
     """
     bare_lines_repr = repr(sorted(bare_lines))
     files_dir_repr = repr(str(files_dir.resolve()))
+    notebook_dir_repr = repr(str(notebook_dir.resolve()))
     return (
         "import sys, builtins, inspect, ast, io\n"
-        # Prepend sandbox/files/ to sys.path so freshly-written `.py`
-        # files in that folder are importable from the notebook in the
-        # same run. Front of the path so Casey's helpers are found
-        # before any same-named installed package — collisions with
-        # stdlib are on the helper.
+        # Prepend sandbox/notebook/ first, then sandbox/files/. Net order
+        # at runtime is [files_dir, notebook_dir, ...], so a freshly-written
+        # `with "Helpers.py":` body wins over the sibling `Helpers/` package
+        # (last action wins, by design).
+        f"sys.path.insert(0, {notebook_dir_repr})\n"
         f"sys.path.insert(0, {files_dir_repr})\n"
         "_orig_print = builtins.print\n"
         "_orig_input = builtins.input\n"
@@ -1281,7 +1287,8 @@ def _run_bash_commands(commands: dict, files_dir: Path) -> dict:
     return results
 
 
-def _run_run_blocks(blocks: dict, files_dir: Path) -> dict:
+def _run_run_blocks(blocks: dict, files_dir: Path,
+                    notebook_dir: Path) -> dict:
     """
     Run each `with RUN:` block in a fresh `python3` subprocess. Each
     block's body is written to a uniquely-named temp file under
@@ -1340,11 +1347,12 @@ def _run_run_blocks(blocks: dict, files_dir: Path) -> dict:
         # notebook sees.
         env = os.environ.copy()
         files_dir_str = str(files_dir.resolve())
+        notebook_dir_str = str(notebook_dir.resolve())
         existing_pp = env.get("PYTHONPATH", "")
-        env["PYTHONPATH"] = (
-            files_dir_str + os.pathsep + existing_pp if existing_pp
-            else files_dir_str
-        )
+        pp_parts = [files_dir_str, notebook_dir_str]
+        if existing_pp:
+            pp_parts.append(existing_pp)
+        env["PYTHONPATH"] = os.pathsep.join(pp_parts)
 
         keep_temp = False
         try:
@@ -1443,7 +1451,7 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     runnable_path.write_text(runnable)
     try:
         shim = _build_shim(runnable_path, src_path, bare_lines, inputs,
-                           files_dir)
+                           files_dir, notebook_dir)
         out_map, val_map, err_lines = _run_shim(shim)
     finally:
         try:
@@ -1460,7 +1468,7 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     # Same idea for `with RUN:` blocks — each runs in its own fresh
     # python3 subprocess from `files_dir`, after the notebook proper, so
     # files Casey writes from Python are visible to the subprocess too.
-    run_results = _run_run_blocks(run_blocks, files_dir)
+    run_results = _run_run_blocks(run_blocks, files_dir, notebook_dir)
 
     # Splice annotations back into CLEANED (so user keeps their original
     # `with "..."`/`with Scratch:`/`with bash:`/`with RUN:` syntax).

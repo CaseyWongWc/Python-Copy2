@@ -1,4 +1,3 @@
-
 # zyBooks Chapter 10 (Sections 10.1–10.12)
 ---
 

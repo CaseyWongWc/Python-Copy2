@@ -175,3 +175,20 @@ string-splitting fix) carry over.
   Subdirectories work too: writing `with "pkg/util.py":` auto-creates
   an empty `pkg/__init__.py` (existing `__init__.py` files are never
   overwritten) so `from pkg import util` resolves cleanly.
+- `sandbox/notebook/` is ALSO on `sys.path` inside the run (right after
+  `sandbox/files/`), so any sibling package next to `goog.py` is
+  importable. Drop `sandbox/notebook/Helpers/helpings.py` next to the
+  notebook and `from Helpers.helpings import *` works the same way it
+  did from the project root in the v4 setup. `with RUN:` subprocesses
+  inherit both directories via PYTHONPATH so imports work identically
+  in fresh-process mode too.
+- The Run button is wired to `python sandbox/notebook/main.py` (the v6
+  sandbox runner), not the v3/v4 root files. Run from the shell to
+  exercise v4: `python main.py` (still works, untouched).
+- Heads-up on `with "X":` body content: it is RAW TEXT. Do NOT wrap the
+  body in `'''...'''` thinking it needs to be a Python string literal.
+  Wrapping markdown in triple quotes inside a `with "README.MD":` block
+  leaves a stray closing `'''` outside the indented body, which Python
+  reads as an open string literal that swallows the rest of `goog.py`
+  and produces a confusing "unterminated triple-quoted string" error
+  far below where the actual problem lives.

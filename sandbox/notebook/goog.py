@@ -129,7 +129,6 @@ with "helpings.py":
         return correct, total
 
 with "README.MD":
-    '''
     # zyBooks Chapter 10 (Sections 10.1–10.12)
     ---
 
@@ -167,8 +166,7 @@ with "README.MD":
     - [Section 10.10](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/10)
     - [Section 10.11](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/11)
     - [Section 10.12](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/12)
-    
-'''
+
 2+3
 # val: 5
 ##############################################################################
@@ -207,3 +205,14 @@ print(1+2)
 # val: 4
 from Helpers.helpings import *
 INFO()
+# val: /home/runner/workspace/sandbox/files
+# val: Sat May  2 11:32:54 AM UTC 2026
+# val: ./names.txt
+# val: ./data1.txt
+# val: ./data2.txt
+# val: ./data3.txt
+# val: ./temp.py
+# val: ./main.py
+# val: ./README.MD
+# val: ./S10_1/README.MD
+# val: ./helpings.py
