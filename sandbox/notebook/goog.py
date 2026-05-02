@@ -1028,20 +1028,11 @@ with Scratch as a:
         f.close()  # Close the file
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: Example string:
         #⭐ val:   test....
         f.close()
@@ -1085,20 +1076,11 @@ with Scratch as a:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
@@ -1144,58 +1126,31 @@ with Scratch as a:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
@@ -1231,58 +1186,31 @@ with Scratch as ae:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         #⭐ val: 5 + 7.5 = 12.5
         f.close()
         # val: None
@@ -1339,20 +1267,11 @@ with Scratch as e:
     #not native
     ret_file = open("myfile.txt", "r")
     ret_file.read()
-    # val: f = open("data.txt", "rb")
-    # val: print(f)
-    # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-    # val: f.close()
-    # val: f = open("myfile.txt", "rb")
-    # val: print(f)
-    # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-    # val: f.close()
-    # val: x = b"\x1a"
-    # val: print(x)
-    # val: #⭐ out: b'\x1a'
-    # val: x = b"\x05\x15\xf2"
-    # val: print(x)
-    # val: #⭐ out: b'\x05\x15\xf2'
+    # val: buyers_file_name = input()
+    # val: buyer_data = input()
+    # val: with open(buyers_file_name, "a") as buyers_file:
+    # val:     buyers_file.write(buyer_data)
+    # val:     buyers_file.write("\n")
     # val: 2
 ####################################################
 '''Output buffer
@@ -1427,20 +1346,11 @@ with Scratch as a:
         f.close()
     with open("myfile.txt", "r") as f:
         f.read()
-        # val: f = open("data.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='data.txt'>
-        # val: f.close()
-        # val: f = open("myfile.txt", "rb")
-        # val: print(f)
-        # val: #⭐ out: <_io.BufferedReader name='myfile.txt'>
-        # val: f.close()
-        # val: x = b"\x1a"
-        # val: print(x)
-        # val: #⭐ out: b'\x1a'
-        # val: x = b"\x05\x15\xf2"
-        # val: print(x)
-        # val: #⭐ out: b'\x05\x15\xf2'
+        # val: buyers_file_name = input()
+        # val: buyer_data = input()
+        # val: with open(buyers_file_name, "a") as buyers_file:
+        # val:     buyers_file.write(buyer_data)
+        # val:     buyers_file.write("\n")
         # val: 2
         f.close()
         # val: None
@@ -1757,7 +1667,7 @@ with Scratch as e:
 
         file_data = colors_file.read()  # Read the contents of the file
         print(file_data)  # Print the contents of the file
-        # out: violetvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletviolet
+        # out: violetvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletviolet
 
         colors_file.close()  # Close the file
         # val: None
@@ -2020,7 +1930,7 @@ with Scratch as e:
     # ....
     file_info = os.stat("myfile.txt")
     print(file_info)
-    # out: os.stat_result(st_mode=33206, st_ino=1313074, st_dev=1796, st_nlink=1, st_uid=1000, st_gid=1000, st_size=285, st_atime=1777677824, st_mtime=1777677824, st_ctime=1777677824)
+    # out: os.stat_result(st_mode=33206, st_ino=1313074, st_dev=1796, st_nlink=1, st_uid=1000, st_gid=1000, st_size=160, st_atime=1777683872, st_mtime=1777683872, st_ctime=1777683872)
     # ....
     #os.remove("myfile.txt")
 ####################################################
@@ -2465,7 +2375,7 @@ with Scratch as e:
         with open("myfile.txt", "rb") as f:
             contents = f.read()
             print(contents)
-            # out: b'f = open("data.txt", "rb")\nprint(f)\n#\xe2\xad\x90 out: <_io.BufferedReader name=\'data.txt\'>\nf.close()\nf = open("myfile.txt", "rb")\nprint(f)\n#\xe2\xad\x90 out: <_io.BufferedReader name=\'myfile.txt\'>\nf.close()\nx = b"\\x1a"\nprint(x)\n#\xe2\xad\x90 out: b\'\\x1a\'\nx = b"\\x05\\x15\\xf2"\nprint(x)\n#\xe2\xad\x90 out: b\'\\x05\\x15\\xf2\'\n2'
+            # out: b'buyers_file_name = input()\nbuyer_data = input()\nwith open(buyers_file_name, "a") as buyers_file:\n    buyers_file.write(buyer_data)\n    buyers_file.write("\\n")\n2'
     except FileNotFoundError:
         print("File not found.")
 
@@ -2505,47 +2415,48 @@ x =
 Check
 
 Show answer'''
-with "myfile.txt":
-    f = open("data.txt", "rb")
-    print(f)
-    #⭐ out: <_io.BufferedReader name='data.txt'>
-    f.close()
-    f = open("myfile.txt", "rb")
-    print(f)
-    #⭐ out: <_io.BufferedReader name='myfile.txt'>
-    f.close()
-    x = b"\x1a"
-    print(x)
-    #⭐ out: b'\x1a'
-    x = b"\x05\x15\xf2"
-    print(x)
-    #⭐ out: b'\x05\x15\xf2'
+with Scratch as a:
+    with "myfile.txt":
+        f = open("data.txt", "rb")
+        print(f)
+        #⭐ out: <_io.BufferedReader name='data.txt'>
+        f.close()
+        f = open("myfile.txt", "rb")
+        print(f)
+        #⭐ out: <_io.BufferedReader name='myfile.txt'>
+        f.close()
+        x = b"\x1a"
+        print(x)
+        #⭐ out: b'\x1a'
+        x = b"\x05\x15\xf2"
+        print(x)
+        #⭐ out: b'\x05\x15\xf2'
 
-open("data1.txt", "rb")
-# val: <_io.BufferedReader name='data1.txt'>
-def none():
-    f = open("data1.txt", "rb")
-    print(f)
-    # out: <_io.BufferedReader name='data1.txt'>
-    #⭐ out: <_io.BufferedReader name='data1.txt'>
-    f.close()
+    open("data1.txt", "rb")
+    # val: <_io.BufferedReader name='data1.txt'>
+    def none():
+        f = open("data1.txt", "rb")
+        print(f)
+        # out: <_io.BufferedReader name='data1.txt'>
+        #⭐ out: <_io.BufferedReader name='data1.txt'>
+        f.close()
+        # val: None
+        f = open("my123.txt", "rb")
+        print(f)
+        # out: <_io.BufferedReader name='my123.txt'>
+        #⭐ out: <_io.BufferedReader name='my123.txt'>
+        f.close()
+        # val: None
+        x = b"\x1a"
+        print(x)
+        # out: b'\x1a'
+        #⭐ out: b'\x1a'
+        x = b"\x05\x15\xf2"
+        print(x)
+        # out: b'\x05\x15\xf2'
+        #⭐ out: b'\x05\x15\xf2'
+    none()
     # val: None
-    f = open("my123.txt", "rb")
-    print(f)
-    # out: <_io.BufferedReader name='my123.txt'>
-    #⭐ out: <_io.BufferedReader name='my123.txt'>
-    f.close()
-    # val: None
-    x = b"\x1a"
-    print(x)
-    # out: b'\x1a'
-    #⭐ out: b'\x1a'
-    x = b"\x05\x15\xf2"
-    print(x)
-    # out: b'\x05\x15\xf2'
-    #⭐ out: b'\x05\x15\xf2'
-none()
-# val: None
 
 
 with Scratch as e:
@@ -2671,51 +2582,378 @@ The location of an input file or output file may not be known before writing a p
 
 #❓hello is your context okay?
 #💿yes, it is.
+
 with Scratch as a:
-    import sys
-    import os
+    with "my_script.py":
+        import sys
+        import os
 
-    if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} input_file")
-        sys.exit(1)  # 1 indicates error
+        if len(sys.argv) != 2:
+            
+            print(f"Usage: {sys.argv[0]} input_file")
+            sys.exit(1)  # 1 indicates error
 
-    print(f"Opening file {sys.argv[1]}.")
 
-    if not os.path.exists(sys.argv[1]):  # Make sure file exists
-        print("File does not exist.")
-        sys.exit(1)  # 1 indicates error
+        print(f"Opening file {sys.argv[1]}.")
 
-    f = open(sys.argv[1], "r")
+        if not os.path.exists(sys.argv[1]):  # Make sure file exists
+            print("File does not exist.")
+            sys.exit(1)  # 1 indicates error
 
-    # Input files should contain two integers on separate lines
+        f = open(sys.argv[1], "r")
 
-    print("Reading two integers.")
+        # Input files should contain two integers on separate lines
+
+        print("Reading two integers.")
+        num1 = int(f.readline())
+        num2 = int(f.readline())
+
+
+        print(f"Closing file {sys.argv[1]}")
+        f.close()  # Done with the file, so close it
+
+
+        print(f"\nnum1: {num1}")
+
+        print(f"num2: {num2}")
+
+        print(f"num1 + num2: {num1 + num2}")
+        #print("This will not work because the file is not being run as a script with command-line arguments.")
+1+1
+# val: 2
+###########not native############# [dont do this at home]
+with "myfile1.txt":
+    5
+    10
+cmd("python","my_script.py","myfile1.txt")
+# val: Traceback (most recent call last):
+# val:   File "/workspaces/Python-Copy2/sandbox/files/my_script.py", line 21, in <module>
+# val:     num1 = int(f.readline())
+# val:            ^^^^^^^^^^^^^^^^^
+# val: ValueError: invalid literal for int() with base 10: '> python myscript.py infile.txt out\n'
+
+cmd("python","my_script.py","myfile2.txt")
+# val: Traceback (most recent call last):
+# val:   File "/workspaces/Python-Copy2/sandbox/files/my_script.py", line 21, in <module>
+# val:     num1 = int(f.readline())
+# val:            ^^^^^^^^^^^^^^^^^
+# val: ValueError: invalid literal for int() with base 10: '> python scriptname data.txt\n'
+####################################################
+'''participation activity
+12.5.1: Filename command line arguments.
+1)
+A script "myscript.py" has two command line arguments, one for an input file and a second for an output file. Type a command to run the program with input file "infile.txt" and output file "out".
+> python 
+
+
+Check
+
+Show answer
+2)
+For a program run as "python scriptname data.txt", what is sys.argv[1]? Do not use quotes in the answer.
+
+Check
+
+Show answer
+'''
+with Scratch as a:
+    with "myfile1.txt":
+        > python myscript.py infile.txt out
+        #⭐ val: python myscript.py infile.txt out
+    with "myfile2.txt":
+        > python scriptname data.txt
+        #⭐ val: python scriptname data.txt
+        #✅ Note: The above commands are meant to be run in a command-line interface, not within a Python script. They are provided here for illustrative purposes based on the context of the participation activity.
+        #data.txt
+with Scratch as e:
+    make_file("infile.txt", "5\n10\n")
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files/infile.txt')
+    make_file("myfile1.txt", "5\n10\n")
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files/myfile1.txt')
+    make_file("myfile2.txt", "5\n10\n")
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files/myfile2.txt')
+    
+    ###not native
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    cmd("python", "my_script.py", "infile.txt", "out")
+    # val: Usage: my_script.py input_file
+    cmd("python", "scriptname", "data.txt")
+    # val: python: can't open file '/workspaces/Python-Copy2/sandbox/files/scriptname': [Errno 2] No such file or directory
+
+##############################################################################
+'''## 12.6 The "with" statement
+
+A with statement can be used to open a file, execute a block of statements, and automatically close the file when complete.
+
+> **The with statement.**
+
+Above, the file object returned by open() is bound to myfile. When the statements in the block complete, then myfile is closed. The with statement creates a context manager, which manages the use of a resource, such as a file, by performing set-up and teardown operations. For files, the teardown operation is automatic closure. Other context managers exist for other resources, and new context managers can be written by a programmer, but these types of context managers are out of scope for this material.
+
+Forgetting to close a file can sometimes cause problems. For example, a file opened in write mode cannot be written to by other programs. Good practice is to use a with statement when opening files to guarantee that the file is closed when no longer needed.
+
+> **Using the with statement to open a file.**
+> ```python
+> print("Opening myfile.txt")
+> 
+> # Open a file for reading and writing
+> with open("myfile.txt", "r+") as f:
+>     # Read in two integers
+>     num1 = int(f.readline())
+>     num2 = int(f.readline())
+> 
+>     product = num1 * num2
+> 
+>     # Write back result on own line
+>     f.write("\n")
+>     f.write(str(product))
+> 
+> # No need to call f.close() - f closed automatically 
+> print("Closed myfile.txt")
+> ```
+
+### PARTICIPATION ACTIVITY: The with statement.
+
+**1.** When using a with statement to open a file, the file is automatically closed when the statements in the block finish executing.
+Answer: **True**
+*The context manager for files performs a teardown operation when the statements complete, closing the file automatically.*
+
+**2.** Use of a with statement is not recommended most of the time when opening files.
+Answer: **False**
+*The with statement is recommended, because closure of the file is guaranteed.*
+
+### CHALLENGE ACTIVITY: Using a "with" statement. (2 Levels)
+
+**Level 1:**
+
+**Task:**
+First, [...] is read from input. Then, [...] is read from input to be [...] to the file. Complete the with statement to [...].
+
+**Explanation pattern:**
+The missing part of the with statement includes the keyword [...].
+
+**Code structure:**
+```python
+___ = input()
+___ = input()
+
+___
+""" Your code goes here """
+___:
+    ___.write(___)
+    ___.write("\n")
+```
+
+**Level 2:**
+
+**Task:**
+First, [...] is read from input. Then, [...] is read from input to be [...] to the file. Write a with statement to open [...] with the "[...]" option for [...]. Bind [...] to the opened file using the keyword as.
+
+**Explanation pattern:**
+The with statement begins with the keyword with followed by open([...], "[...]") and as [...].
+
+**Code structure:**
+```python
+___ = input()
+___ = input()
+""" Your code goes here """
+:
+    ___.write(___)
+    ___.write("\n")
+```
+'''
+####################################################
+'''# 12.6 The "with" statement
+
+A with statement can be used to open a file, execute a block of statements, and automatically close the file when complete.
+
+**Construct 12.6.1: The with statement.**
+
+with open("myfile.txt", "r") as myfile:
+    # Statement-1
+    # Statement-2
+    # ....
+    # Statement-N
+
+Above, the file object returned by open() is bound to myfile. When the statements in the block complete, then myfile is closed. The with statement creates a context manager, which manages the use of a resource, such as a file, by performing set-up and teardown operations. For files, the teardown operation is automatic closure. Other context managers exist for other resources, and new context managers can be written by a programmer, but these types of context managers are out of scope for this material.
+
+Forgetting to close a file can sometimes cause problems. For example, a file opened in write mode cannot be written to by other programs. Good practice is to use a with statement when opening files to guarantee that the file is closed when no longer needed.'''
+
+with Scratch as e:
+    #not native
+    make_file("myfile.txt", "5\n10\n")
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files/myfile.txt')
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    
+    print("Opening myfile.txt")
+    # out: Opening myfile.txt
+    with open("myfile.txt", "r") as myfile:
+        contents = myfile.read()
+        print(contents)
+        # out: 5
+        # out: 10
+    # At this point, myfile is automatically closed.
+    # Trying to read from myfile after the with block will raise an error.
+    try:
+        myfile.read()
+    except ValueError as e:
+        print("Error:", e)
+        # out: Error: I/O operation on closed file.
+####################################################
+'''Figure 12.6.1: Using the with statement to open a file.
+print("Opening myfile.txt")
+
+# Open a file for reading and writing
+with open("myfile.txt", "r+") as f:
+    # Read in two integers
     num1 = int(f.readline())
     num2 = int(f.readline())
 
-    print(f"Closing file {sys.argv[1]}")
-    f.close()  # Done with the file, so close it
+    product = num1 * num2
 
-    print(f"\nnum1: {num1}")
-    print(f"num2: {num2}")
-    print(f"num1 + num2: {num1 + num2}")
+    # Write back result on own line
+    f.write("\n")
+    f.write(str(product))
 
-with Scratch as e:
-    with "Fig_12_5_1.py":
-        print("This will not work because the file is not being run as a script with command-line arguments.")
-    try:
-        import sys
-        print(sys.argv)
-        # out: ['Fig_12_5_1.py']
-    except Exception as e:
-        print("Error:", e)
-        # out: Error: name 'sys' is not defined
+# No need to call f.close() - f closed automatically 
+print("Closed myfile.txt")
+
+Feedback?
+participation activity
+12.6.1: The with statement.
+1)True or False:
+When using a with statement to open a file, the file is automatically closed when the statements in the block finish executing.
+2)True or False:
+Use of a with statement is not recommended most of the time when opening files.
+
+Feedback?'''
+with Scratch as a:
+    with "myfile.txt":
+        "1)True"
+        "2)False"
 with Scratch as e:
     #not native
     here()
     # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
-    import sys
-    print(sys.argv)
-    # out: ['<ipython-input-...>']
-    #✅ Note: The output may vary based on the actual environment where this code is run.
-    #✅⭐ sys.argv is typically used when running a Python script from the command line, and may not behave as expected in an interactive environment like this one.
+    print("When using a with statement to open a file, the file is automatically closed when the statements in the block finish executing.")
+    # out: When using a with statement to open a file, the file is automatically closed when the statements in the block finish executing.
+    print("Use of a with statement is not recommended most of the time when opening files.")
+    # out: Use of a with statement is not recommended most of the time when opening files.
+    print("True")
+    # out: True
+    print("False")
+    # out: False
+####################################################
+
+'''challenge activity
+12.6.1: Using a "with" statement.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+First, buyers_file_name is read from input. Then, buyer_data is read from input to be appended to the file. Complete the with statement to open buyers_file_name with the "a" option for appending.
+
+Click here for example
+Ex: If the input for buyers_file_name is data3.txt, buyer_data is Ani, and:
+
+Contents of file data3.txt
+Ron
+then the output comes from:
+
+New contents of file data3.txt
+Ron
+Ani
+
+main.py
+buyers_file_name = input()
+buyer_data = input()
+
+""" Your code goes here """ as buyers_file:
+    buyers_file.write(buyer_data)
+    buyers_file.write("\n")
+data1.txt
+Eve
+Gus
+
+data2.txt
+Kim
+Eli
+Dan
+
+data3.txt
+Ron
+'''
+
+with Scratch as a:
+    with "myfile.txt":
+        buyers_file_name = input()
+        buyer_data = input()
+        with open(buyers_file_name, "a") as buyers_file:
+            buyers_file.write(buyer_data)
+            buyers_file.write("\n")
+
+with Scratch as e:
+    #not native
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    make_file("data3.txt", "Ron\n")
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files/data3.txt')
+    buyers_file_name = "data3.txt"
+    buyer_data = "Ani"
+    with open(buyers_file_name, "a") as buyers_file:
+        buyers_file.write(buyer_data)
+        # val: 3
+        buyers_file.write("\n")
+        # val: 1
+    with open("data3.txt", "r") as f:
+        contents = f.read()
+        print(contents)
+        # out: Ron
+        # out: Ani
+####################################################
+'''challenge activity
+12.6.1: Using a "with" statement.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+First, foodstuffs_file_name is read from input. Then, foodstuff_data is read from input to be appended to the file. Write a with statement to open foodstuffs_file_name with the "a" option for appending. Bind foodstuffs_file to the opened file using the keyword as.
+
+Click here for example
+Ex: If the input for foodstuffs_file_name is data3.txt, foodstuff_data is egg, and:
+
+Contents of file data3.txt
+yam
+then the output comes from:
+
+New contents of file data3.txt
+yam
+egg
+
+main.py
+foodstuffs_file_name = input()
+foodstuff_data = input()
+
+""" Your code goes here """:
+    foodstuffs_file.write(foodstuff_data)
+    foodstuffs_file.write("\n")
+data1.txt
+beet
+plum
+leek
+
+data2.txt
+lime
+pear
+
+data3.txt
+yam
+'''
+
+with Scratch as a:
+    with "myfile5.txt":
+        foodstuffs_file_name = input()
+        foodstuff_data = input()
+        with open(foodstuffs_file_name, "a") as foodstuffs_file:
+            foodstuffs_file.write(foodstuff_data)
+            foodstuffs_file.write("\n")
+##############################################################################
