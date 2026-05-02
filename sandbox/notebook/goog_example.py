@@ -86,6 +86,45 @@ greet_helper.greet("Casey")
 # val: hi, Casey!
 
 
+# --- 5b. `with "X" as Scratch:` — save AND run in one block -----------------
+# Combines `with "X":` (write file) + `with Scratch:` (run isolated). The
+# body lands on disk verbatim AND runs in-process; vars defined inside
+# don't leak. Use this when you want a helper file written AND its setup
+# logic executed in the same step.
+#
+# Before (two steps — file write, then a separate Scratch run):
+#   with "tally.py":
+#       a = 5
+#       b = 7.5
+#       total = a + b
+#   with Scratch:
+#       a = 5             # had to retype the body to actually run it
+#       b = 7.5
+#       total = a + b
+#       print(total)
+#
+# After (one step):
+with "tally.py" as Scratch:
+    a = 5
+    b = 7.5
+    total = a + b
+    print(total)
+# Outer scope can't see a/b/total — Scratch isolation. But
+# sandbox/files/tally.py exists too, ready for `import tally` later.
+
+# Capture form: `as h` exposes the body's locals on `h`, just like plain
+# `with Scratch as h:`. Comma form (`with "X", Scratch:` / `with "X",
+# Scratch as h:`) also works if you prefer Python's native multi-context
+# syntax.
+with "tally2.py" as Scratch as h:
+    x = 100
+    y = 50
+    sum_xy = x + y
+
+h.sum_xy
+# val: 150
+
+
 # --- 6. Shell commands inline -----------------------------------------------
 # `with bash:` runs each indented body line through `/bin/sh -c`, with cwd
 # at sandbox/files/. After the run:

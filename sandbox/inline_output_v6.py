@@ -142,6 +142,22 @@ WITH_STR_RE = re.compile(r'^(\s*)with\s+(["\'])(.+?)\2\s*:\s*$')
 WITH_SCRATCH_RE = re.compile(
     r'^(\s*)with\s+(Scratch|__|_)(\s+as\s+\w+)?\s*:\s*$'
 )
+# Combined save-and-run header: `with "X" as Scratch:`,
+# `with "X" as Scratch as h:`, `with "X", Scratch:` and
+# `with "X", Scratch as h:`. Group meanings:
+#   1: indent
+#   2: open quote (closing must match — handled by \2)
+#   3: path string
+#   4: scratch name from the ` as Scratch` form (None for comma form)
+#   5: scratch name from the `, Scratch` form (None for `as` form)
+#   6: optional capture variable (e.g. `h` in `as Scratch as h:`)
+WITH_SAVE_RUN_RE = re.compile(
+    r'^(\s*)with\s+'
+    r'(["\'])(.+?)\2'
+    r'(?:\s+as\s+(Scratch|__|_)|\s*,\s*(Scratch|__|_))'
+    r'(?:\s+as\s+(\w+))?'
+    r'\s*:\s*$'
+)
 WITH_BASH_RE = re.compile(r'^(\s*)with\s+bash\s*:\s*$')
 # `with RUN:` and `with RUN: <args>` (e.g. `with RUN: -O`,
 # `with RUN: --foo bar`). The args portion is intentionally untyped
@@ -153,12 +169,18 @@ WITH_RUN_RE = re.compile(r'^(\s*)with\s+RUN\s*:\s*(.*?)\s*$')
 
 def _find_magic_with_lines(src: str):
     """
-    Tokenize the source and return four sets of line numbers (1-based)
-    where REAL magic `with` statements appear:
-      - str_lines:     `with "X":`         (file-extraction form)
-      - scratch_lines: `with Scratch:` etc. (sandbox-scope form)
-      - bash_lines:    `with bash:`        (shell-command form)
-      - run_lines:     `with RUN:`         (fresh-subprocess form)
+    Tokenize the source and return four sets + one dict keyed by 1-based
+    line numbers, marking REAL magic `with` statements:
+      - str_lines:     `with "X":`              (file-extraction form)
+      - scratch_lines: `with Scratch:` etc.     (sandbox-scope form)
+      - bash_lines:    `with bash:`             (shell-command form)
+      - run_lines:     `with RUN:`              (fresh-subprocess form)
+      - save_run_info: {line: (path, capture)}  (combined save-and-run
+                       form: `with "X" as Scratch:`,
+                       `with "X" as Scratch as h:`, `with "X", Scratch:`,
+                       and `with "X", Scratch as h:`. `capture` is the
+                       optional `as <name>` binding for the locals dict,
+                       or None when omitted.)
 
     Patterns inside docstrings or other string literals are NOT included
     because the tokenizer reports them as part of a STRING token, not as
@@ -174,6 +196,7 @@ def _find_magic_with_lines(src: str):
     scratch_lines: set = set()
     bash_lines: set = set()
     run_lines: set = set()
+    save_run_info: dict = {}
 
     # Sanitize `with RUN: <args>` headers down to `with RUN:` for the
     # tokenizer pass. The args (e.g. `-O`, `--foo bar`) are a shell-style
@@ -198,6 +221,16 @@ def _find_magic_with_lines(src: str):
         toks = list(tokenize.generate_tokens(io.StringIO(sanitized_src).readline))
     except (tokenize.TokenError, IndentationError, SyntaxError):
         for ln_idx, line in enumerate(src.splitlines(), start=1):
+            stripped_line = line.rstrip("\n")
+            m_sr = WITH_SAVE_RUN_RE.match(stripped_line)
+            if m_sr:
+                # Save+run takes precedence over plain `with "X":` and
+                # plain `with Scratch:` so the same line never lands in
+                # two passes.
+                path = m_sr.group(3)
+                capture = m_sr.group(6)
+                save_run_info[ln_idx] = (path, capture)
+                continue
             if WITH_STR_RE.match(line):
                 str_lines.add(ln_idx)
             if WITH_SCRATCH_RE.match(line):
@@ -206,7 +239,7 @@ def _find_magic_with_lines(src: str):
                 bash_lines.add(ln_idx)
             if WITH_RUN_RE.match(line):
                 run_lines.add(ln_idx)
-        return str_lines, scratch_lines, bash_lines, run_lines
+        return str_lines, scratch_lines, bash_lines, run_lines, save_run_info
 
     skip_types = {
         tokenize.NL, tokenize.NEWLINE, tokenize.COMMENT,
@@ -222,6 +255,44 @@ def _find_magic_with_lines(src: str):
             continue
         a = code[i + 1]
         b = code[i + 2]
+
+        # Save+run forms: `with "X" as Scratch:`, `with "X" as Scratch as h:`,
+        # `with "X", Scratch:`, `with "X", Scratch as h:`. Checked BEFORE
+        # the plain `with "X":` form so the same line never lands in both
+        # `str_lines` and `save_run_info`.
+        if a.type == tokenize.STRING and i + 4 < len(code):
+            sep = code[i + 2]
+            scratch_tok = code[i + 3]
+            after_scratch = code[i + 4]
+            is_as_form = (sep.type == tokenize.NAME and sep.string == "as")
+            is_comma_form = (sep.type == tokenize.OP and sep.string == ",")
+            scratch_match = (
+                (is_as_form or is_comma_form)
+                and scratch_tok.type == tokenize.NAME
+                and scratch_tok.string in ("Scratch", "_", "__")
+            )
+            if scratch_match:
+                try:
+                    path_str = ast.literal_eval(a.string)
+                except Exception:
+                    path_str = None
+                if isinstance(path_str, str):
+                    # Bare colon: no capture variable.
+                    if (after_scratch.type == tokenize.OP
+                            and after_scratch.string == ":"):
+                        save_run_info[t.start[0]] = (path_str, None)
+                        continue
+                    # `as <name>:` capture form.
+                    if (after_scratch.type == tokenize.NAME
+                            and after_scratch.string == "as"
+                            and i + 6 < len(code)
+                            and code[i + 5].type == tokenize.NAME
+                            and code[i + 6].type == tokenize.OP
+                            and code[i + 6].string == ":"):
+                        save_run_info[t.start[0]] = (
+                            path_str, code[i + 5].string
+                        )
+                        continue
 
         if a.type == tokenize.STRING and b.type == tokenize.OP and b.string == ":":
             str_lines.add(t.start[0])
@@ -249,7 +320,7 @@ def _find_magic_with_lines(src: str):
             ):
                 scratch_lines.add(t.start[0])
 
-    return str_lines, scratch_lines, bash_lines, run_lines
+    return str_lines, scratch_lines, bash_lines, run_lines, save_run_info
 
 
 def _resolve_file_path(path_str: str, files_dir: Path, notebook_dir: Path) -> Path:
@@ -334,16 +405,33 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
             `with __nb_Scratch__():`         (or `... as a:`)
         Body lines are left untouched (line numbers preserved).
 
-    Returns (runnable_src, files_written, bash_commands, run_blocks).
+    For every save-and-run block (`with "X" as Scratch:` and friends):
+      - dedent the body and write it verbatim to the resolved path
+        (same path rules as `with "X":`)
+      - rewrite ONLY the `with` header to `with __nb_Scratch__():`
+        (or `with __nb_Scratch__() as h:`) so the body runs in-process
+        with normal Scratch isolation. Body lines are NOT blanked.
+      - if the body is not valid Python, skip the file write and emit
+        a `# !err: SyntaxError` annotation on the header line; the
+        header is rewritten to `: pass` and the body is blanked so the
+        rest of the notebook still parses and gets annotated.
+
+    Returns (runnable_src, files_written, bash_commands, run_blocks,
+    save_run_results).
     `bash_commands` is a dict: {body_line_number_1based: command_str}.
     `run_blocks` is a dict: {last_body_line_1based: (body_text, argv_list)}.
+    `save_run_results` is a dict: {with_line_1based: [(prefix, text), ...]}
+    used to splice annotations (currently only SyntaxError reports) onto
+    save+run header lines after the run.
     """
     lines = src.splitlines(keepends=True)
     files_written = []
     bash_commands: dict = {}
     run_blocks: dict = {}
+    save_run_results: dict = {}
 
-    str_lines, scratch_lines, bash_lines, run_lines = _find_magic_with_lines(src)
+    (str_lines, scratch_lines, bash_lines, run_lines,
+     save_run_info) = _find_magic_with_lines(src)
 
     # ---- Pass 1: extract `with "X":` blocks ----
     # Replace the `with` line and its body with blank lines so the surviving
@@ -405,6 +493,111 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
         for k in range(i, body_end):
             end = "\n" if lines[k].endswith("\n") else ""
             pass1[k] = end
+        i = body_end
+
+    # ---- Pass 1.4: extract `with "X" as Scratch:` save+run blocks ----
+    # Combined "save the body to disk AND run it sandboxed" form. Walks
+    # the ORIGINAL `lines` (not pass1) so the file written to disk is the
+    # verbatim source the user typed, and rewrites ONLY the header line
+    # in pass1 (body lines stay in place so they execute in-process).
+    # Headers turn into `with __nb_Scratch__():` (or `... as h:`), which
+    # the shim's AST transform later converts into a real function-scope
+    # block — same isolation guarantees as plain `with Scratch:`.
+    #
+    # If the body fails to parse as Python, we DO NOT write the file (the
+    # file should reflect runnable source, not garbage), AND we attach a
+    # `# !err: SyntaxError` annotation to the header line, AND we blank
+    # the body so the file still parses and the rest of the notebook can
+    # be annotated.
+    i = 0
+    while i < len(lines):
+        line_num = i + 1
+        info = save_run_info.get(line_num)
+        if info is None:
+            i += 1
+            continue
+
+        path_str, capture_var = info
+        line = lines[i]
+        leading = len(line) - len(line.lstrip(" \t"))
+        indent_str = line[:leading]
+        with_indent = leading
+
+        # Body comes from ORIGINAL source — file on disk should match
+        # what the user typed, not the post-string-extraction state.
+        block_end = _gather_block_end(lines, i, with_indent)
+        body_end = block_end
+        while body_end > i + 1 and lines[body_end - 1].strip() == "":
+            body_end -= 1
+
+        body_lines_orig = lines[i + 1:body_end]
+        if body_lines_orig:
+            real_indent = _smallest_indent(body_lines_orig, with_indent)
+            dedented = _dedent_body(body_lines_orig, real_indent)
+        else:
+            dedented = []
+        body_text = "".join(dedented)
+
+        # Validate the body as Python before writing the file.
+        valid = True
+        syntax_err_msg = None
+        if body_text.strip():
+            try:
+                ast.parse(body_text)
+            except SyntaxError as exc:
+                valid = False
+                detail = exc.msg or "invalid syntax"
+                if exc.lineno:
+                    syntax_err_msg = (
+                        f"SyntaxError: {detail} (body line {exc.lineno})"
+                    )
+                else:
+                    syntax_err_msg = f"SyntaxError: {detail}"
+
+        if valid:
+            target = _resolve_file_path(path_str, files_dir, notebook_dir)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(body_text)
+            files_written.append(str(target))
+
+            # Same `__init__.py` auto-creation as Pass 1, so a save+run
+            # block at `with "pkg/util.py" as Scratch:` is importable as
+            # `from pkg import util` later in the same notebook.
+            if target.suffix == ".py":
+                try:
+                    rel_parent = target.parent.resolve().relative_to(
+                        files_dir.resolve()
+                    )
+                except ValueError:
+                    rel_parent = None
+                if rel_parent is not None and rel_parent != Path("."):
+                    cur = files_dir.resolve()
+                    for part in rel_parent.parts:
+                        cur = cur / part
+                        init_file = cur / "__init__.py"
+                        if not init_file.exists():
+                            init_file.write_text("")
+        else:
+            save_run_results[line_num] = [("# !err:", syntax_err_msg)]
+
+        as_part = f" as {capture_var}" if capture_var else ""
+        if valid and body_lines_orig:
+            new_header = f"{indent_str}with __nb_Scratch__(){as_part}:"
+        else:
+            # Empty OR invalid body — emit a one-liner so the file still
+            # parses, and (if invalid) blank the body lines in pass1 so
+            # they can't break the surrounding notebook.
+            new_header = (
+                f"{indent_str}with __nb_Scratch__(){as_part}: pass"
+            )
+            if not valid:
+                for k in range(i + 1, body_end):
+                    end = "\n" if pass1[k].endswith("\n") else ""
+                    pass1[k] = end
+
+        if line.endswith("\n"):
+            new_header += "\n"
+        pass1[i] = new_header
         i = body_end
 
     # ---- Pass 1.5: extract `with bash:` blocks ----
@@ -539,7 +732,8 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
         out[i] = new_line
         i += 1
 
-    return "".join(out), files_written, bash_commands, run_blocks
+    return ("".join(out), files_written, bash_commands, run_blocks,
+            save_run_results)
 
 
 def _smallest_indent(body_lines, with_indent: int) -> int:
@@ -1007,7 +1201,8 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     cleaned = _strip_old_annotations(original)
 
     # PRE-PROCESS the magic `with` blocks
-    runnable, files_written, bash_commands, run_blocks = _preprocess_with_blocks(
+    (runnable, files_written, bash_commands, run_blocks,
+     save_run_results) = _preprocess_with_blocks(
         cleaned, files_dir, notebook_dir
     )
 
@@ -1061,6 +1256,9 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
                 new_lines.append(f"{indent}{prefix} {text}")
         if idx in run_results:
             for prefix, text in run_results[idx]:
+                new_lines.append(f"{indent}{prefix} {text}")
+        if idx in save_run_results:
+            for prefix, text in save_run_results[idx]:
                 new_lines.append(f"{indent}{prefix} {text}")
 
     if err_lines:

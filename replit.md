@@ -57,6 +57,26 @@ features Casey actually uses:
         inside is reverted when the block ends. `with Scratch as a:` captures
         each variable onto `a` so `a.x`, `a.y`, ... live on after the block.
 
+  - `with "X" as Scratch:` (and friends)
+        Combined "save the body to disk AND run it sandboxed" form, fusing
+        the two-step `with "X":` + `with Scratch:` pattern Casey kept
+        retyping. The body lands on disk verbatim at the resolved path
+        (same path rules as `with "X":`) AND runs in-process with normal
+        Scratch isolation. Body annotations work normally (`# out:` for
+        `print`, `# val:` for bare expressions). Three header shapes are
+        accepted, all interchangeable:
+          `with "name.py" as Scratch:`
+          `with "name.py" as Scratch as h:`        (capture locals on `h`)
+          `with "name.py", Scratch:` /
+              `with "name.py", Scratch as h:`      (Python's native
+                                                   multi-context-manager
+                                                   comma syntax)
+        If the body is not valid Python the file is NOT written, the
+        header gets a `# !err: SyntaxError ...` annotation, and the body
+        is blanked so the rest of the notebook still parses and gets
+        annotated. The save-and-run is in-process — for fresh-subprocess
+        isolation use a separate `with RUN:` block.
+
   - `# in: <value>` comments
         build a queue feeding `input()` calls in source order. Real stdin is
         used once the queue is empty. Old `# setin` directives still work and
