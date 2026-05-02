@@ -71,6 +71,21 @@ n + m
 # val: 10
 
 
-# --- 5. Magic save still works ----------------------------------------------
+# --- 5. Write a helper, then import it --------------------------------------
+# `with "helper.py":` writes to sandbox/files/helper.py, and that folder is
+# on sys.path inside the notebook run, so `import helper` Just Works.
+# `with "subdir/helper.py":` also works — empty __init__.py files are
+# auto-created so `from subdir import helper` resolves.
+
+with "greet_helper.py":
+    def greet(name):
+        return f"hi, {name}!"
+
+import greet_helper
+greet_helper.greet("Casey")
+# val: hi, Casey!
+
+
+# --- 6. Magic save still works ----------------------------------------------
 # Add a `# zy: 12.1 MyExample` (or `# quick:`, `# note:`, `# save:`) at the
 # top of this file to auto-save a copy after annotation.

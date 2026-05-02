@@ -304,6 +304,25 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
         target.write_text("".join(dedented))
         files_written.append(str(target))
 
+        # If this is a `.py` file inside a subdirectory of files_dir,
+        # auto-create empty `__init__.py` files all the way up to (but
+        # not including) files_dir, so `from subdir import foo` works.
+        # Don't overwrite any existing `__init__.py` files.
+        if target.suffix == ".py":
+            try:
+                rel_parent = target.parent.resolve().relative_to(
+                    files_dir.resolve()
+                )
+            except ValueError:
+                rel_parent = None
+            if rel_parent is not None and rel_parent != Path("."):
+                cur = files_dir.resolve()
+                for part in rel_parent.parts:
+                    cur = cur / part
+                    init_file = cur / "__init__.py"
+                    if not init_file.exists():
+                        init_file.write_text("")
+
         for k in range(i, body_end):
             end = "\n" if lines[k].endswith("\n") else ""
             pass1[k] = end
@@ -475,15 +494,28 @@ skip_none_flag = False
 
 
 def _build_shim(read_path: Path, file_attr_path: Path,
-                bare_lines: set, inputs: list) -> str:
+                bare_lines: set, inputs: list,
+                files_dir: Path) -> str:
     """
     `read_path`        — file the shim opens to read source (the temp runnable)
     `file_attr_path`   — what the user's code sees as `__file__` and what
                          appears in tracebacks (the original goog.py)
+    `files_dir`        — sandbox/files/, prepended to sys.path so user-written
+                         `with "helper.py":` files are importable as
+                         `import helper` from the notebook in the same run.
+                         Each notebook run is a fresh subprocess, so cached
+                         modules from a previous run are gone automatically.
     """
     bare_lines_repr = repr(sorted(bare_lines))
+    files_dir_repr = repr(str(files_dir.resolve()))
     return (
         "import sys, builtins, inspect, ast, io\n"
+        # Prepend sandbox/files/ to sys.path so freshly-written `.py`
+        # files in that folder are importable from the notebook in the
+        # same run. Front of the path so Casey's helpers are found
+        # before any same-named installed package — collisions with
+        # stdlib are on the helper.
+        f"sys.path.insert(0, {files_dir_repr})\n"
         "_orig_print = builtins.print\n"
         "_orig_input = builtins.input\n"
         "def _tagged_print(*args, **kwargs):\n"
@@ -683,7 +715,8 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     runnable_path = src_path.with_name(src_path.name + ".__v6run__")
     runnable_path.write_text(runnable)
     try:
-        shim = _build_shim(runnable_path, src_path, bare_lines, inputs)
+        shim = _build_shim(runnable_path, src_path, bare_lines, inputs,
+                           files_dir)
         out_map, val_map, err_lines = _run_shim(shim)
     finally:
         try:

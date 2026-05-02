@@ -91,3 +91,11 @@ string-splitting fix) carry over.
   same is true when a Scratch block's only body is one or more
   `with "X":` blocks (those get extracted to disk first, leaving the
   Scratch block effectively empty — v6 handles that too).
+- `sandbox/files/` is on `sys.path` inside the notebook run (prepended
+  at the front), so a `with "helper.py":` block followed by
+  `import helper` in the same file Just Works. Each notebook run is a
+  fresh subprocess, so module re-imports always pick up the latest
+  source — no stale-cache surprises after editing the helper.
+  Subdirectories work too: writing `with "pkg/util.py":` auto-creates
+  an empty `pkg/__init__.py` (existing `__init__.py` files are never
+  overwritten) so `from pkg import util` resolves cleanly.
