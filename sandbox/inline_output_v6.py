@@ -43,11 +43,14 @@ Everything else from v4 still applies:
 
 import ast
 import io
+import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
 import tokenize
+import uuid
 from pathlib import Path
 
 OUT_PREFIX = "# out:"
@@ -140,15 +143,22 @@ WITH_SCRATCH_RE = re.compile(
     r'^(\s*)with\s+(Scratch|__|_)(\s+as\s+\w+)?\s*:\s*$'
 )
 WITH_BASH_RE = re.compile(r'^(\s*)with\s+bash\s*:\s*$')
+# `with RUN:` and `with RUN: <args>` (e.g. `with RUN: -O`,
+# `with RUN: --foo bar`). The args portion is intentionally untyped
+# (treated as a shell-style argv) and may not be valid Python — see
+# _find_magic_with_lines for the sanitization step that keeps the rest
+# of the file tokenizable.
+WITH_RUN_RE = re.compile(r'^(\s*)with\s+RUN\s*:\s*(.*?)\s*$')
 
 
 def _find_magic_with_lines(src: str):
     """
-    Tokenize the source and return three sets of line numbers (1-based)
+    Tokenize the source and return four sets of line numbers (1-based)
     where REAL magic `with` statements appear:
       - str_lines:     `with "X":`         (file-extraction form)
       - scratch_lines: `with Scratch:` etc. (sandbox-scope form)
       - bash_lines:    `with bash:`        (shell-command form)
+      - run_lines:     `with RUN:`         (fresh-subprocess form)
 
     Patterns inside docstrings or other string literals are NOT included
     because the tokenizer reports them as part of a STRING token, not as
@@ -163,9 +173,29 @@ def _find_magic_with_lines(src: str):
     str_lines: set = set()
     scratch_lines: set = set()
     bash_lines: set = set()
+    run_lines: set = set()
+
+    # Sanitize `with RUN: <args>` headers down to `with RUN:` for the
+    # tokenizer pass. The args (e.g. `-O`, `--foo bar`) are a shell-style
+    # argv, not valid Python, and would otherwise make the tokenizer (or
+    # any follow-up parse) choke — taking out docstring isolation with
+    # them. Stripping happens line-by-line so docstring contents that
+    # *look* like `with RUN: ...` remain inside their STRING tokens, just
+    # with shorter text — the tokenizer still classifies them as part of
+    # the string and our token walk skips them.
+    sanitized_lines = []
+    for line in src.splitlines(keepends=True):
+        m = WITH_RUN_RE.match(line.rstrip("\n"))
+        if m and m.group(2):
+            indent = m.group(1)
+            ending = "\n" if line.endswith("\n") else ""
+            sanitized_lines.append(f"{indent}with RUN:{ending}")
+        else:
+            sanitized_lines.append(line)
+    sanitized_src = "".join(sanitized_lines)
 
     try:
-        toks = list(tokenize.generate_tokens(io.StringIO(src).readline))
+        toks = list(tokenize.generate_tokens(io.StringIO(sanitized_src).readline))
     except (tokenize.TokenError, IndentationError, SyntaxError):
         for ln_idx, line in enumerate(src.splitlines(), start=1):
             if WITH_STR_RE.match(line):
@@ -174,7 +204,9 @@ def _find_magic_with_lines(src: str):
                 scratch_lines.add(ln_idx)
             if WITH_BASH_RE.match(line):
                 bash_lines.add(ln_idx)
-        return str_lines, scratch_lines, bash_lines
+            if WITH_RUN_RE.match(line):
+                run_lines.add(ln_idx)
+        return str_lines, scratch_lines, bash_lines, run_lines
 
     skip_types = {
         tokenize.NL, tokenize.NEWLINE, tokenize.COMMENT,
@@ -200,6 +232,11 @@ def _find_magic_with_lines(src: str):
                 bash_lines.add(t.start[0])
                 continue
 
+        if a.type == tokenize.NAME and a.string == "RUN":
+            if b.type == tokenize.OP and b.string == ":":
+                run_lines.add(t.start[0])
+                continue
+
         if a.type == tokenize.NAME and a.string in ("Scratch", "_", "__"):
             if b.type == tokenize.OP and b.string == ":":
                 scratch_lines.add(t.start[0])
@@ -212,7 +249,7 @@ def _find_magic_with_lines(src: str):
             ):
                 scratch_lines.add(t.start[0])
 
-    return str_lines, scratch_lines, bash_lines
+    return str_lines, scratch_lines, bash_lines, run_lines
 
 
 def _resolve_file_path(path_str: str, files_dir: Path, notebook_dir: Path) -> Path:
@@ -286,19 +323,27 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
       - blank out the entire block (header + body) so the runnable Python
         never sees these lines (line numbers preserved)
 
+    For every `with RUN:` (or `with RUN: arg1 arg2 ...`) block:
+      - extract and dedent the body, store keyed by the 1-based line number
+        of the LAST non-blank body line (where annotations go)
+      - blank out the entire block (header + body) so the runnable Python
+        never sees these lines (line numbers preserved)
+
     For every `with Scratch:` / `with _:` / `with __:` block:
       - rewrite the `with` line so it calls a runtime context manager:
             `with __nb_Scratch__():`         (or `... as a:`)
         Body lines are left untouched (line numbers preserved).
 
-    Returns (runnable_src, files_written, bash_commands).
+    Returns (runnable_src, files_written, bash_commands, run_blocks).
     `bash_commands` is a dict: {body_line_number_1based: command_str}.
+    `run_blocks` is a dict: {last_body_line_1based: (body_text, argv_list)}.
     """
     lines = src.splitlines(keepends=True)
     files_written = []
     bash_commands: dict = {}
+    run_blocks: dict = {}
 
-    str_lines, scratch_lines, bash_lines = _find_magic_with_lines(src)
+    str_lines, scratch_lines, bash_lines, run_lines = _find_magic_with_lines(src)
 
     # ---- Pass 1: extract `with "X":` blocks ----
     # Replace the `with` line and its body with blank lines so the surviving
@@ -397,6 +442,54 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
             pass1[k] = end
         i = body_end
 
+    # ---- Pass 1.6: extract `with RUN:` blocks ----
+    # Walk the post-string-extraction source so a nested `with "X":` block
+    # whose contents happen to look like a RUN body cannot leak in. Each
+    # block's body is dedented and stashed as a single string keyed by the
+    # 1-based line number of its LAST non-blank body line — that's where
+    # the # out: / # err: annotations get spliced after the subprocess
+    # finishes. The whole block (header + body) is then blanked so the
+    # runnable Python doesn't try to execute the body in the notebook
+    # process (the whole point is fresh-process isolation).
+    i = 0
+    while i < len(pass1):
+        line = pass1[i]
+        line_num = i + 1
+
+        m = WITH_RUN_RE.match(line.rstrip("\n")) if line_num in run_lines else None
+        if not m:
+            i += 1
+            continue
+
+        with_indent = len(m.group(1))
+        args_str = m.group(2) or ""
+        try:
+            argv = shlex.split(args_str) if args_str else []
+        except ValueError:
+            # Malformed quoting — treat as no args rather than crashing
+            # the whole notebook run.
+            argv = []
+
+        block_end = _gather_block_end(pass1, i, with_indent)
+
+        body_end = block_end
+        while body_end > i + 1 and pass1[body_end - 1].strip() == "":
+            body_end -= 1
+
+        body_lines = pass1[i + 1:body_end]
+        if body_lines:
+            real_indent = _smallest_indent(body_lines, with_indent)
+            dedented = _dedent_body(body_lines, real_indent)
+            body_text = "".join(dedented)
+            # 1-based line number of the last non-blank body line.
+            last_body_line = body_end
+            run_blocks[last_body_line] = (body_text, argv)
+
+        for k in range(i, body_end):
+            end = "\n" if pass1[k].endswith("\n") else ""
+            pass1[k] = end
+        i = body_end
+
     # ---- Pass 2: rewrite `with Scratch:` blocks ----
     # Operate on the pass1 source so empty-body detection accounts for
     # already-blanked nested string-extraction blocks.
@@ -446,7 +539,7 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
         out[i] = new_line
         i += 1
 
-    return "".join(out), files_written, bash_commands
+    return "".join(out), files_written, bash_commands, run_blocks
 
 
 def _smallest_indent(body_lines, with_indent: int) -> int:
@@ -770,6 +863,108 @@ def _run_bash_commands(commands: dict, files_dir: Path) -> dict:
     return results
 
 
+def _run_run_blocks(blocks: dict, files_dir: Path) -> dict:
+    """
+    Run each `with RUN:` block in a fresh `python3` subprocess. Each
+    block's body is written to a uniquely-named temp file under
+    `<files_dir>/.run_blocks/`, then invoked as
+    `python3 [argv...] <tempfile>` from `files_dir`.
+
+    Returns a dict {line_number: [(prefix, text), ...]} ready for the
+    splice loop. The `line_number` key is the 1-based line number of the
+    last non-blank body line in the original notebook source — every
+    annotation for the block lands under that line.
+
+    Per-block annotations:
+      - each stdout line   -> ("# out:", line)
+      - each stderr line   -> ("# err:", line)
+      - non-zero exit code -> ("# !err:", "subprocess exited with code N")
+      - exec failure       -> ("# !err:", "failed to run: <exc>")
+
+    Temp files are deleted on success and KEPT on failure so Casey can
+    poke at them for debugging.
+    """
+    results: dict = {}
+    if not blocks:
+        return results
+
+    run_dir = files_dir / ".run_blocks"
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    for line_num, (body_text, argv) in blocks.items():
+        annotations = []
+        # Unique-per-block temp filename: line number for human readability,
+        # short uuid suffix to dodge collisions across runs.
+        temp_path = run_dir / f"run_L{line_num}_{uuid.uuid4().hex[:8]}.py"
+        try:
+            temp_path.write_text(body_text)
+        except Exception as exc:
+            annotations.append(("# !err:", f"failed to write temp file: {exc}"))
+            results[line_num] = annotations
+            continue
+
+        # Per-block stdin queue: only `# in:` directives INSIDE the
+        # RUN body feed the subprocess. The outer notebook's queue is
+        # intentionally not shared (the body has been blanked from the
+        # `runnable` source already, so `_parse_all_inputs(runnable)`
+        # in the outer flow can't see these). Each `# in:` value
+        # becomes one line on stdin, in source order.
+        stdin_inputs = _parse_all_inputs(body_text)
+        stdin_payload = (
+            "".join(s + "\n" for s in stdin_inputs) if stdin_inputs else None
+        )
+
+        # Make sandbox/files/ importable inside the subprocess so
+        # `import main` (and other helpers Casey wrote with `with
+        # "X.py":`) resolve. The script lives in `.run_blocks/`, so
+        # python3 only auto-prepends THAT to sys.path; we add files_dir
+        # via PYTHONPATH so the subprocess matches what the in-process
+        # notebook sees.
+        env = os.environ.copy()
+        files_dir_str = str(files_dir.resolve())
+        existing_pp = env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = (
+            files_dir_str + os.pathsep + existing_pp if existing_pp
+            else files_dir_str
+        )
+
+        keep_temp = False
+        try:
+            proc = subprocess.run(
+                ["python3", *argv, str(temp_path)],
+                capture_output=True,
+                text=True,
+                cwd=str(files_dir),
+                input=stdin_payload,
+                env=env,
+            )
+        except Exception as exc:
+            annotations.append(("# !err:", f"failed to run: {exc}"))
+            # Keep the temp file on launch failure too — Casey can
+            # eyeball it to see what was about to run.
+            results[line_num] = annotations
+            continue
+
+        for sl in proc.stdout.splitlines():
+            annotations.append(("# out:", sl))
+        for sl in proc.stderr.splitlines():
+            annotations.append(("# err:", sl))
+        if proc.returncode != 0:
+            annotations.append(
+                ("# !err:", f"subprocess exited with code {proc.returncode}")
+            )
+            keep_temp = True
+
+        if not keep_temp:
+            try:
+                temp_path.unlink()
+            except FileNotFoundError:
+                pass
+
+        results[line_num] = annotations
+    return results
+
+
 def _run_shim(shim_src: str):
     proc = subprocess.run(
         [sys.executable, "-c", shim_src],
@@ -812,7 +1007,7 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     cleaned = _strip_old_annotations(original)
 
     # PRE-PROCESS the magic `with` blocks
-    runnable, files_written, bash_commands = _preprocess_with_blocks(
+    runnable, files_written, bash_commands, run_blocks = _preprocess_with_blocks(
         cleaned, files_dir, notebook_dir
     )
 
@@ -843,8 +1038,13 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     # `with "X":` writes and where the notebook itself chdirs to).
     bash_results = _run_bash_commands(bash_commands, files_dir)
 
+    # Same idea for `with RUN:` blocks — each runs in its own fresh
+    # python3 subprocess from `files_dir`, after the notebook proper, so
+    # files Casey writes from Python are visible to the subprocess too.
+    run_results = _run_run_blocks(run_blocks, files_dir)
+
     # Splice annotations back into CLEANED (so user keeps their original
-    # `with "..."`/`with Scratch:`/`with bash:` syntax).
+    # `with "..."`/`with Scratch:`/`with bash:`/`with RUN:` syntax).
     new_lines = []
     for idx, line in enumerate(cleaned.splitlines(), start=1):
         new_lines.append(line)
@@ -858,6 +1058,9 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
                 new_lines.append(f"{indent}{VAL_PREFIX} {val}")
         if idx in bash_results:
             for prefix, text in bash_results[idx]:
+                new_lines.append(f"{indent}{prefix} {text}")
+        if idx in run_results:
+            for prefix, text in run_results[idx]:
                 new_lines.append(f"{indent}{prefix} {text}")
 
     if err_lines:
@@ -879,6 +1082,8 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
         counts.append(f"{sum(len(v) for v in val_map.values())} expression values")
     if bash_commands:
         counts.append(f"{len(bash_commands)} bash command(s)")
+    if run_blocks:
+        counts.append(f"{len(run_blocks)} run block(s)")
     summary = ", ".join(counts) if counts else "no output"
 
     msg = f"✅ Annotated {src_path.name} → {summary}."

@@ -73,6 +73,24 @@ features Casey actually uses:
         notebook. Default 30s per-command timeout (no knob to tweak).
         Linux/macOS only — `/bin/sh` is required.
 
+  - `with RUN:` (and `with RUN: <args>`)
+        the indented body is dedented, written to a uniquely-named temp
+        file under `sandbox/files/.run_blocks/`, and run in a brand-new
+        `python3` subprocess from `sandbox/files/`. This is FULL process
+        isolation, not just namespace isolation like `Scratch` — globals
+        from the surrounding notebook are invisible inside, `sys.modules`
+        is empty, and `# in:` queues from the outer notebook are not
+        shared. Optional inline args (`with RUN: -O`, `with RUN: -V`,
+        `with RUN: --foo bar`) are shell-split (`shlex`) and passed to
+        `python3` before the temp file. After the run, all stdout lines
+        become `# out:` under the LAST non-blank body line, stderr lines
+        become `# err:` there too, and a non-zero exit appends
+        `# !err: subprocess exited with code N`. Temp files are deleted
+        on success and KEPT on failure for debugging. No timeout — Casey
+        can ctrl-C. Use this whenever the body needs `import main` to
+        re-import fresh, or anything else where leftover notebook state
+        would muddy the result.
+
 All v4 features (`# out:` / `# val:` / `# !err:` / magic save comments / v4
 string-splitting fix) carry over.
 

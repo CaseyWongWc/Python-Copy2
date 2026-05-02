@@ -101,6 +101,31 @@ with bash:
     cat does-not-exist
 
 
-# --- 7. Magic save still works ----------------------------------------------
+# --- 7. Fresh-subprocess `with RUN:` ----------------------------------------
+# `with RUN:` writes the indented body to a temp file under
+# `sandbox/files/.run_blocks/` and runs it in a brand-new `python3`
+# subprocess. Globals from the surrounding notebook are NOT visible
+# inside (true process isolation, stronger than `Scratch`'s namespace
+# isolation). Stdout becomes `# out:` lines, stderr becomes `# err:`,
+# and a non-zero exit appends `# !err: subprocess exited with code N`.
+# Pass extra python3 args inline: `with RUN: -O`, `with RUN: -V`, etc.
+
+# (a) Plain run — stdout flows back as `# out:`
+with RUN:
+    x = 5
+    y = 7
+    print(x + y)
+
+# (b) `outside_var` is invisible to the subprocess — fresh interpreter
+outside_var = "you can't see me"
+with RUN:
+    print(outside_var)   # NameError, by design
+
+# (c) Pass args to python3 — `-V` prints the version on stderr/stdout
+with RUN: -V
+    pass
+
+
+# --- 8. Magic save still works ----------------------------------------------
 # Add a `# zy: 12.1 MyExample` (or `# quick:`, `# note:`, `# save:`) at the
 # top of this file to auto-save a copy after annotation.
