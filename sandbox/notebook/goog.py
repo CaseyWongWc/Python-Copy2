@@ -1099,7 +1099,10 @@ with Scratch as a:
         f.close()
     #not native
     cmd("python3","myfile.py")
-    # val: 
+    # val: Destination
+    # val: Phoenix
+    # val: Milan
+    # val: London
     with open("output.txt", "r") as f:
         f.read()
         # val: 5 + 7.5 = 12.5
@@ -1667,7 +1670,7 @@ with Scratch as e:
 
         file_data = colors_file.read()  # Read the contents of the file
         print(file_data)  # Print the contents of the file
-        # out: violetvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletviolet
+        # out: violetvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletvioletviolet
 
         colors_file.close()  # Close the file
         # val: None
@@ -1930,7 +1933,7 @@ with Scratch as e:
     # ....
     file_info = os.stat("myfile.txt")
     print(file_info)
-    # out: os.stat_result(st_mode=33206, st_ino=1313074, st_dev=1796, st_nlink=1, st_uid=1000, st_gid=1000, st_size=160, st_atime=1777683872, st_mtime=1777683872, st_ctime=1777683872)
+    # out: os.stat_result(st_mode=33206, st_ino=1313074, st_dev=1796, st_nlink=1, st_uid=1000, st_gid=1000, st_size=160, st_atime=1777691790, st_mtime=1777691790, st_ctime=1777691790)
     # ....
     #os.remove("myfile.txt")
 ####################################################
@@ -2103,8 +2106,105 @@ with Scratch as e:
 with Scratch as e2:
     ####not native####
     here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
     list_project_files()
+    # val: ./myfile.txt
+    # val: ./data2.txt
+    # val: ./teal
+    # val: ./mycsv2.csv
+    # val: ./helpings.py
+    # val: ./mycsv.py
+    # val: ./mycsv3.py
+    # val: ./lab_12_9/input3.csv
+    # val: ./lab_12_9/input1.csv
+    # val: ./lab_12_9/main.py
+    # val: ./lab_12_9/input4.csv
+    # val: ./lab_12_9/input2.csv
+    # val: ./lab_12_9/main2.py
+    # val: ./lab_12_9/input5.csv
+    # val: ./main.py
+    # val: ./Fig_12_5_1.py
+    # val: ./myfile2.txt
+    # val: ./lab_12_8.py
+    # val: ./ball.bmp
+    # val: ./gradeswr copy.csv
+    # val: ./temp.py
+    # val: ./data3.txt
+    # val: ./.gitignore
+    # val: ./myfile.py
+    # val: ./gradeswr.csv
+    # val: ./names.txt
+    # val: ./inconclusion.py
+    # val: ./mycsv2.py
+    # val: ./to delete.py
+    # val: ./myfile5.txt
+    # val: ./my123.txt
+    # val: ./.gitkeep
+    # val: ./infile.txt
+    # val: ./myfile.csv
+    # val: ./myfile1.txt
+    # val: ./Ron
+    # val: ./lab_12_12/ParkPhotos2.txt
+    # val: ./lab_12_12/main.py
+    # val: ./lab_12_12/main2.py
+    # val: ./lab_12_12/ParkPhotos.txt
+    # val: ./lab_12_12/ParkPhotos3.txt
+    # val: ./lab_12_12/ParkPhotos1.txt
+    # val: ./lab_12_12/main3.py
+    # val: ./lab.py
+    # val: ./__pycache__/mycsv.cpython-312.pyc
+    # val: ./output.txt
+    # val: ./teal
+    # val: 
+    # val: ./lab_12_8/input1.txt
+    # val: ./lab_12_8/main.py
+    # val: ./lab_12_8/input3.txt
+    # val: ./lab_12_8/input2.txt
+    # val: ./my_script.py
+    # val: ./data1.txt
     lsalf()
+    # val: total 168
+    # val: drwxrwxrwx+ 6 codespace codespace  4096 May  2 03:01 ./
+    # val: drwxrwxrwx+ 5 codespace codespace  4096 May  1 18:47 ../
+    # val: -rw-rw-rw-  1 codespace codespace    24 May  1 17:08 .gitignore
+    # val: -rw-rw-rw-  1 codespace codespace     0 May  1 17:08 .gitkeep
+    # val: -rw-rw-rw-  1 codespace codespace   762 May  2 00:04 Fig_12_5_1.py
+    # val: -rw-rw-rw-  1 codespace codespace    10 May  2 00:45 Ron
+    # val: drwxrwxrwx+ 2 codespace codespace  4096 May  2 01:38 __pycache__/
+    # val: -rw-rw-rw-  1 codespace codespace 15286 May  1 22:52 ball.bmp
+    # val: -rw-rw-rw-  1 codespace codespace     7 May  2 03:16 data1.txt
+    # val: -rw-rw-rw-  1 codespace codespace     9 May  2 03:16 data2.txt
+    # val: -rw-rw-rw-  1 codespace codespace     5 May  2 03:16 data3.txt
+    # val: -rw-rw-rw-  1 codespace codespace    42 May  2 02:05 gradeswr copy.csv
+    # val: -rw-rw-rw-  1 codespace codespace    44 May  2 03:01 gradeswr.csv
+    # val: -rw-rw-rw-  1 codespace codespace  3106 May  1 18:57 helpings.py
+    # val: -rw-rw-rw-  1 codespace codespace    20 May  2 03:16 inconclusion.py
+    # val: -rw-rw-rw-  1 codespace codespace     5 May  2 03:01 infile.txt
+    # val: -rw-rw-rw-  1 codespace codespace   337 May  2 02:23 lab.py
+    # val: drwxrwxrwx+ 2 codespace codespace  4096 May  2 03:15 lab_12_12/
+    # val: drwxrwxrwx+ 2 codespace codespace  4096 May  2 03:03 lab_12_8/
+    # val: -rw-rw-rw-  1 codespace codespace   338 May  2 02:31 lab_12_8.py
+    # val: drwxrwxrwx+ 2 codespace codespace  4096 May  2 02:56 lab_12_9/
+    # val: -rw-rw-rw-  1 codespace codespace   545 May  2 03:16 main.py
+    # val: -rw-rw-rw-  1 codespace codespace    22 May  2 03:16 my123.txt
+    # val: -rw-rw-rw-  1 codespace codespace   762 May  2 03:16 my_script.py
+    # val: -rw-rw-rw-  1 codespace codespace   456 May  2 03:16 mycsv.py
+    # val: -rw-rw-rw-  1 codespace codespace   126 May  2 03:16 mycsv2.csv
+    # val: -rw-rw-rw-  1 codespace codespace   136 May  2 03:16 mycsv2.py
+    # val: -rw-rw-rw-  1 codespace codespace   364 May  2 03:16 mycsv3.py
+    # val: -rw-rw-rw-  1 codespace codespace   126 May  2 03:01 myfile.csv
+    # val: -rw-rw-rw-  1 codespace codespace   257 May  2 03:16 myfile.py
+    # val: -rw-rw-rw-  1 codespace codespace   160 May  2 03:16 myfile.txt
+    # val: -rw-rw-rw-  1 codespace codespace    80 May  2 03:16 myfile1.txt
+    # val: -rw-rw-rw-  1 codespace codespace   284 May  2 03:16 myfile2.txt
+    # val: -rw-rw-rw-  1 codespace codespace   187 May  2 03:16 myfile5.txt
+    # val: -rw-rw-rw-  1 codespace codespace    14 May  1 17:08 names.txt
+    # val: -rw-rw-rw-  1 codespace codespace    14 May  2 02:05 output.txt
+    # val: -rw-rw-rw-  1 codespace codespace     6 May  1 20:58 teal
+    # val: -rw-rw-rw-  1 codespace codespace  1410 May  2 03:16 teal
+    # val: 
+    # val: -rw-rw-rw-  1 codespace codespace   105 May  2 03:16 temp.py
+    # val: -rw-rw-rw-  1 codespace codespace   921 May  2 03:12 to delete.py
     pass
 
 ##############################################################################
@@ -3085,3 +3185,415 @@ Answer: row[1]
 *Hint: The "row" variable is a list of strings containing the current row's fields that are read from the file.*
 *Iterating over the reader object yields each row of the file as a list of the fields. The destination field is in position 1 of the list.*'''
 ####################################################
+'''2.7 Comma-separated values files
+Text data is commonly organized in a spreadsheet format using columns and rows. A comma-separated values (csv) file is a simple text-based file format that uses commas to separate data items, called fields. Below is an example of a typical csv file that contains information about student scores:
+
+Figure 12.7.1: Contents of a csv file.
+name,hw1,hw2,midterm,final
+Petr Little,9,8,85,78
+Sam Tarley,10,10,99,100
+Joff King,4,2,55,61
+
+Feedback?
+Each line in the file above represents a row, and fields between commas on each row are in the same column as fields in the same position in each line. For example, the first row contains the items "name", "hw1", "hw2", "midterm", and "final"; the second row contains "Petr Little", "9", "8", "85" and "78". The first column contains "name", "Petr Little", "Sam Tarley", and "Joff King"; the second column contains "hw1", "9", "10", and "4".
+
+The Python standard library csv module can be used to help read and write files in the csv format. To read a file using the csv module, a program must first create a reader object, passing a file object created via open. The reader object is an iterable—iterating over the reader using a for loop returns each row of the csv file as a list of strings, where each item in the list is a field from the row.
+
+Figure 12.7.2: Reading each row of a csv file.'''
+with Scratch as a:
+    with "mycsv.py":
+        import csv
+        with open("grades.csv", "r") as csvfile:
+            grades_reader = csv.reader(csvfile, delimiter=",")
+
+            row_num = 1
+            for row in grades_reader:
+                print(f"Row #{row_num}: {row}")
+                row_num += 1
+        #⭐ out: Row #1: ['name', 'hw1', 'hw2', 'midterm', 'final']
+        #⭐ out: Row #2: ['Petr Little', '9', '8', '85', '78']
+        #⭐ out: Row #3: ['Sam Tarley', '10', '10', '99', '100']
+        #⭐ out: Row #4: ['Joff King', '4', '2', '55', '61']
+        # Feedback?
+####################################################
+'''The optional delimiter argument in the csv.reader() function specifies the character used in the csv file to separate fields; by default, a comma is used. In some cases, the field itself may contain a comma—for example, if the name of a student was specified as "lastname,firstname". In such a case, the csv file might instead use semicolons or some other rare character, e.g., Little, Petr;9;8;85;78. An alternative to changing the delimiter is to use quotes around the item containing the comma, e.g., "Little, Petr",9,8,85,78.
+
+If the contents of the fields are numeric, then a programmer may want to convert the strings to integer or floating-point values to perform calculations with the data. The example below reads each row using a reader object and calculates a student's final score in the class:
+
+Figure 12.7.3: Using csv file contents to perform calculations.'''
+with Scratch as a:
+    with "mycsv2.py":
+        import csv
+
+        # Dictionary that maps student names to a list of scores
+        grades = {}
+
+        # Use with statement to guarantee file closure
+        with open("grades.csv", "r") as csvfile:
+            grades_reader = csv.reader(csvfile, delimiter=",")
+
+            first_row = True
+            for row in grades_reader:
+                # Skip the first row with column names
+                if first_row:
+                    first_row = False
+                    continue
+
+                ## Calculate final student grade ##
+
+                name = row[0]
+
+                # Convert score strings into floats
+                scores = [float(cell) for cell in row[1:]]
+
+                hw1_weighted = scores[0]/10 * 0.05
+                hw2_weighted = scores[1]/10 * 0.05
+                mid_weighted = scores[2]/100 * 0.40
+                fin_weighted = scores[3]/100 * 0.50
+
+                grades[name] = (hw1_weighted + hw2_weighted + 
+                                mid_weighted + fin_weighted) * 100
+
+        for student, score in grades.items():
+            print(f"{student} earned {score:.1f}%")
+        #⭐ out: Petr Little earned 81.5%
+        #⭐ out: Sam Tarley earned 99.6%
+        #⭐ out: Joff King earned 55.5%
+        # Feedback?
+####################################################
+'''A programmer can also use the csv module to write text into a csv file, using a writer object. The writer object's writerow() and writerows methods can be used to write a list of strings into the file as one or more rows.
+
+Figure 12.7.4: Writing rows to a csv module.'''
+
+with Scratch as a:
+    with "mycsv3.py":
+        import csv
+
+        row1 = ["100", "50", "29"]
+        row2 = ["76", "32", "330"]
+
+        with open("gradeswr.csv", "w", newline="") as csvfile:
+            grades_writer = csv.writer(csvfile)
+
+            grades_writer.writerow(row1)
+            grades_writer.writerow(row2)
+
+            grades_writer.writerows([row1, row2])
+        #⭐ out: 100,50,29
+        #⭐ out: 76,32,330
+        #⭐ out: 100,50,29
+        #⭐ out: 76,32,330
+        # Feedback?
+##########################
+with Scratch as ae:
+    #not native
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    import csv
+    row1 = ["100", "50", "29"]
+    row2 = ["76", "32", "330"]
+    with open("gradeswr.csv", "w", newline="") as csvfile:
+        grades_writer = csv.writer(csvfile)
+
+        grades_writer.writerow(row1)
+        # val: 11
+        grades_writer.writerow(row2)
+        # val: 11
+
+        grades_writer.writerows([row1, row2])
+        # val: None
+    ret_file("gradeswr.csv")
+    # val: 100,50,29
+    # val: 76,32,330
+    # val: 100,50,29
+    # val: 76,32,330
+####################################################
+'''participation activity
+12.7.1: Comma-separated values files.
+The file "myfile.csv" contains the following contents:
+
+Airline,Destination,Departure time,Plane
+Southwest,Phoenix,615,B747
+Alitalia,Milan,1545,B757
+British Airways,London,1230,A380
+1)
+Complete the statement to create a csv module reader object to read myfile.csv.
+import csv
+with open("myfile.csv", "r") as myfile:
+    csv_reader = 
+
+ 
+
+Check
+
+Show answer
+2)
+Complete the statement so that the program prints the destination of each flight in myfile.csv.
+import csv
+with open("myfile.csv", "r") as myfile:
+    csv_reader = csv.reader(myfile)
+    for row in csv_reader:
+        print(
+)
+
+Check
+
+Show answer''' #[2] is print(row[1])
+
+with Scratch as a:
+    with "myfile.py":
+        import csv
+        with open("myfile.csv", "r") as myfile:
+            csv_reader = csv.reader(myfile) #✅<- 
+            for row in csv_reader:
+                print(row[1]) #✅<- 
+                #⭐ out: Destination
+                #⭐ out: Phoenix
+                #⭐ out: Milan
+                #⭐ out: London
+with Scratch as e:
+    #not native
+    here()
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files')
+    make_file("myfile.csv", "Airline,Destination,Departure time,Plane\nSouthwest,Phoenix,615,B747\nAlitalia,Milan,1545,B757\nBritish Airways,London,1230,A380\n")
+    # val: PosixPath('/workspaces/Python-Copy2/sandbox/files/myfile.csv')
+    import csv
+    with open("myfile.csv", "r") as myfile:
+        csv_reader = csv.reader(myfile)
+        for row in csv_reader:
+            print(row[1])
+            # out: Destination
+            # out: Phoenix
+            # out: Milan
+            # out: London
+with Scratch as other:
+    
+    with "mycsv2.py":
+        import csv
+        with open("mycsv2.csv", "r") as myfile:
+            csv_reader = csv.reader(myfile)
+            for row in csv_reader:
+                print(row[1])
+
+    with "mycsv2.csv":
+        Airline,Destination,Departure time,Plane
+        Southwest,Phoenix,615,B747
+        Alitalia,Milan,1545,B757
+        British Airways,London,1230,A380
+    ret_file("mycsv2.csv")
+    # val: Airline,Destination,Departure time,Plane
+    # val: Southwest,Phoenix,615,B747
+    # val: Alitalia,Milan,1545,B757
+    # val: British Airways,London,1230,A380
+    cmd("python", "mycsv2.py")
+    # val: Destination
+    # val: Phoenix
+    # val: Milan
+    # val: London
+##############################################################################
+'''## 12.8 LAB: Words in a range (lists)
+
+### LAB ACTIVITY: LAB: Words in a range (lists)
+
+Write a program that first reads in the name of an input file, followed by two strings representing the lower and upper bounds of a search range. The file should be read using the file.readlines() method. The input file contains a list of alphabetical, ten-letter strings, each on a separate line. Your program should determine if the strings from the list are within that range (inclusive of the bounds) and output the results.
+Ex: If the input is:
+
+```
+input1.txt
+ammoniated
+millennium
+```
+and the contents of input1.txt are:
+
+```
+aspiration
+classified
+federation
+graduation
+millennium
+philosophy
+quadratics
+transcript
+wilderness
+zoologists
+```
+the output is:
+
+```
+aspiration - in range
+classified - in range
+federation - in range
+graduation - in range
+millennium - in range
+philosophy - not in range
+quadratics - not in range
+transcript - not in range
+wilderness - not in range
+zoologists - not in range
+```
+Notes:
+- End the output with a newline.- All input files are hosted in the zyLab and file names can be directly referred to. **input1.txt** is available to download so that the contents of the file can be seen.- In the tests, the first word input always comes alphabetically before the second word input.
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `input1.txt\nammoniated\nmillennium\n` | `aspiration - in range\nclassified - in range\nfederation - in range\ngraduation - in range\nmillennium - in range\nphilosophy - not in range\nquadratics - not in range\ntranscript - not in range\nwilderness - not in range\nzoologists - not in range` | 1 |
+| 2 | `input1.txt\nantheridia\nholofernes\n` | `aspiration - in range\nclassified - in range\nfederation - in range\ngraduation - in range\nmillennium - not in range\nphilosophy - not in range\nquadratics - not in range\ntranscript - not in range\nwilderness - not in range\nzoologists - not in range` | 1 |
+| 3 | `input2.txt\nadrianople\nmisopaedia\n` | `acromicria - not in range\nacronymous - not in range\nattractant - in range\nbackblocks - in range\nbladderpod - in range\nbrownnosed - in range\nburglarise - in range\nbusybodies - in range\neconomiser - in range\nequanimous - in range\nescarpment - in range\nexfoliated - in range\nextemporal - in range\nglochidial - in range\nglomerular - in range\ngloucester - in range\ngorgonised - in range\ngrandmamma - in range\nhaeckelism - in range\nheadphones - in range\nignorantly - in range\nimpassable - in range\nimpishness - in range\nintermalar - in range\njacobethan - in range\njapanesque - in range\njubilation - in range\nnarcissist - not in range\nneoplastic - not in range\nnominalist - not in range\nnontrunked - not in range\nnunciature - not in range\noblongness - not in range\noutlipping - not in range\noutsnoring - not in range\noverdosage - not in range\noverharden - not in range\nphenacetin - not in range\npluraliser - not in range\npoeticised - not in range\npredefying - not in range\npredestine - not in range\nquadriceps - not in range\nquantified - not in range\nquaternary - not in range\nquietistic - not in range\nquinoidine - not in range\ntranscribe - not in range\nultrafiche - not in range\nunprofaned - not in range\nurogomphus - not in range\nvallecular - not in range\nvinylating - not in range\nviolescent - not in range\nviscountcy - not in range\nvitalizing - not in range\nweaponshaw - not in range\nwinkelried - not in range\nxenophobic - not in range\nxiphosuran - not in range\nzeffirelli - not in range\nzoophilism - not in range` | 2 |
+| 4 | `input2.txt\ncharcutier\nwinkelried\n` | `acromicria - not in range\nacronymous - not in range\nattractant - not in range\nbackblocks - not in range\nbladderpod - not in range\nbrownnosed - not in range\nburglarise - not in range\nbusybodies - not in range\neconomiser - in range\nequanimous - in range\nescarpment - in range\nexfoliated - in range\nextemporal - in range\nglochidial - in range\nglomerular - in range\ngloucester - in range\ngorgonised - in range\ngrandmamma - in range\nhaeckelism - in range\nheadphones - in range\nignorantly - in range\nimpassable - in range\nimpishness - in range\nintermalar - in range\njacobethan - in range\njapanesque - in range\njubilation - in range\nnarcissist - in range\nneoplastic - in range\nnominalist - in range\nnontrunked - in range\nnunciature - in range\noblongness - in range\noutlipping - in range\noutsnoring - in range\noverdosage - in range\noverharden - in range\nphenacetin - in range\npluraliser - in range\npoeticised - in range\npredefying - in range\npredestine - in range\nquadriceps - in range\nquantified - in range\nquaternary - in range\nquietistic - in range\nquinoidine - in range\ntranscribe - in range\nultrafiche - in range\nunprofaned - in range\nurogomphus - in range\nvallecular - in range\nvinylating - in range\nviolescent - in range\nviscountcy - in range\nvitalizing - in range\nweaponshaw - in range\nwinkelried - in range\nxenophobic - not in range\nxiphosuran - not in range\nzeffirelli - not in range\nzoophilism - not in range` | 2 |
+| 5 | `input3.txt\nantipapism\nqueensland\n` | `abdication - not in range\nabnegating - not in range\nabstersive - not in range\nanalytical - not in range\nantimasker - not in range\nbalneology - in range\nblandisher - in range\nbloomfield - in range\nboilerless - in range\nbutterfish - in range\ncabalistic - in range\ncastration - in range\nchasmogamy - in range\ncnidophore - in range\ncorrientes - in range\ndevocalise - in range\ndimerizing - in range\ndispraised - in range\ndistillate - in range\ndistortive - in range\nearthbound - in range\nencipherer - in range\nequipoised - in range\nevaluating - in range\nexpurgated - in range\nfacileness - in range\nfarforthly - in range\nfeebleness - in range\nfilialness - in range\nfoamflower - in range\ngeniculate - in range\ngingersnap - in range\ngnosticize - in range\ngoalkeeper - in range\ngreenbrier - in range\nhardenable - in range\nharmlessly - in range\nharquebuss - in range\nhatshepset - in range\nhephaistos - in range\nincurrence - in range\ninterceder - in range\ninterferon - in range\nintrospect - in range\nirishizing - in range\njanitorial - in range\njarovizing - in range\njawbreaker - in range\njournalese - in range\njuantorena - in range\nkeratinise - in range\nkhrushchev - in range\nkilmarnock - in range\nkilndrying - in range\nknockabout - in range\nlatinizing - in range\nleucomaine - in range\nlibrettist - in range\nlongstreet - in range\nlysistrata - in range\nmatozinhos - in range\nmickiewicz - in range\nmixability - in range\nmotherhood - in range\nmutilating - in range\nnephrocele - in range\nnettlelike - in range\nnoncogency - in range\nnongenuine - in range\nnonswimmer - in range\noutroguing - in range\noutselling - in range\noverdilate - in range\noverseason - in range\noverstress - in range\nphenetidin - in range\npoulticing - in range\npresbyopia - in range\nprologuist - in range\npseudocele - in range\nquadruplex - in range\nquantified - in range\nquathlamba - in range\nquinacrine - not in range\nquintuplet - not in range\nreaudition - not in range\nrecreatory - not in range\nremobilize - not in range\nretroceded - not in range\nromanesque - not in range\nscraggiest - not in range\nstockiness - not in range\nsuperimply - not in range\nswearingly - not in range\nsymbolical - not in range\ntallowlike - not in range\nthroughout - not in range\ntoastiness - not in range\ntrigeminal - not in range\ntrouvaille - not in range\nundercarry - not in range\nundrenched - not in range\nunfrazzled - not in range\nunreminded - not in range\nunsturdily - not in range\nvindictive - not in range\nvinylidene - not in range\nviscometer - not in range\nviscometry - not in range\nviviparous - not in range\nwapinschaw - not in range\nwestwardly - not in range\nwindowless - not in range\nwinkelried - not in range\nwomanising - not in range\nxanthophyl - not in range\nxenocrates - not in range\nxenolithic - not in range\nxylostroma - not in range\nxylotomous - not in range\nyarborough - not in range\nyeastiness - not in range\nyellowlegs - not in range\nyellowwood - not in range\nyonkersite - not in range\nzeffirelli - not in range\nzephyrinus - not in range\nzinckenite - not in range\nzoophilism - not in range\nzoophobous - not in range` | 2 |
+| 6 | `input3.txt\ndimerizing\nkilndrying\n` | `abdication - not in range\nabnegating - not in range\nabstersive - not in range\nanalytical - not in range\nantimasker - not in range\nbalneology - not in range\nblandisher - not in range\nbloomfield - not in range\nboilerless - not in range\nbutterfish - not in range\ncabalistic - not in range\ncastration - not in range\nchasmogamy - not in range\ncnidophore - not in range\ncorrientes - not in range\ndevocalise - not in range\ndimerizing - in range\ndispraised - in range\ndistillate - in range\ndistortive - in range\nearthbound - in range\nencipherer - in range\nequipoised - in range\nevaluating - in range\nexpurgated - in range\nfacileness - in range\nfarforthly - in range\nfeebleness - in range\nfilialness - in range\nfoamflower - in range\ngeniculate - in range\ngingersnap - in range\ngnosticize - in range\ngoalkeeper - in range\ngreenbrier - in range\nhardenable - in range\nharmlessly - in range\nharquebuss - in range\nhatshepset - in range\nhephaistos - in range\nincurrence - in range\ninterceder - in range\ninterferon - in range\nintrospect - in range\nirishizing - in range\njanitorial - in range\njarovizing - in range\njawbreaker - in range\njournalese - in range\njuantorena - in range\nkeratinise - in range\nkhrushchev - in range\nkilmarnock - in range\nkilndrying - in range\nknockabout - not in range\nlatinizing - not in range\nleucomaine - not in range\nlibrettist - not in range\nlongstreet - not in range\nlysistrata - not in range\nmatozinhos - not in range\nmickiewicz - not in range\nmixability - not in range\nmotherhood - not in range\nmutilating - not in range\nnephrocele - not in range\nnettlelike - not in range\nnoncogency - not in range\nnongenuine - not in range\nnonswimmer - not in range\noutroguing - not in range\noutselling - not in range\noverdilate - not in range\noverseason - not in range\noverstress - not in range\nphenetidin - not in range\npoulticing - not in range\npresbyopia - not in range\nprologuist - not in range\npseudocele - not in range\nquadruplex - not in range\nquantified - not in range\nquathlamba - not in range\nquinacrine - not in range\nquintuplet - not in range\nreaudition - not in range\nrecreatory - not in range\nremobilize - not in range\nretroceded - not in range\nromanesque - not in range\nscraggiest - not in range\nstockiness - not in range\nsuperimply - not in range\nswearingly - not in range\nsymbolical - not in range\ntallowlike - not in range\nthroughout - not in range\ntoastiness - not in range\ntrigeminal - not in range\ntrouvaille - not in range\nundercarry - not in range\nundrenched - not in range\nunfrazzled - not in range\nunreminded - not in range\nunsturdily - not in range\nvindictive - not in range\nvinylidene - not in range\nviscometer - not in range\nviscometry - not in range\nviviparous - not in range\nwapinschaw - not in range\nwestwardly - not in range\nwindowless - not in range\nwinkelried - not in range\nwomanising - not in range\nxanthophyl - not in range\nxenocrates - not in range\nxenolithic - not in range\nxylostroma - not in range\nxylotomous - not in range\nyarborough - not in range\nyeastiness - not in range\nyellowlegs - not in range\nyellowwood - not in range\nyonkersite - not in range\nzeffirelli - not in range\nzephyrinus - not in range\nzinckenite - not in range\nzoophilism - not in range\nzoophobous - not in range` | 2 |
+*Total: 10 points*
+```python
+# Type your code here. 
+```
+'''
+
+with Scratch as a:
+    with "lab_12_8/main.py":
+        file_name = input()
+        lower_bound = input()
+        upper_bound = input()
+
+        with open(file_name, "r") as f:
+            words = f.readlines()
+
+        for word in words:
+            word = word.strip()  # Remove any leading/trailing whitespace
+            if lower_bound <= word <= upper_bound:
+                print(f"{word} - in range")
+            else:
+                print(f"{word} - not in range")
+####################################################
+'''## 12.9 LAB: Word frequencies (lists)
+
+### LAB ACTIVITY: LAB: Word frequencies (lists)
+
+Write a program that first reads in the name of an input file and then reads the file using the csv.reader() method. The file contains a list of words separated by commas. The program must output the words and their frequencies (the number of times each word appears in the file) without any duplicates.
+Ex: If the input is:
+
+```
+input1.csv
+```
+and the contents of input1.csv are:
+
+```
+hello,cat,man,hey,dog,boy,Hello,man,cat,woman,dog,Cat,hey,boy
+```
+the output is:
+
+```
+hello - 1
+cat - 2
+man - 2
+hey - 2
+dog - 2
+boy - 2
+Hello - 1
+woman - 1
+Cat - 1
+```
+Notes: Output words in order of first occurrence in input and end output with a newline. File **input1.csv** is available to download.
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `input1.csv\n` | `hello - 1\ncat - 2\nman - 2\nhey - 2\ndog - 2\nboy - 2\nHello - 1\nwoman - 1\nCat - 1` | 1 |
+| 2 | `input2.csv\n` | `bubble - 3\ncaring - 1\nunsuitable - 1\ndispensable - 1\nobtainable - 1\nbloody - 1\nmeddle - 1\ncrown - 1\nvisitor - 1\nahead - 1\ninvention - 1\nspot - 1\ndelirious - 1\nsavory - 1\nservant - 1\npot - 1\nincrease - 1\nsoothe - 1\ntruculent - 1\nsqueak - 1\nlearn - 2\ntroubled - 1\nwalk - 1\ntease - 1\ncumbersome - 1\ndeeply - 2\nspark - 1\nscience - 1\nisland - 1\nnarrow - 1` | 2 |
+| 3 | `input3.csv\n` | `hi - 7\nhey - 2\nHi - 3\nHI - 2` | 2 |
+| 4 | `input4.csv\n` | `caring - 1\nunsuitable - 1\nbubble - 1\ndispensable - 1\nobtainable - 1\nbloody - 1\nmeddle - 1\ncrown - 1\nvisitor - 1\nahead - 1\ninvention - 1\nspot - 1\ndelirious - 1\nsavory - 1\nservant - 1\npot - 1\nincrease - 1\nsoothe - 1\ntruculent - 1\nsqueak - 1\nlearn - 1\ntroubled - 1\nwalk - 1\ntease - 1\ncumbersome - 1\ndeeply - 1\nspark - 1\nscience - 1\nisland - 1\nnarrow - 1` | 2 |
+| 5 | `input5.csv\n` | `spy - 5\npleasure - 1\nuncovered - 1\nupbeat - 1\nfound - 1\ncopper - 3\nshare - 1\nbelieve - 1\nbrawny - 1\ncommittee - 1\nhydrant - 1\neminent - 1\ntowering - 2\ncoherent - 1\npast - 1\nhate - 2\nstep - 2\ninfluence - 1\nants - 1\ndesk - 2\nobsolete - 1\nanalyse - 1\nimportant - 1\nunruly - 1\ncowardly - 1\namused - 1\ngovernor - 1\nsloppy - 1\nlevel - 1\ncall - 1\ntransport - 1\ncakes - 3\nbad - 1\nnumerous - 1\nmarch - 1\nmurder - 1\npossessive - 1\ninternal - 1\ngiant - 1\nhum - 1\nrose - 1\naunt - 1\nskin - 1\ntrouble - 1\ncontinue - 1\nglow - 1\nenchanting - 1\nsock - 1\nmotionless - 1\nwaste - 1\nmarvelous - 1\nsecretive - 2\nguarantee - 1\nducks - 1\ntop - 1\nflood - 1\nwell-off - 1\nmilk - 1\nbubble - 1\nmagic - 1\nspray - 1\nspare - 1\nlove - 1\nstereotyped - 1\njagged - 1\ndysfunctional - 1\nsneeze - 1\nmountain - 1\nignore - 1\ntacky - 2\nincompetent - 1\ndear - 1\ndare - 1\ncaring - 1\nproperty - 1\nmist - 1\ntest - 1\nfoamy - 1\nnotice - 1` | 3 |
+*Total: 10 points*
+```python
+import csv
+
+# Type your code here. 
+```'''
+with Scratch as a:
+    with "lab_12_9/main.py":
+        import csv
+
+        file_name = input()
+
+        word_freq = {}
+        with open(file_name, "r") as f:
+            csv_reader = csv.reader(f)
+            for row in csv_reader:
+                for word in row:
+                    if word in word_freq:
+                        word_freq[word] += 1
+                    else:
+                        word_freq[word] = 1
+
+        for word, freq in word_freq.items():
+            print(f"{word} - {freq}")
+            
+##############################################################################
+'''## 12.12 LAB: File name change
+
+### LAB ACTIVITY: LAB: File name change
+
+A photographer is organizing a photo collection about the national parks in the US and would like to annotate the information about each of the photos into a separate set of files. Write a program that reads the name of a text file containing a list of photo file names. The program then reads the photo file names from the text file, replaces the "_photo.jpg" portion of the file names with "_info.txt", and outputs the modified file names.
+Assume the unchanged portion of the photo file names contains only letters and numbers, and the text file stores one photo file name per line. If the text file is empty, the program produces no output.
+Ex: If the input of the program is:
+
+```
+ParkPhotos.txt
+```
+and the contents of ParkPhotos.txt are:
+
+```
+Acadia2003_photo.jpg
+AmericanSamoa1989_photo.jpg
+BlackCanyonoftheGunnison1983_photo.jpg
+CarlsbadCaverns2010_photo.jpg
+CraterLake1996_photo.jpg
+GrandCanyon1996_photo.jpg
+IndianaDunes1987_photo.jpg
+LakeClark2009_photo.jpg
+Redwood1980_photo.jpg
+VirginIslands2007_photo.jpg
+Voyageurs2006_photo.jpg
+WrangellStElias1987_photo.jpg
+```
+the output of the program is:
+
+```
+Acadia2003_info.txt
+AmericanSamoa1989_info.txt
+BlackCanyonoftheGunnison1983_info.txt
+CarlsbadCaverns2010_info.txt
+CraterLake1996_info.txt
+GrandCanyon1996_info.txt
+IndianaDunes1987_info.txt
+LakeClark2009_info.txt
+Redwood1980_info.txt
+VirginIslands2007_info.txt
+Voyageurs2006_info.txt
+WrangellStElias1987_info.txt
+```
+
+**Test Cases:**
+| # | Input | Expected Output | Points |
+|---|-------|-----------------|--------|
+| 1 | `ParkPhotos.txt\n` | `Acadia2003_info.txt\nAmericanSamoa1989_info.txt\nBlackCanyonoftheGunnison1983_info.txt\nCarlsbadCaverns2010_info.txt\nCraterLake1996_info.txt\nGrandCanyon1996_info.txt\nIndianaDunes1987_info.txt\nLakeClark2009_info.txt\nRedwood1980_info.txt\nVirginIslands2007_info.txt\nVoyageurs2006_info.txt\nWrangellStElias1987_info.txt` | 3 |
+| 2 | `ParkPhotos1.txt\n` | `Acadia2003_info.txt\nAmericanSamoa1989_info.txt\nArches1997_info.txt\nBadlands2000_info.txt\nBigBend2008_info.txt\nBiscayne2019_info.txt\nBlackCanyonoftheGunnison1983_info.txt\nBryceCanyon1985_info.txt\nCanyonlands1996_info.txt\nCapitolReef1991_info.txt\nCarlsbadCaverns2010_info.txt\nChannelIslands1999_info.txt\nCongaree2006_info.txt\nCraterLake1996_info.txt\nCuyahogaValley1995_info.txt\nDeathValley1996_info.txt\nDenali2001_info.txt\nDryTortugas1982_info.txt\nEverglades1984_info.txt\nGatesoftheArctic1989_info.txt\nGatewayArch1986_info.txt\nGlacierBay1982_info.txt\nGlacier1980_info.txt\nGrandCanyon1996_info.txt\nGrandTeton1997_info.txt\nGreatBasin2018_info.txt\nGreatSandDunes2006_info.txt\nGreatSmokyMountains1992_info.txt\nGuadalupeMountains2020_info.txt\nHaleakala2010_info.txt\nHawaiiVolcanoes1981_info.txt\nHotSprings1984_info.txt\nIndianaDunes1987_info.txt\nIsleRoyale1987_info.txt\nJoshuaTree1984_info.txt\nKatmai1997_info.txt\nKenaiFjords2020_info.txt\nKingsCanyon2002_info.txt\nKobukValley2014_info.txt\nLakeClark2009_info.txt\nLassenVolcanic1991_info.txt\nMammothCave1983_info.txt\nMesaVerde2012_info.txt\nMountRainier1999_info.txt\nNorthCascades1993_info.txt\nOlympic1986_info.txt\nPetrifiedForest1994_info.txt\nPinnacles1998_info.txt\nRedwood1980_info.txt\nRockyMountain1986_info.txt\nSaguaro1980_info.txt\nSequoia2009_info.txt\nShenandoah1983_info.txt\nTheodoreRoosevelt2006_info.txt\nVirginIslands2007_info.txt\nVoyageurs2006_info.txt\nWhiteSands2002_info.txt\nWindCave1986_info.txt\nWrangellStElias1987_info.txt\nYellowstone2017_info.txt\nYosemite1992_info.txt\nZion2009_info.txt` | 3 |
+| 3 | `ParkPhotos2.txt\n` | `GreatSmokyMountains1992_info.txt` | 2 |
+| 4 | `ParkPhotos3.txt\n` | `` | 2 |
+*Total: 10 points*
+```python
+# Type your code here.```
+'''
+with Scratch as a:
+    with "lab_12_12/main.py":
+        file_name = input()
+
+        with open(file_name, "r") as f:
+            photo_files = f.readlines()
+
+        for photo in photo_files:
+            photo = photo.strip()  # Remove any leading/trailing whitespace
+            info_file = photo.replace("_photo.jpg", "_info.txt")
+            print(info_file)
+
+##############################################################################
