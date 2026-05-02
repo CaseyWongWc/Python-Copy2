@@ -2102,9 +2102,9 @@ with Scratch as e:
 
 with Scratch as e2:
     ####not native####
-    #here()
-    #list_project_files()
-    #lsalf()
+    here()
+    list_project_files()
+    lsalf()
     pass
 
 ##############################################################################
@@ -2956,4 +2956,132 @@ with Scratch as a:
         with open(foodstuffs_file_name, "a") as foodstuffs_file:
             foodstuffs_file.write(foodstuff_data)
             foodstuffs_file.write("\n")
+
 ##############################################################################
+'''## 12.7 Comma-separated values files
+
+Text data is commonly organized in a spreadsheet format using columns and rows. A comma-separated values (csv) file  is a simple text-based file format that uses commas to separate data items, called fields. Below is an example of a typical csv file that contains information about student scores:
+
+> **Contents of a csv file.**
+> ```
+> name,hw1,hw2,midterm,final
+> Petr Little,9,8,85,78
+> Sam Tarley,10,10,99,100
+> Joff King,4,2,55,61
+> ```
+
+Each line in the file above represents a row, and fields between commas on each row are in the same column as fields in the same position in each line. For example, the first row contains the items "name", "hw1", "hw2", "midterm", and "final"; the second row contains "Petr Little", "9", "8", "85" and "78". The first column contains "name", "Petr Little", "Sam Tarley", and "Joff King"; the second column contains "hw1", "9", "10", and "4".
+
+The Python standard library csv module can be used to help read and write files in the csv format. To read a file using the csv module, a program must first create a *reader* object, passing a file object created via *open*. The reader object is an iterable&mdash;iterating over the reader using a for loop returns each row of the csv file as a list of strings, where each item in the list is a field from the row.
+
+> **Reading each row of a csv file.**
+> ```python
+> import csv
+> 
+> with open("grades.csv", "r") as csvfile:
+>     grades_reader = csv.reader(csvfile, delimiter=",")
+> 
+>     row_num = 1
+>     for row in grades_reader:
+>         print(f"Row #{row_num}: {row}")
+>         row_num += 1
+> ```
+> ```
+> Row #1: ["name", "hw1", "hw2", "midterm", "final"]
+> Row #2: ["Petr Little", "9", "8", "85", "78"]
+> Row #3: ["Sam Tarley", "10", "10", "99", "100"]
+> Row #4: ["Joff King", "4", "2", "55", "61"]
+> ```
+
+The optional delimiter argument in the csv.reader() function specifies the character used in the csv file to separate fields; by default, a comma is used. In some cases, the field itself may contain a comma&mdash;for example, if the name of a student was specified as "lastname,firstname". In such a case, the csv file might instead use semicolons or some other rare character, e.g., Little, Petr;9;8;85;78. An alternative to changing the delimiter is to use quotes around the item containing the comma, e.g., "Little, Petr",9,8,85,78.
+
+If the contents of the fields are numeric, then a programmer may want to convert the strings to integer or floating-point values to perform calculations with the data. The example below reads each row using a reader object and calculates a student's final score in the class:
+
+> **Using csv file contents to perform calculations.**
+> ```python
+> import csv
+> 
+> # Dictionary that maps student names to a list of scores
+> grades = {}
+> 
+> # Use with statement to guarantee file closure
+> with open("grades.csv", "r") as csvfile:
+>     grades_reader = csv.reader(csvfile, delimiter=",")
+> 
+>     first_row = True
+>     for row in grades_reader:
+>         # Skip the first row with column names
+>         if first_row:
+>             first_row = False
+>             continue
+> 
+>         ## Calculate final student grade ##
+> 
+>         name = row[0]
+> 
+>         # Convert score strings into floats
+>         scores = [float(cell) for cell in row[1:]]
+> 
+>         hw1_weighted = scores[0]/10 * 0.05
+>         hw2_weighted = scores[1]/10 * 0.05
+>         mid_weighted = scores[2]/100 * 0.40
+>         fin_weighted = scores[3]/100 * 0.50
+> 
+>         grades[name] = (hw1_weighted + hw2_weighted + 
+>                         mid_weighted + fin_weighted) * 100
+> 
+> for student, score in grades.items():
+>     print(f"{student} earned {score:.1f}%")
+> ```
+> ```
+> Petr Little earned 81.5%
+> Sam Tarley earned 99.6%
+> Joff King earned 55.5%
+> ```
+
+A programmer can also use the csv module to write text into a csv file, using a *writer* object. The writer object's *writerow()* and *writerows* methods can be used to write a list of strings into the file as one or more rows.
+
+> **Writing rows to a csv module.**
+> ```python
+> import csv
+> 
+> row1 = ["100", "50", "29"]
+> row2 = ["76", "32", "330"]
+> 
+> with open("gradeswr.csv", "w", newline="") as csvfile:
+>     grades_writer = csv.writer(csvfile)
+> 
+>     grades_writer.writerow(row1)
+>     grades_writer.writerow(row2)
+> 
+>     grades_writer.writerows([row1, row2])
+> ```
+> ```
+> 100,50,29
+> 76,32,330
+> 100,50,29
+> 76,32,330
+> ```
+
+### PARTICIPATION ACTIVITY: Comma-separated values files.
+
+import csv
+with open("myfile.csv", "r") as myfile:
+    csv_reader =
+
+**1.** Complete the statement to create a csv module reader object to read myfile.csv.
+Answer: csv.reader(myfile) or csv.reader(myfile, delimiter=',')
+*Hint: Create an instance of csv.reader. Specifying the delimiter argument is optional.*
+*The reader object can be used to iterate over rows of the csv file.*
+
+import csv
+with open("myfile.csv", "r") as myfile:
+    csv_reader = csv.reader(myfile)
+    for row in csv_reader:
+        print(
+
+**2.** Complete the statement so that the program prints the destination of each flight in myfile.csv. )
+Answer: row[1]
+*Hint: The "row" variable is a list of strings containing the current row's fields that are read from the file.*
+*Iterating over the reader object yields each row of the file as a list of the fields. The destination field is in position 1 of the list.*'''
+####################################################
