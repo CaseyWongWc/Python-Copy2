@@ -220,3 +220,29 @@ with "comma.py", RUN:
 # --- 8. Magic save still works ----------------------------------------------
 # Add a `# zy: 12.1 MyExample` (or `# quick:`, `# note:`, `# save:`) at the
 # top of this file to auto-save a copy after annotation.
+
+
+# --- 9. Indentation help (phone-typing friendly) ----------------------------
+# The runner quietly fixes the most common phone-keyboard whitespace slips
+# BEFORE parsing your file:
+#   - leading TAB characters become 4 spaces
+#   - leading non-breaking spaces (the invisible U+00A0 some keyboards
+#     insert) become regular spaces
+# Only the LEADING whitespace of each line is touched, so a tab inside a
+# string (`print("a\tb")` or inside a triple-quoted string) is preserved.
+#
+# When indentation IS broken in a way the auto-fix can't resolve, you get
+# a friendly multi-line error instead of a raw Python traceback:
+#
+#   def foo():
+#       x = 1
+#      y = 2          # ← only 3 spaces, mismatched
+#   # !err: --- ERROR ---
+#   # !err: IndentationError on line 3: indented 3 space(s), but no
+#   #       open block matches that level.
+#   # !err:   line 2 was indented 4 space(s) — pick a level that lines
+#   #       up with an outer block.
+#
+# Same for missing indent after a `:` ("this line needs to be indented")
+# and plain SyntaxError ("SyntaxError on line N: ..." instead of a
+# 5-line traceback).

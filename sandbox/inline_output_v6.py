@@ -136,6 +136,60 @@ def _strip_old_annotations(src: str) -> str:
     return "".join(keep)
 
 
+# ---------- whitespace normalization ----------
+
+def _normalize_whitespace(src: str) -> str:
+    """Quietly fix the most common phone-typing whitespace mistakes:
+        - leading TAB characters become 4 spaces (standard Python indent)
+        - leading non-breaking spaces (U+00A0) become regular spaces
+    Only the LEADING whitespace of each line is touched, so a real `\\t`
+    inside a string literal (e.g. `print("a\\tb")`) is never disturbed.
+    Lines whose leading whitespace is part of a multi-line string literal
+    are also skipped — `tokenize` is used to find those line ranges so
+    the string contents stay byte-exact. If the source can't even be
+    tokenized (already broken), we normalize every line — usually the
+    very thing that fixes the tokenize failure on the next pass.
+    """
+    if "\t" not in src and "\u00a0" not in src:
+        return src
+
+    lines = src.splitlines(keepends=True)
+    skip_lines: set = set()
+    try:
+        toks = list(tokenize.generate_tokens(io.StringIO(src).readline))
+        for t in toks:
+            if t.type != tokenize.STRING:
+                continue
+            start_line, end_line = t.start[0], t.end[0]
+            # The opening line's leading whitespace is CODE (the indent
+            # of the assignment statement), not string content — leave it
+            # alone. Lines AFTER the opener are string body, including
+            # the closing line whose leading whitespace IS part of the
+            # string up until the closing quote.
+            for ln in range(start_line + 1, end_line + 1):
+                skip_lines.add(ln)
+    except (tokenize.TokenError, IndentationError, SyntaxError):
+        skip_lines = set()
+
+    LEADING_WS_RE = re.compile(r"^[ \t\u00a0]*")
+    out = []
+    for i, line in enumerate(lines, start=1):
+        if i in skip_lines:
+            out.append(line)
+            continue
+        m = LEADING_WS_RE.match(line)
+        if not m:
+            out.append(line)
+            continue
+        leading = m.group(0)
+        if "\t" not in leading and "\u00a0" not in leading:
+            out.append(line)
+            continue
+        normalized = leading.replace("\t", "    ").replace("\u00a0", " ")
+        out.append(normalized + line[len(leading):])
+    return "".join(out)
+
+
 # ---------- v6 preprocessor: magic `with` blocks ----------
 
 WITH_STR_RE = re.compile(r'^(\s*)with\s+(["\'])(.+?)\2\s*:\s*$')
@@ -1391,6 +1445,86 @@ def _run_run_blocks(blocks: dict, files_dir: Path,
     return results
 
 
+def _friendly_indent_error(src: str, exc: IndentationError):
+    """Turn a Python IndentationError into a 1–3 line plain-language
+    explanation that points at the line AND the previous line, since
+    the issue is almost always a mismatch between the two.
+    Returns a list of strings ready to be emitted as `# !err:` lines.
+    """
+    raw = exc.msg or "indentation problem"
+    line_no = exc.lineno
+    if not line_no:
+        return [f"IndentationError: {raw}"]
+
+    src_lines = src.splitlines()
+    bad_line = src_lines[line_no - 1] if 0 < line_no <= len(src_lines) else ""
+    bad_indent = len(bad_line) - len(bad_line.lstrip(" \t"))
+
+    prev_idx = line_no - 2
+    while prev_idx >= 0 and not src_lines[prev_idx].strip():
+        prev_idx -= 1
+    prev_line = src_lines[prev_idx] if prev_idx >= 0 else None
+    prev_indent = (
+        len(prev_line) - len(prev_line.lstrip(" \t")) if prev_line else 0
+    )
+    prev_no = prev_idx + 1 if prev_idx >= 0 else None
+
+    low = raw.lower()
+    msgs = []
+    if "expected an indented block" in low:
+        msgs.append(f"IndentationError on line {line_no}: this line needs to be indented.")
+        if prev_no is not None and prev_line.rstrip().endswith(":"):
+            msgs.append(
+                f"  line {prev_no} ends with `:`, so line {line_no} should be "
+                f"indented further (try {prev_indent + 4} spaces)."
+            )
+    elif "unindent does not match" in low:
+        msgs.append(
+            f"IndentationError on line {line_no}: indented {bad_indent} "
+            f"space(s), but no open block matches that level."
+        )
+        if prev_no is not None:
+            msgs.append(
+                f"  line {prev_no} was indented {prev_indent} space(s) — pick "
+                f"a level that lines up with an outer block."
+            )
+    elif "unexpected indent" in low:
+        msgs.append(
+            f"IndentationError on line {line_no}: indented {bad_indent} "
+            f"space(s), but the previous line wasn't expecting a new block."
+        )
+        if prev_no is not None:
+            msgs.append(
+                f"  line {prev_no} was indented {prev_indent} space(s) — "
+                f"line {line_no} probably wants the same."
+            )
+    elif "tab" in low and "space" in low:
+        msgs.append(
+            f"IndentationError on line {line_no}: tabs and spaces are mixed "
+            f"in this block."
+        )
+        msgs.append(
+            "  pick one (the runner already converts leading tabs to 4 "
+            "spaces, but a tab in the middle of indentation can still slip in)."
+        )
+    else:
+        msgs.append(f"IndentationError on line {line_no}: {raw}")
+        if prev_no is not None:
+            msgs.append(
+                f"  line {line_no} indent: {bad_indent}; line {prev_no} "
+                f"indent: {prev_indent}."
+            )
+    return msgs
+
+
+def _friendly_syntax_error(exc: SyntaxError):
+    """Brief friendly message for a non-indentation SyntaxError."""
+    raw = exc.msg or "invalid syntax"
+    if exc.lineno:
+        return [f"SyntaxError on line {exc.lineno}: {raw}"]
+    return [f"SyntaxError: {raw}"]
+
+
 def _run_shim(shim_src: str):
     proc = subprocess.run(
         [sys.executable, "-c", shim_src],
@@ -1430,7 +1564,11 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     files_dir.mkdir(parents=True, exist_ok=True)
 
     original = src_path.read_text()
-    cleaned = _strip_old_annotations(original)
+    # Quietly fix common phone-typing whitespace mistakes (leading tabs,
+    # non-breaking spaces) BEFORE anything else looks at the source, so
+    # the preprocessor, parser, and our own error reporters all see a
+    # consistent indent style.
+    cleaned = _normalize_whitespace(_strip_old_annotations(original))
 
     # PRE-PROCESS the magic `with` blocks
     (runnable, files_written, bash_commands, run_blocks,
@@ -1438,26 +1576,48 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
         cleaned, files_dir, notebook_dir
     )
 
+    # Pre-flight parse the runnable source. If it has an
+    # IndentationError or SyntaxError, surface a friendly explanation
+    # instead of letting the shim subprocess die with a raw Python
+    # traceback. Line numbers in `runnable` match `cleaned` (the
+    # preprocessor only blanks lines, never shifts them) so the
+    # reported line numbers are meaningful to the user.
+    preflight_err_lines = None
+    try:
+        ast.parse(runnable)
+    except IndentationError as exc:
+        preflight_err_lines = ["--- ERROR ---"] + _friendly_indent_error(
+            cleaned, exc
+        )
+    except SyntaxError as exc:
+        preflight_err_lines = ["--- ERROR ---"] + _friendly_syntax_error(exc)
+
     # Inputs (combine `# in:` and `# setin` in source order)
     inputs = _parse_all_inputs(runnable)
 
     # Bare expressions: parse the RUNNABLE source (it's valid Python now).
     bare_lines = _find_bare_expr_lines(runnable)
 
-    # Write runnable to a SIBLING temp file so the user's file is never
-    # overwritten until we have annotations to splice in. Tracebacks still
-    # show the original goog.py path because we pass file_attr_path.
-    runnable_path = src_path.with_name(src_path.name + ".__v6run__")
-    runnable_path.write_text(runnable)
-    try:
-        shim = _build_shim(runnable_path, src_path, bare_lines, inputs,
-                           files_dir, notebook_dir)
-        out_map, val_map, err_lines = _run_shim(shim)
-    finally:
+    if preflight_err_lines is not None:
+        # Skip the shim — running broken Python would just produce a
+        # noisier version of the same error. The friendly message is
+        # spliced in below via `err_lines`.
+        out_map, val_map, err_lines = {}, {}, preflight_err_lines
+    else:
+        # Write runnable to a SIBLING temp file so the user's file is never
+        # overwritten until we have annotations to splice in. Tracebacks still
+        # show the original goog.py path because we pass file_attr_path.
+        runnable_path = src_path.with_name(src_path.name + ".__v6run__")
+        runnable_path.write_text(runnable)
         try:
-            runnable_path.unlink()
-        except FileNotFoundError:
-            pass
+            shim = _build_shim(runnable_path, src_path, bare_lines, inputs,
+                               files_dir, notebook_dir)
+            out_map, val_map, err_lines = _run_shim(shim)
+        finally:
+            try:
+                runnable_path.unlink()
+            except FileNotFoundError:
+                pass
 
     # Run any `with bash:` shell commands AFTER the Python notebook so
     # files Casey writes inside Python are visible to the shell. Each

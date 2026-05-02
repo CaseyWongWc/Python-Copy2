@@ -192,3 +192,24 @@ string-splitting fix) carry over.
   reads as an open string literal that swallows the rest of `goog.py`
   and produces a confusing "unterminated triple-quoted string" error
   far below where the actual problem lives.
+- Phone-friendly indentation handling (added on top of v6):
+  1. `_normalize_whitespace` runs BEFORE the preprocessor — leading TAB
+     characters become 4 spaces, leading non-breaking spaces (U+00A0)
+     become regular spaces. Only LEADING whitespace is touched, and
+     `tokenize` is used to skip lines that live inside multi-line string
+     literals so string contents stay byte-exact (a tab in `print("a\\tb")`
+     or inside a triple-quoted string is never mangled). On tokenize
+     failure (already broken source) we normalize every line — usually
+     fixing the very thing that made tokenize fail.
+  2. After preprocessing, `run_and_annotate` does an `ast.parse` pre-flight
+     on the runnable source. An `IndentationError` becomes a 1–3 line
+     `# !err:` annotation that names the bad line AND the previous line,
+     reports both indent counts, and (for "expected indented block")
+     suggests a target indent. A `SyntaxError` becomes a one-line
+     `# !err: SyntaxError on line N: ...` instead of a raw multi-line
+     traceback. The shim subprocess is skipped entirely when pre-flight
+     fails — no point running broken Python.
+- `with "X":` bodies have always been dedented before being written to
+  disk (smallest non-blank body indent is the dedent base). So a
+  `with "README.MD":` block at indent 0 with body at indent 4 produces
+  a clean README starting at column 0, not column 4.
