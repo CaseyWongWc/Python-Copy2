@@ -60,8 +60,9 @@ features Casey actually uses:
   - `with "X" as Scratch:` (and friends)
         Combined "save the body to disk AND run it sandboxed" form, fusing
         the two-step `with "X":` + `with Scratch:` pattern Casey kept
-        retyping. The body lands on disk verbatim at the resolved path
-        (same path rules as `with "X":`) AND runs in-process with normal
+        retyping. The body lands on disk at the resolved path (same
+        path rules as `with "X":`, with the clean-save filter applied —
+        see below) AND runs in-process with normal
         Scratch isolation. Body annotations work normally (`# out:` for
         `print`, `# val:` for bare expressions). Five header shapes are
         accepted, all interchangeable:
@@ -145,8 +146,9 @@ features Casey actually uses:
         subprocess" form. Fuses the two-step `with "X":` + `with RUN:`
         pattern Casey kept retyping when iterating on a script he wanted
         both saved AND executed with full process isolation. The body
-        lands on disk verbatim at the resolved path (same path rules as
-        `with "X":`) AND is queued through the same subprocess machinery
+        lands on disk at the resolved path (same path rules as
+        `with "X":`, with the clean-save filter applied — see below)
+        AND is queued through the same subprocess machinery
         as plain `with RUN:`. All RUN behaviors carry over: stdout/stderr
         land as `# out:` / `# err:` under the LAST non-blank body line,
         non-zero exit appends `# !err: subprocess exited with code N`,
