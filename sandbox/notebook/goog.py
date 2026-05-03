@@ -257,21 +257,6 @@ Next
 
 Feedback?'''
 
-with "mypy.py":
-    # in: 9
-    # in: A
-    # in: L
-    # in: q
-    user_input = input()
-    while user_input != "q":
-        try:
-            number = int(user_input)
-            print(number * 3)
-        except:
-            print("x")
-        user_input = input()
-    print("e")
-
 
 ##############################################################################
 # Same challenge, but using `as RUN` instead of `as Scratch`.
@@ -291,7 +276,38 @@ with "mypy.py" as RUN:
             print("x")
         user_input = input()
     print("e")
-    # out: 27
+    # out: 36
     # out: x
     # out: x
     # out: e
+####################################################
+with "mypy.py" as RUN:
+    # in: 9
+    # in: A
+    # in: L
+    # in: q
+    user_input = input()
+    while user_input != "q":
+        try:
+            number = int(user_input)
+            print(number * 4)
+        except:
+            print("x")
+        user_input = input()
+    print("e")
+    # out: 36
+    # out: x
+    # out: x
+    # out: e
+
+
+'''9
+J
+M
+A
+8
+q'''
+
+with Scratch as "mypy.py":
+    # in: 9
+print(1)
