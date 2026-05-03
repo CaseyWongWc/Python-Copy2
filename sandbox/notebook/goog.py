@@ -264,7 +264,7 @@ with "a.py"  as Scratch:
 with "b.py":
     hey=input()
 with bash:
-    python3 b.py
+    python3 b.py <<< "123"
     # err: Traceback (most recent call last):
     # err:   File "/home/runner/workspace/sandbox/files/b.py", line 1, in <module>
     # err:     hey=input()
