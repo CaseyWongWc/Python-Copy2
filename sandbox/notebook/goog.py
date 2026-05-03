@@ -305,7 +305,7 @@ with Scratch as a:
     # out: 1
 a
 # val: Scratch()
-Scratch
+
 '''9
 J
 M
