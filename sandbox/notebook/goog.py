@@ -305,10 +305,17 @@ with Scratch as a:
     # out: 1
 a
 # val: Scratch()
+Scratch
 '''9
 J
 M
 A
 8
 q'''
-
+# !err: --- ERROR ---
+# !err: Traceback (most recent call last):
+# !err:   File "<string>", line 132, in <module>
+# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 252, in <module>
+# !err:     Next
+# !err:     ^^^^^
+# !err: NameError: name 'Scratch' is not defined
