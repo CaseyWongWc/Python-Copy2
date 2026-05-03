@@ -11,7 +11,9 @@ seven cases below:
   (a) save AND run: file lands on disk verbatim, body's print() shows up
       as `# out:` under the LAST non-blank body line
   (b) process isolation: an outer-scope variable is INVISIBLE to the
-      subprocess (NameError + non-zero exit annotation)
+      subprocess (NameError + non-zero exit annotation), AND the
+      traceback path points at the user-saved file (e.g.
+      `File "isolation.py"`) — NOT a `.run_blocks/...` temp file
   (c) `with "X" as RUN: -V` passes args to python3
   (d) docstring containing a fake save+RUN header is left alone
   (e) body invalid Python -> `# !err: SyntaxError` AND the file is NOT
@@ -109,6 +111,20 @@ def main():
         )
         assert "# !err: subprocess exited with code" in result, (
             "case (b) failed: expected non-zero exit annotation"
+        )
+        # Traceback should reference the user-saved file path, NOT the
+        # `.run_blocks/...` throwaway temp. Python 3.11+ normalizes the
+        # script argument to an absolute path in tracebacks, so we
+        # assert on the absolute path that ends in the user-typed name.
+        expected_path = str((files_dir / "isolation.py").resolve())
+        assert f'File "{expected_path}"' in result, (
+            "case (b) failed: traceback should point at the saved file "
+            f"`{expected_path}`, but it doesn't.\nGot:\n{result}"
+        )
+        assert ".run_blocks" not in result, (
+            "case (b) failed: traceback (or another annotation) referenced "
+            "a `.run_blocks/...` temp path; save+RUN must run the saved "
+            "file directly"
         )
 
         # (c) -V flag returns "Python 3.x.y" (lands on stdout or stderr
