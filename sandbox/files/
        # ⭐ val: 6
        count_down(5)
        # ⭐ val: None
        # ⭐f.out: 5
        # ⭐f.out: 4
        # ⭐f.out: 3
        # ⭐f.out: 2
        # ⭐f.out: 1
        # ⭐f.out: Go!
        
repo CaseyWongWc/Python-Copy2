@@ -1,0 +1,13 @@
+'''
+# ⭐ val: 6
+count_down(5)
+# ⭐ val: None
+# ⭐f.out: 5
+# ⭐f.out: 4
+# ⭐f.out: 3
+# ⭐f.out: 2
+# ⭐f.out: 1
+# ⭐f.out: Go!
+'''     
+if RUN_CHILD_MAIN:
+    cmd("python","main.py")

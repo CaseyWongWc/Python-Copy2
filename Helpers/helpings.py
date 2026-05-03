@@ -3,9 +3,63 @@ from pathlib import Path
 import shutil
 import subprocess
 import builtins
+import os
 
 
 ROOT = Path.cwd()
+
+
+def _queued_subprocess_stdin(cmd_args):
+    """Return stdin text from notebook `# in:` queue for python subprocesses.
+
+    The inline notebook runner replaces builtins.input with a shim carrying
+    `_INPUTS` and `_input_consumed` in function globals. When a helper launches
+    `python ...` as a child process, forward the newest reachable batch so child
+    `input()` calls do not fall back to terminal stdin.
+    """
+    if not cmd_args:
+        return None
+    exe = str(cmd_args[0])
+    if "python" not in exe:
+        return None
+    if os.environ.get("GOOG_NOTEBOOK_RUNNER") != "1":
+        return None
+
+    try:
+        input_fn = builtins.input
+        g = getattr(input_fn, "__globals__", None)
+        if not isinstance(g, dict):
+            return None
+        raw_inputs = g.get("_INPUTS")
+        consumed = g.get("_input_consumed")
+        if not isinstance(raw_inputs, list) or not isinstance(consumed, list):
+            return None
+        if len(raw_inputs) != len(consumed):
+            return None
+
+        reachable = [
+            i
+            for i, item in enumerate(raw_inputs)
+            if (not consumed[i]) and isinstance(item, (list, tuple)) and len(item) >= 3
+        ]
+        if not reachable:
+            return None
+
+        active_batch = max(raw_inputs[i][1] for i in reachable)
+        selected = [i for i in reachable if raw_inputs[i][1] == active_batch]
+        values = [str(raw_inputs[i][2]) for i in selected]
+        if not values:
+            return None
+
+        # Mirror shim behavior: older reachable batches are stale once a newer
+        # batch is used.
+        for i in reachable:
+            if raw_inputs[i][1] <= active_batch:
+                consumed[i] = True
+
+        return "\n".join(values) + "\n"
+    except Exception:
+        return None
 
 
 def here():
@@ -35,7 +89,13 @@ def remove_path(path):
 
 
 def run_cmd(*cmd):
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
+    result = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        cwd=ROOT,
+        input=_queued_subprocess_stdin(cmd),
+    )
     print(result.stdout)
     if result.stderr:
         print(result.stderr)
@@ -43,7 +103,13 @@ def run_cmd(*cmd):
 
 
 def cmd(*cmd):
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
+    result = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        cwd=ROOT,
+        input=_queued_subprocess_stdin(cmd),
+    )
     if result.stderr:
         return result.stderr
     return result.stdout
