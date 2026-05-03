@@ -31,6 +31,9 @@ with bash:
     # err: error: Please commit or stash them.
     # err: fatal: no rebase in progress
     # err: Everything up-to-date
-1+1
+    .git add
+    # err: /bin/sh: 1: .git: not found
+    # !err: exit code 127
+
 
     
