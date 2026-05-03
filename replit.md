@@ -40,7 +40,7 @@ first 5 lines of the file copy the annotated file somewhere useful:
 
 ## v7 (sandbox/, current)
 
-v7 is v6 plus four phone-friendly upgrades. `sandbox/notebook/main.py` imports
+v7 is v6 plus five phone-friendly upgrades. `sandbox/notebook/main.py` imports
 `inline_output_v7`; v6 stays on disk as a fallback. Everything v6 did still
 works byte-for-byte.
 
@@ -61,6 +61,13 @@ works byte-for-byte.
   - **`Sandbox` alias for `RUN`.** Both names work everywhere `RUN` did:
     `with Sandbox:`, `with "x.py" as Sandbox:`, `with Sandbox: "x.py"`,
     `with "x.py", Sandbox:`. Existing `with RUN:` code unchanged.
+
+  - **Terse subprocess shape:** `with r"FILE.py":` (note the leading `r`)
+    is shorthand for `with "FILE.py" as Sandbox:`. With a body, it saves
+    the body to `FILE.py` then runs that file in a fresh `python3`
+    subprocess. With a one-line `pass` body it just (re)saves `pass` and
+    runs that — the `r` prefix is what flips this from the file-write
+    shape (`with "FILE.py":`) to the run-as-script shape.
 
   - **Crash isolation + cleaner tracebacks.** Each magic block runs inside
     a per-block try/except in the shim. When something blows up, v7

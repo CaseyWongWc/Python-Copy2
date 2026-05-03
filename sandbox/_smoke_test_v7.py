@@ -176,6 +176,59 @@ results.append(_stale_input_shadowed())
 results.append(_multi_input_batch())
 results.append(_run_prefix_stripped())
 
+
+# 11. `with r"FILE.py":` (terse subprocess) — non-empty body saves
+#     the file then runs it; output appears as `# out:` below body.
+def _raw_str_with_body():
+    target_dir = HERE / "_v7smoke_dir"
+    target_dir.mkdir(exist_ok=True)
+    files_dir = target_dir / "files"
+    files_dir.mkdir(exist_ok=True)
+    target = target_dir / "_v7_raw_body.py"
+    target.write_text(
+        'with r"_v7_rawbody.py":\n'
+        '    print("hello from raw")\n'
+    )
+    run_and_annotate(str(target), files_dir=files_dir)
+    out = target.read_text()
+    saved = (files_dir / "_v7_rawbody.py").read_text()
+    ok = "# out: hello from raw" in out and 'print("hello from raw")' in saved
+    status = "PASS" if ok else "FAIL"
+    print(f"[{status}] `with r\"FILE.py\":` saves body and runs subprocess")
+    if not ok:
+        print(out)
+    return ok
+
+
+# 12. `with r"FILE.py":` body lands in fresh subprocess (proves
+#     process isolation, not in-process Scratch behavior).
+def _raw_str_subprocess_isolated():
+    target_dir = HERE / "_v7smoke_dir"
+    target_dir.mkdir(exist_ok=True)
+    files_dir = target_dir / "files"
+    files_dir.mkdir(exist_ok=True)
+    target = target_dir / "_v7_raw_iso.py"
+    # `__name__ == "__main__"` only prints when the file is run as a
+    # script, which proves it ran in a subprocess (not just imported
+    # or evaluated in-process by Scratch).
+    target.write_text(
+        'with r"_v7_iso.py":\n'
+        '    if __name__ == "__main__":\n'
+        '        print("ran as script")\n'
+    )
+    run_and_annotate(str(target), files_dir=files_dir)
+    out = target.read_text()
+    ok = "# out: ran as script" in out
+    status = "PASS" if ok else "FAIL"
+    print(f"[{status}] `with r\"FILE.py\":` runs in fresh subprocess")
+    if not ok:
+        print(out)
+    return ok
+
+
+results.append(_raw_str_with_body())
+results.append(_raw_str_subprocess_isolated())
+
 print()
 print(f"{sum(results)}/{len(results)} v7 cases pass")
 

@@ -328,6 +328,14 @@ WITH_SAVE_RUN_RUN_RE = re.compile(
     r'(\s+as\s+(?:RUN|Sandbox)|\s*,\s*(?:RUN|Sandbox))'
     r'\s*:\s*(.*?)\s*$'
 )
+# v7 terse subprocess shape: `with r"FILENAME.py":`. Same semantics
+# as `with "FILENAME.py" as RUN:` (save body if non-empty, run file
+# in fresh subprocess) but with no body — runs the existing file —
+# also supported. The leading `r` quote prefix is what distinguishes
+# this from the file-write form `with "FILENAME.py":`.
+WITH_RAW_STR_RE = re.compile(
+    r'^(\s*)with\s+[rR](["\'])(.+?)\2\s*:\s*$'
+)
 RAW_TEXT_MARKERS = {"\"\"\"", "'''"}
 
 
@@ -435,8 +443,15 @@ def _find_magic_with_lines(src: str):
                 # passes.
                 path = m_srr.group(3)
                 save_run_run_info[ln_idx] = (
-                    path, _argv_for_save_run_run(ln_idx)
+                    path, _argv_for_save_run_run(ln_idx), False
                 )
+                continue
+            m_raw = WITH_RAW_STR_RE.match(stripped_line)
+            if m_raw:
+                # Terse subprocess form `with r"FILE.py":` — same
+                # precedence as save+RUN above, also never falls into
+                # the plain `with "X":` file-write pass.
+                save_run_run_info[ln_idx] = (m_raw.group(3), [], True)
                 continue
             m_sr = WITH_SAVE_RUN_RE.match(stripped_line)
             if m_sr:
@@ -586,11 +601,24 @@ def _find_magic_with_lines(src: str):
                     path_str = None
                 if isinstance(path_str, str):
                     save_run_run_info[t.start[0]] = (
-                        path_str, _argv_for_save_run_run(t.start[0])
+                        path_str, _argv_for_save_run_run(t.start[0]), False
                     )
                     continue
 
         if a.type == tokenize.STRING and b.type == tokenize.OP and b.string == ":":
+            # `with r"FILE.py":` (raw-string prefix) is a TERSE save+
+            # subprocess form, not a plain file-write. Detect by the
+            # `r` / `R` prefix on the string token. Empty body means
+            # "just run the existing file in a subprocess".
+            raw_text = a.string
+            if raw_text[:1] in ("r", "R") and raw_text[1:2] in ("'", '"'):
+                try:
+                    path_str = ast.literal_eval(raw_text)
+                except Exception:
+                    path_str = None
+                if isinstance(path_str, str):
+                    save_run_run_info[t.start[0]] = (path_str, [], True)
+                    continue
             str_lines.add(t.start[0])
             continue
 
@@ -1004,7 +1032,14 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path,
             i += 1
             continue
 
-        path_str, argv = info
+        # Tuple shape: (path, argv, is_raw). `is_raw=True` is the
+        # terse `with r"FILE.py":` form — empty body means "just run
+        # the existing file in a subprocess" instead of a no-op.
+        if len(info) == 3:
+            path_str, argv, is_raw = info
+        else:
+            path_str, argv = info
+            is_raw = False
         line = lines[i]
         leading = len(line) - len(line.lstrip(" \t"))
         with_indent = leading
@@ -1084,6 +1119,12 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path,
             run_blocks[last_body_line] = (body_text, argv, target)
         elif not valid:
             save_run_results[line_num] = [("# !err:", syntax_err_msg)]
+        elif is_raw:
+            # Empty-body `with r"FILE.py":` — no save, but still
+            # invoke python3 on the existing file in a fresh
+            # subprocess. Annotations land under the header line.
+            target = _resolve_file_path(path_str, files_dir, notebook_dir)
+            run_blocks[line_num] = ("", argv, target)
 
         # Blank out header + body so the runnable Python never sees
         # them. Empty-body case also lands here (no file write, no
