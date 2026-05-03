@@ -1,0 +1,10 @@
+"""
+1)Describes a block of code that uses exception handling
+    Try
+2)An exception handler for NameError exceptions
+    except NameError:
+3)An exception handler for ValueError and NameError exceptions
+    except (ValueError, NameError):
+4)A catchall exception handler
+    except:
+"""

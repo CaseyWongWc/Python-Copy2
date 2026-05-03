@@ -1559,6 +1559,7 @@ def _run_bash_commands(commands: dict, files_dir: Path) -> dict:
                 capture_output=True,
                 text=True,
                 cwd=str(files_dir),
+                stdin=subprocess.DEVNULL,
                 timeout=30,
             )
         except subprocess.TimeoutExpired:

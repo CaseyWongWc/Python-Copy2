@@ -1,0 +1,8 @@
+"""
+1)A custom exception type is usually defined by inheriting from the Exception class.
+    True
+2)The following statement defines a new type of exception: def MyMultError: pass
+    False
+3)"FileNotOpen" is a good name for a custom exception class.
+    False
+"""

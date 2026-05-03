@@ -1,0 +1,7 @@
+"""
+1)What is the output of divide(4, 2)?
+    Result is 2.0.
+2)What is the output of divide(4, 0)?
+    Cannot divide by zero.
+    Result is -1.
+"""

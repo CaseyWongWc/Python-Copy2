@@ -1,0 +1,8 @@
+"""
+1)For a function that may contain a raise statement, the function's statements must be placed in a try block within the function.
+    False
+2)A raise statement executed in a function automatically causes a jump to the last return statement in the function.
+    False
+3)A key goal of exception handling is to avoid polluting normal code with distracting error-handling code.
+    True
+"""

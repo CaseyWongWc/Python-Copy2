@@ -1,0 +1,6 @@
+"""
+1)If no exception occurs, then execution continues in the finally clause and proceeds with the program.
+    If no exception occurs, then execution continues in the finally clause and proceeds with the program.
+2)If a handled exception occurs, then an exception handler executes and the finally clause executes.
+    If a handled exception occurs, then an exception handler executes and the finally clause executes.
+"""
