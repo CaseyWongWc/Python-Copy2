@@ -39,3 +39,7 @@ outputType = "console"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python sandbox/notebook/main.py"
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 10000

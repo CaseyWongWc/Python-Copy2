@@ -582,9 +582,12 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
       - dedent the body and write it verbatim to the resolved path
         (same path rules as `with "X":`)
       - queue the body in `run_blocks` keyed by its LAST non-blank body
-        line, so `_run_run_blocks` runs it in a fresh `python3` subprocess
-        (same path argv goes to python3, body annotations land on the
-        last body line — same shape as plain `with RUN:`)
+        line, so `_run_run_blocks` runs it in a fresh `python3` subprocess.
+        Save+RUN entries carry the resolved saved-file path as the third
+        tuple element (`saved_path`), so `_run_run_blocks` invokes
+        python3 on the user-typed file directly and any traceback points
+        at that path instead of a `.run_blocks/...` throwaway. Body
+        annotations still land on the last body line.
       - blank out the entire block (header + body) so the runnable Python
         never sees these lines (full process isolation, like plain RUN)
       - if the body is not valid Python, DO NOT write the file, DO NOT
@@ -595,7 +598,13 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
     Returns (runnable_src, files_written, bash_commands, run_blocks,
     save_run_results).
     `bash_commands` is a dict: {body_line_number_1based: command_str}.
-    `run_blocks` is a dict: {last_body_line_1based: (body_text, argv_list)}.
+    `run_blocks` is a dict:
+        {last_body_line_1based: (body_text, argv_list, saved_path_or_None)}.
+    `saved_path` is the resolved `Path` written to disk for save+RUN
+    blocks (`with "X" as RUN:` / `with "X", RUN:`), and `None` for plain
+    `with RUN:` blocks. `_run_run_blocks` uses it to invoke python3 on
+    the saved file directly when present, so tracebacks reference the
+    user-typed path instead of a `.run_blocks/...` temp.
     `save_run_results` is a dict: {with_line_1based: [(prefix, text), ...]}
     used to splice annotations (currently only SyntaxError reports) onto
     save+run header lines after the run.
@@ -869,7 +878,11 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
             # line, which equals the 1-based line number of that last
             # body line.
             last_body_line = body_end
-            run_blocks[last_body_line] = (body_text, argv)
+            # Pass the resolved saved-file path so `_run_run_blocks`
+            # invokes python3 on THAT file directly — any traceback then
+            # references the user-typed path (e.g. `sandbox/files/name.py`)
+            # instead of the throwaway `.run_blocks/...` temp file.
+            run_blocks[last_body_line] = (body_text, argv, target)
         elif not valid:
             save_run_results[line_num] = [("# !err:", syntax_err_msg)]
 
@@ -957,7 +970,9 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
             body_text = "".join(dedented)
             # 1-based line number of the last non-blank body line.
             last_body_line = body_end
-            run_blocks[last_body_line] = (body_text, argv)
+            # Plain `with RUN:` has no user-saved file; `_run_run_blocks`
+            # will write a throwaway temp file under `.run_blocks/`.
+            run_blocks[last_body_line] = (body_text, argv, None)
 
         for k in range(i, body_end):
             end = "\n" if pass1[k].endswith("\n") else ""
@@ -1347,10 +1362,19 @@ def _run_bash_commands(commands: dict, files_dir: Path) -> dict:
 def _run_run_blocks(blocks: dict, files_dir: Path,
                     notebook_dir: Path) -> dict:
     """
-    Run each `with RUN:` block in a fresh `python3` subprocess. Each
-    block's body is written to a uniquely-named temp file under
-    `<files_dir>/.run_blocks/`, then invoked as
+    Run each `with RUN:` block in a fresh `python3` subprocess.
+
+    For plain `with RUN:` blocks, the body is written to a uniquely-named
+    temp file under `<files_dir>/.run_blocks/`, then invoked as
     `python3 [argv...] <tempfile>` from `files_dir`.
+
+    For save+RUN blocks (`with "name.py" as RUN:`), the user already has
+    an identical-content saved file at `<files_dir>/name.py`; we invoke
+    python3 on THAT file directly so any error traceback references the
+    path the user typed (e.g. `sandbox/files/name.py`) — exactly the file
+    they can open and fix — instead of a throwaway temp under
+    `.run_blocks/`. The saved file is NEVER deleted (it belongs to the
+    user).
 
     Returns a dict {line_number: [(prefix, text), ...]} ready for the
     splice loop. The `line_number` key is the 1-based line number of the
@@ -1363,27 +1387,40 @@ def _run_run_blocks(blocks: dict, files_dir: Path,
       - non-zero exit code -> ("# !err:", "subprocess exited with code N")
       - exec failure       -> ("# !err:", "failed to run: <exc>")
 
-    Temp files are deleted on success and KEPT on failure so Casey can
-    poke at them for debugging.
+    Temp files (plain RUN only) are deleted on success and KEPT on
+    failure so Casey can poke at them for debugging.
     """
     results: dict = {}
     if not blocks:
         return results
 
     run_dir = files_dir / ".run_blocks"
-    run_dir.mkdir(parents=True, exist_ok=True)
 
-    for line_num, (body_text, argv) in blocks.items():
+    for line_num, value in blocks.items():
+        # `run_blocks` value tuple shape:
+        #   (body_text, argv, saved_path_or_None)
+        # `saved_path` is set only for save+RUN blocks.
+        body_text, argv, saved_path = value
         annotations = []
-        # Unique-per-block temp filename: line number for human readability,
-        # short uuid suffix to dodge collisions across runs.
-        temp_path = run_dir / f"run_L{line_num}_{uuid.uuid4().hex[:8]}.py"
-        try:
-            temp_path.write_text(body_text)
-        except Exception as exc:
-            annotations.append(("# !err:", f"failed to write temp file: {exc}"))
-            results[line_num] = annotations
-            continue
+
+        if saved_path is not None:
+            # Save+RUN: invoke the user-typed file directly so tracebacks
+            # reference its real path. No temp file written, no cleanup.
+            script_path = Path(saved_path)
+            is_temp = False
+        else:
+            # Plain `with RUN:`: write a throwaway temp file.
+            run_dir.mkdir(parents=True, exist_ok=True)
+            # Unique-per-block temp filename: line number for human readability,
+            # short uuid suffix to dodge collisions across runs.
+            script_path = run_dir / f"run_L{line_num}_{uuid.uuid4().hex[:8]}.py"
+            is_temp = True
+            try:
+                script_path.write_text(body_text)
+            except Exception as exc:
+                annotations.append(("# !err:", f"failed to write temp file: {exc}"))
+                results[line_num] = annotations
+                continue
 
         # Per-block stdin queue: only `# in:` directives INSIDE the
         # RUN body feed the subprocess. The outer notebook's queue is
@@ -1412,9 +1449,16 @@ def _run_run_blocks(blocks: dict, files_dir: Path,
         env["PYTHONPATH"] = os.pathsep.join(pp_parts)
 
         keep_temp = False
+        # Note: Python normalizes the script argument to an absolute path
+        # in tracebacks regardless of whether we pass a relative or
+        # absolute path. For save+RUN that's fine — the absolute path
+        # still ENDS in the user-typed name (e.g. `.../files/name.py`),
+        # which is the file Casey can open and fix. Plain RUN keeps
+        # showing its `.run_blocks/...` temp path (also fine — that file
+        # is preserved on failure for poking).
         try:
             proc = subprocess.run(
-                ["python3", *argv, str(temp_path)],
+                ["python3", *argv, str(script_path)],
                 capture_output=True,
                 text=True,
                 cwd=str(files_dir),
@@ -1438,9 +1482,11 @@ def _run_run_blocks(blocks: dict, files_dir: Path,
             )
             keep_temp = True
 
-        if not keep_temp:
+        # Only delete the throwaway temp script — never the user's
+        # saved file.
+        if is_temp and not keep_temp:
             try:
-                temp_path.unlink()
+                script_path.unlink()
             except FileNotFoundError:
                 pass
 
