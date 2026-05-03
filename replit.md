@@ -15,12 +15,13 @@ file is run.
 ├── goog.py                  ← root working file (long-form ZyBooks notes)
 ├── Helpers/helpings.py      ← INFO(), setin(), ret_file(), quiz(), etc.
 ├── old/                     ← prior versions kept for reference
-└── sandbox/                 ← v6 "magic with" notebook (self-contained)
+└── sandbox/                 ← v7 "magic with" notebook (self-contained)
     ├── notebook/
-    │   ├── main.py          ← click Run -> annotates goog.py here
-    │   └── goog.py          ← starter / cheat sheet for v6
+    │   ├── main.py          ← click Run -> imports v7, annotates goog.py
+    │   └── goog.py          ← starter / cheat sheet (Casey's working file)
     ├── files/               ← default home for `with "name.txt":` files
-    └── inline_output_v6.py  ← v4 + magic `with` blocks + `# in:` queue
+    ├── inline_output_v6.py  ← v6 (kept untouched as fallback / reference)
+    └── inline_output_v7.py  ← v6 + auto-show + crash isolation + Sandbox alias
 ```
 
 ## v4 (root)
@@ -37,7 +38,38 @@ first 5 lines of the file copy the annotated file somewhere useful:
 `STRIP_AFTER_SAVE` toggle in `main.py` controls whether annotations stay in
 `goog.py` after the auto-save (default: stay).
 
-## v6 (sandbox/)
+## v7 (sandbox/, current)
+
+v7 is v6 plus four phone-friendly upgrades. `sandbox/notebook/main.py` imports
+`inline_output_v7`; v6 stays on disk as a fallback. Everything v6 did still
+works byte-for-byte.
+
+  - **Auto-show under any `as <name>` block.** Whenever a magic block is
+    bound `as <name>` (Scratch, save+run, save+run+capture), every line the
+    block prints now also gets spliced in below as `# <name>.out: <line>`,
+    right next to the body. So `with Scratch as a: print("1")` no longer
+    needs a separate `a.out` line — the `# a.out: 1` annotation appears
+    automatically.
+
+  - **Short save+run+capture shape:** `with "FILE.py" as <name>:` saves the
+    body to `FILE.py`, runs it in-process under `__nb_Scratch__()`, and
+    binds locals onto `<name>` (same as the longer `with "FILE.py" as
+    Scratch as <name>:`). Reserved names (`Scratch`, `_`, `__`, `RUN`,
+    `Sandbox`) keep their old meanings — only "real" identifiers trigger
+    the new shape.
+
+  - **`Sandbox` alias for `RUN`.** Both names work everywhere `RUN` did:
+    `with Sandbox:`, `with "x.py" as Sandbox:`, `with Sandbox: "x.py"`,
+    `with "x.py", Sandbox:`. Existing `with RUN:` code unchanged.
+
+  - **Crash isolation + cleaner tracebacks.** Each magic block runs inside
+    a per-block try/except in the shim. When something blows up, v7
+    splices `# !err: <ExcType>: <msg>` and `# !err:   at line <N>` right
+    under the failing block (filtering out internal `__sc_N__` wrapper
+    frames so you only see your own goog.py lines), then keeps running
+    the rest of the notebook. One bad block no longer kills the run.
+
+## v6 (sandbox/, fallback)
 
 Self-contained "notebook" version. Run via `python sandbox/notebook/main.py`
 (or just click Run from the workspace inside that file). Adds three preprocessor
