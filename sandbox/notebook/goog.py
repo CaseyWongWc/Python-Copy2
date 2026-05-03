@@ -106,7 +106,19 @@ with "mydata.txt":
     # out: Ana
     # out: Ben
     # out: 5
+    # out: Enter age ('q' to quit): Ana
+    # out: Enter age ('q' to quit): Ben
+    # out: Enter age ('q' to quit): 5
     # out: Enter age ('q' to quit): 6
+    # out: Enter age ('q' to quit): q
+    # out: seven
+    # out: 0
+    # out: 10
+    # out: end
+    # out: 2
+    # out: 0
+    # out: -8
+    # out: end
     65
     78
     90
@@ -359,7 +371,7 @@ Next
 # in: 8
 # in: q
 with Scratch as a:
-
+    
     user_input = input()
     # out: 9
     while user_input != "q":
@@ -738,14 +750,13 @@ Exploring further:
 1)
 Fill in the missing code so that any type of error in the try block is handled.
 ages = []
-prompt = "Enter age ("q" to quit): "
+prompt = "Enter age ('q' to quit): "
 user_input = input(prompt)
 while user_input != "q":
       try:
             ages.append(int(user_input))
             user_input = input(prompt)
-
-
+      except:
             print("Unable to add age.")
             user_input = input(prompt)
 print(ages)
@@ -785,22 +796,20 @@ Show answer
 Feedback?'''
 1
 # val: 1
-with Scratch as a:"test.py"
+with Scratch:"test.py"
     print("1")
     # out: 1
 1
 # val: 1
 2
 # val: 2
-
-# in: 5
-# in: q
-with Scratch as a:"CA_10_2_2_1.py"
-    #in: 6
-    #in: 3
-    #in: 1
-    #in: j
-    #in: q
+3
+# val: 3
+setin("Ana","Ben","5","6","q")
+# val: None
+with Scratch:"CA_10_2_2_1.py"
+    # in: 5
+    # in: q
     ages = []
     prompt = "Enter age ('q' to quit): "
     user_input = input(prompt)
@@ -808,23 +817,28 @@ with Scratch as a:"CA_10_2_2_1.py"
         try:
             ages.append(int(user_input))
             # val: None
+            # val: None
             user_input = input(prompt)
         except:
             print("Unable to add age.")
             # out: Unable to add age.
+            # out: Unable to add age.
             user_input = input(prompt)
     print(ages)
+    # out: [5, 6]
 1
-with Scratch as a:"CA_10_2_2_2.py"
-    #import my_lib
+# val: 1
+
+with "CA_10_2_2_2.py":
+    import my_lib
     try:
         result = my_lib.magic()
     except AttributeError:
         print("No magic() function in my_lib.")
-
-with Scratch as a:"CA_10_2_2_3.py"
+1
+# val: 1
+with "CA_10_2_2_3.py":
     #import my_lib
-
     try:
         result = my_lib.magic()
         f = open(result, "r")
@@ -837,41 +851,205 @@ with Scratch as a:"CA_10_2_2_3.py"
         print("Something bad has happened.")
 
 print("Done with all the exception handling.")
+# out: Done with all the exception handling.
 make_file("1.txt")
-# !err: --- ERROR ---
-# !err: Traceback (most recent call last):
-# !err:   File "/home/runner/workspace/sandbox/notebook/Helpers/helpings.py", line 84, in mock_input
-# !err:     value = next(input_iter)
-# !err:             ^^^^^^^^^^^^^^^^
-# !err: StopIteration
-# !err: 
-# !err: During handling of the above exception, another exception occurred:
-# !err: 
-# !err: Traceback (most recent call last):
-# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 712, in __sc_17__
-# !err:     
-# !err:   File "/home/runner/workspace/sandbox/notebook/Helpers/helpings.py", line 88, in mock_input
-# !err:     raise EOFError("No more inputs for testing")
-# !err: EOFError: No more inputs for testing
-# !err: 
-# !err: During handling of the above exception, another exception occurred:
-# !err: 
-# !err: Traceback (most recent call last):
-# !err:   File "/home/runner/workspace/sandbox/notebook/Helpers/helpings.py", line 84, in mock_input
-# !err:     value = next(input_iter)
-# !err:             ^^^^^^^^^^^^^^^^
-# !err: StopIteration
-# !err: 
-# !err: During handling of the above exception, another exception occurred:
-# !err: 
-# !err: Traceback (most recent call last):
-# !err:   File "<string>", line 175, in <module>
-# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 700, in <module>
-# !err:     
-# !err:   File "<string>", line 83, in __nb_capture__
-# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 715, in __sc_17__
-# !err:     **Task:**
-# !err:               
-# !err:   File "/home/runner/workspace/sandbox/notebook/Helpers/helpings.py", line 88, in mock_input
-# !err:     raise EOFError("No more inputs for testing")
-# !err: EOFError: No more inputs for testing
+# val: PosixPath('/workspaces/Python-Copy2/sandbox/files/1.txt')
+####################################################
+'''4
+seven
+0
+10
+end
+
+
+'''
+setin("seven","0","10","end")
+# val: None
+with Scratch as a:"CA_10_2_1.py"
+    
+    user_input = input()
+    while user_input != "end":
+        try:
+            # Possible ValueError
+            divisor = int(user_input)
+            # Possible ZeroDivisionError
+            print(60 // divisor) # Truncates to an integer
+            # out: 6
+        except ValueError:
+            print("v")
+            # out: v
+        except ZeroDivisionError:
+            print("z")
+            # out: z
+        user_input = input()
+    print("OK")
+    # out: OK
+a.out
+# val: ['seven', 'v', '0', 'z', '10', '6', 'end', 'OK']
+1
+# val: 1
+'''challenge activity
+10.2.1: Enter the output of multiple exception handlers.
+712910.5105864.qx3zqy7
+Jump to level 1
+Type the program's output
+
+numbers = [2, 4, 5, 8]
+user_input = input()
+while user_input != "end":
+    try:
+        num_val = int(user_input)
+        if num_val < 0:
+            # Possible IndexError if num_val is less than 0
+            print(numbers[num_val])
+        else:
+            # Possible ZeroDivisionError
+            print(20 // num_val)          # Truncates to an integer
+    except ZeroDivisionError:
+        print("r")
+    except IndexError:
+        print("s")
+    user_input = input()
+print("OK")
+Input
+2
+0
+-8
+end
+Output
+1
+2
+3'''
+setin("2","0","-8","end")
+# val: None
+with Scratch as a:"CA_10_2_1.py"
+    numbers = [2, 4, 5, 8]
+    user_input = input()
+    while user_input != "end":
+        try:
+            num_val = int(user_input)
+            if num_val < 0:
+                # Possible IndexError if num_val is less than 0
+                print(numbers[num_val])
+            else:
+                # Possible ZeroDivisionError
+                print(20 // num_val)          # Truncates to an integer
+                # out: 10
+        except ZeroDivisionError:
+            print("r")
+            # out: r
+        except IndexError:
+            print("s")
+            # out: s
+        user_input = input()
+    print("OK")
+    # out: OK
+a.out
+# val: ['2', '10', '0', 'r', '-8', 's', 'end', 'OK']
+####################################################
+'''
+user_input = input()
+while user_input != "end":
+    try:
+        # Possible ValueError
+        divisor = int(user_input)
+        if divisor < 0:
+            # Possible NameError because
+            # compute() is not defined
+            print(compute(divisor))
+        else:
+            # Possible ZeroDivisionError
+            print(20 // divisor)     # Truncates to an integer
+    except ValueError:
+        print("v")
+    except ZeroDivisionError:
+        print("z")
+    except:
+        print("x")
+    user_input = input()
+print("OK")
+Input
+one
+0
+5
+-3
+end
+Output
+v
+z
+4
+x
+OK
+'''
+####################################################
+'''challenge activity
+10.2.2: Handling exceptions with math operations and common data types.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+Complete the following tasks:
+
+Write an exception handler to catch ValueError and output "float(): Input is not a float."
+Write an exception handler to catch OverflowError and output "math.pow(): result of 20 raised to the power of ", followed by x_value and " is too large."
+Click here to show example
+Ex: If the input is red, then the output is:
+
+float(): Input is not a float.
+
+Ex: If the input is 1030.0, then the output is:
+
+math.pow(): result of 20 raised to the power of 1030.0 is too large.
+import math
+
+try:
+    x_value = float(input())
+    print(f"20 raised to the power of {x_value} is {math.pow(20, x_value)}")
+
+
+'''
+with "CA_10_2_2.py":
+    import math
+
+    try:
+        x_value = float(input())
+        print(f"20 raised to the power of {x_value} is {math.pow(20, x_value)}")
+    except ValueError:
+        print("float(): Input is not a float.")
+    except OverflowError:
+        print(f"math.pow(): result of 20 raised to the power of {x_value} is too large.")
+####################################################
+'''challenge activity
+10.2.2: Handling exceptions with math operations and common data types.
+712910.5105864.qx3zqy7
+
+Jump to level 1
+List value_list contains elements 4.2, 4.1, 3.0, 3.6, 9.6, 0.1, 6.2, 7.9, 2.5, and 0.7. In the try block, integer list_index is read from input. The element at list_index of value_list is output. Complete the following tasks:
+
+Write an exception handler to catch ValueError and output "int(): An integer is expected."
+Write an exception handler to catch IndexError and output "Index is out of range."
+Click here to show example
+Ex: If the input is four, then the output is:
+
+int(): An integer is expected.
+
+Ex: If the input is 11, then the output is:
+Index is out of range.
+value_list = [4.2, 4.1, 3.0, 3.6, 9.6, 0.1, 6.2, 7.9, 2.5, 0.7]
+
+try:
+    list_index = int(input())
+    print(f"value = {value_list[list_index]}")
+
+# Your code goes here
+
+'''
+with "CA_10_2_2_2.py":
+    value_list = [4.2, 4.1, 3.0, 3.6, 9.6, 0.1, 6.2, 7.9, 2.5, 0.7]
+
+    try:
+        list_index = int(input())
+        print(f"value = {value_list[list_index]}")
+    except ValueError:
+        print("int(): An integer is expected.")
+    except IndexError:
+        print("Index is out of range.")
