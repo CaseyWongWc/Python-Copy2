@@ -67,7 +67,7 @@ with bash:
     echo "hi from the shell"
     # out: hi from the shell
     pwd
-    # out: /home/runner/workspace/sandbox/files
+    # out: /workspaces/Python-Copy2/sandbox/files
     ls | head -3
     # out: a.py
     # out: asdfasdlfjkdhasdlkfasdf.py
@@ -83,7 +83,7 @@ with RUN:
     import sys
     print("python:", sys.version_info[:2])
     # out: I am a clean python process
-    # out: python: (3, 11)
+    # out: python: (3, 13)
 
 
 # ---  7) with "X" as Scratch:  ------------------------------------
@@ -147,9 +147,8 @@ with "z.py" as RUN:
     v = input()
     print(v)
     # err: Traceback (most recent call last):
-    # err:   File "/home/runner/workspace/sandbox/files/z.py", line 1, in <module>
+    # err:   File "/workspaces/Python-Copy2/sandbox/files/z.py", line 1, in <module>
     # err:     v = input()
-    # err:         ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: subprocess exited with code 1
 with "z.py":
@@ -197,9 +196,8 @@ with bash:
     # out: print("hey")
     python hey2.py
     # err: Traceback (most recent call last):
-    # err:   File "/home/runner/workspace/sandbox/files/hey2.py", line 1, in <module>
+    # err:   File "/workspaces/Python-Copy2/sandbox/files/hey2.py", line 1, in <module>
     # err:     h=input()
-    # err:       ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: exit code 1
     2
@@ -210,9 +208,8 @@ with "hey2.py" as RUN:
     h=input()
     print("hey")
     # err: Traceback (most recent call last):
-    # err:   File "/home/runner/workspace/sandbox/files/hey2.py", line 1, in <module>
+    # err:   File "/workspaces/Python-Copy2/sandbox/files/hey2.py", line 1, in <module>
     # err:     h=input()
-    # err:       ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: subprocess exited with code 1
 with "hey2.py" as RUN:
@@ -238,9 +235,8 @@ with r"hey4.py" as b:
 with bash:
     python hey4.py
     # err: Traceback (most recent call last):
-    # err:   File "/home/runner/workspace/sandbox/files/hey4.py", line 1, in <module>
+    # err:   File "/workspaces/Python-Copy2/sandbox/files/hey4.py", line 1, in <module>
     # err:     m=input()
-    # err:       ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: exit code 1
 # in: 67
@@ -264,15 +260,14 @@ with "a.py"  as Scratch:
 with "b.py":
     hey=input()
 with bash:
-    python3 b.py >>> "123"
+    python3 b.py <<< "123"
     # err: /bin/sh: 1: Syntax error: redirection unexpected
     # !err: exit code 2
     
 with "b.py" as RUN:
     hey=input()
     # err: Traceback (most recent call last):
-    # err:   File "/home/runner/workspace/sandbox/files/b.py", line 1, in <module>
+    # err:   File "/workspaces/Python-Copy2/sandbox/files/b.py", line 1, in <module>
     # err:     hey=input()
-    # err:         ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: subprocess exited with code 1
