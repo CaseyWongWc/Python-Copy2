@@ -63,7 +63,7 @@ features Casey actually uses:
         retyping. The body lands on disk verbatim at the resolved path
         (same path rules as `with "X":`) AND runs in-process with normal
         Scratch isolation. Body annotations work normally (`# out:` for
-        `print`, `# val:` for bare expressions). Three header shapes are
+        `print`, `# val:` for bare expressions). Five header shapes are
         accepted, all interchangeable:
           `with "name.py" as Scratch:`
           `with "name.py" as Scratch as h:`        (capture locals on `h`)
@@ -71,11 +71,33 @@ features Casey actually uses:
               `with "name.py", Scratch as h:`      (Python's native
                                                    multi-context-manager
                                                    comma syntax)
+          `with Scratch: "name.py"` /
+              `with Scratch as h: "name.py"`       (reversed shape — same
+                                                   semantics, just easier
+                                                   to type when editing on
+                                                   phone where the Scratch
+                                                   keyword sits at the
+                                                   front of the line)
         If the body is not valid Python the file is NOT written, the
         header gets a `# !err: SyntaxError ...` annotation, and the body
         is blanked so the rest of the notebook still parses and gets
         annotated. The save-and-run is in-process — for fresh-subprocess
         isolation use a separate `with RUN:` block.
+
+        Clean-save: the file written to disk has notebook-only annotation
+        lines stripped (`# in:`, `# out:`, `# val:`, `# !err:`, `# err:`)
+        and runs of 3+ blank lines collapsed to one blank. So iterating
+        on a save+run block doesn't grow the saved file taller every
+        run; what lands on disk is always a clean, runnable script.
+
+        Capture (`as h:`): when a capture variable is bound, the namespace
+        object also exposes `h.out` (list of printed lines, one entry per
+        newline-split piece), `h.outs` (`'\n'.join(h.out)` for one-liner
+        round-trips with `print(h.outs)`), and `h.err` (list of stderr
+        lines, captured via a tee on `sys.stderr.write`). These attrs
+        live alongside the body's locals, so `h.x` and `h.out` coexist.
+        `with Scratch:` (no `as`) skips capture — nothing reads it, so
+        the wrapper isn't installed.
 
   - `# in: <value>` comments
         build a queue feeding `input()` calls in source order. Real stdin is
@@ -111,6 +133,13 @@ features Casey actually uses:
         re-import fresh, or anything else where leftover notebook state
         would muddy the result.
 
+        Stdin is ALWAYS a closed pipe (even when the body has no
+        `# in:` directives), so an `input()` call that runs past the
+        queue raises EOFError immediately instead of blocking on the
+        parent's real stdin. That EOFError surfaces as a normal
+        `# err:` traceback annotation plus the non-zero exit line — no
+        more invisible hangs that need a ctrl-C to recover from.
+
   - `with "X" as RUN:` (and `with "X", RUN:`, with optional inline argv)
         Combined "save the body to disk AND run it in a fresh python3
         subprocess" form. Fuses the two-step `with "X":` + `with RUN:`
@@ -137,6 +166,15 @@ features Casey actually uses:
         rest of the notebook still parses and gets annotated (mirrors
         `with "X" as Scratch:`). Stronger isolation than `with "X" as
         Scratch:` (that one is in-process namespace isolation only).
+
+        Clean-save: same as `with "X" as Scratch:` — the file written
+        to disk has notebook annotation lines (`# in:` / `# out:` /
+        `# val:` / `# !err:` / `# err:`) stripped and triple-blank
+        runs collapsed to one blank, so the saved file stays a clean
+        runnable script across iterations. The subprocess still sees
+        the ORIGINAL body text via the in-memory queue, so the body's
+        own `# in:` directives still feed its stdin — only the file
+        on disk is cleaned.
 
 All v4 features (`# out:` / `# val:` / `# !err:` / magic save comments / v4
 string-splitting fix) carry over.

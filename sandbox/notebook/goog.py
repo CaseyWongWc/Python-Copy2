@@ -99,6 +99,10 @@ with Scratch as p3:
 # Figure: average of integers in a file (mydata.txt with one int per line).
 with "mydata.txt":
     105
+    # out: 6
+    # out: 3
+    # out: 1
+    # out: j
     65
     78
     90
@@ -304,7 +308,7 @@ with Scratch as a:
     print("1")
     # out: 1
 a
-# val: Scratch()
+# val: Scratch(out=['1'], err=[], outs='1')
 
 '''9
 J
@@ -312,10 +316,103 @@ M
 A
 8
 q'''
-# !err: --- ERROR ---
-# !err: Traceback (most recent call last):
-# !err:   File "<string>", line 132, in <module>
-# !err:   File "/home/runner/workspace/sandbox/notebook/goog.py", line 252, in <module>
-# !err:     Next
-# !err:     ^^^^^
-# !err: NameError: name 'Scratch' is not defined
+'''challenge activity
+10.1.1: Handling exceptions using try and except.
+712910.5105864.qx3zqy7
+Jump to level 1
+Type the program's output
+
+user_input = input()
+while user_input != "q":
+    try:
+        number = int(user_input)
+        print(number * 4)
+    except:
+        print("x")
+    user_input = input()
+print("e")
+Input
+9
+J
+M
+A
+8
+q
+Output
+1
+2
+3
+4
+Check
+Next
+1
+2
+3
+'''
+# in: 9
+# in: J
+# in: A
+# in: 8
+# in: q
+with Scratch as a:
+    
+    user_input = input()
+    # out: 9
+    while user_input != "q":
+        try:
+            number = int(user_input)
+            print(number * 4)
+            # out: 36
+            # out: 32
+        except:
+            print("x")
+            # out: x
+            # out: x
+        user_input = input()
+        # out: J
+        # out: A
+        # out: 8
+        # out: q
+    print("e")
+    # out: e
+with "my.py" as RUN:
+    # in: 9
+    # in: J
+    # in: A
+    # in: 8
+    # in: q
+    user_input = input()
+
+    while user_input != "q":
+        try:
+            number = int(user_input)
+            print(number * 4)
+
+        except:
+            print("x")
+
+        user_input = input()
+
+    print("e")
+    # out: 36
+    # out: x
+    # out: x
+    # out: 32
+    # out: e
+from Helpers.helpings import *
+setin("6","3","1","j","5","q")
+# val: None
+user_input = input()
+try:
+    while user_input != "q":
+        number = int(user_input)
+        print(number * 4)
+        # out: 24
+        # out: 12
+        # out: 4
+        user_input = input()
+except:
+    print("x")
+    # out: x
+print("e")
+# out: e

@@ -140,6 +140,36 @@ def _strip_old_annotations(src: str) -> str:
     return "".join(keep)
 
 
+_CLEAN_SAVE_IN_RE = re.compile(r"^\s*#\s*in:\s")
+
+
+def _strip_for_clean_save(src: str) -> str:
+    """Strip notebook-only annotation lines from a save+run body before
+    writing it to disk: `# in:`, `# out:`, `# val:`, `# !err:`, and the
+    `# err:` (lowercase) bash-style stderr annotation.
+
+    Then collapse runs of 3+ blank lines down to 2 so iterated saves
+    don't grow taller and taller. The saved file is meant to be a
+    standalone, shareable script — not a notebook with stale scaffolding.
+    """
+    keep = []
+    for line in src.splitlines(keepends=True):
+        stripped = line.lstrip()
+        if (
+            stripped.startswith(OUT_PREFIX)
+            or stripped.startswith(VAL_PREFIX)
+            or stripped.startswith(ERR_PREFIX)
+            or stripped.startswith(BASH_ERR_PREFIX)
+            or _CLEAN_SAVE_IN_RE.match(line)
+        ):
+            continue
+        keep.append(line)
+    result = "".join(keep)
+    # Collapse 3+ consecutive newlines to exactly 2 (one blank line).
+    result = re.sub(r"\n{3,}", "\n\n", result)
+    return result
+
+
 def _find_workspace_settings(start_dir: Path):
     """Return the nearest workspace settings.json path, if present."""
     for parent in (start_dir, *start_dir.parents):
@@ -237,6 +267,22 @@ WITH_SAVE_RUN_RE = re.compile(
     r'(?:\s+as\s+(Scratch|__|_)|\s*,\s*(Scratch|__|_))'
     r'(?:\s+as\s+(\w+))?'
     r'\s*:\s*$'
+)
+# Reversed save-and-run shape: `with Scratch: "name.py"`,
+# `with Scratch as a: "name.py"`, plus `_` / `__` aliases. Same
+# semantics as `with "name.py" as Scratch:` — body is the indented
+# block BELOW the header (the inline string is just the path target,
+# even though Python would otherwise parse it as the body). A trailing
+# `:` after the string is tolerated for users who instinctively type
+# one. Group meanings:
+#   1: indent
+#   2: scratch name (Scratch / _ / __)
+#   3: optional capture variable (e.g. `a` in `as a`)
+#   4: open quote (closing must match — handled by \4)
+#   5: path string
+WITH_SCRATCH_SAVE_RE = re.compile(
+    r'^(\s*)with\s+(Scratch|__|_)(?:\s+as\s+(\w+))?\s*:\s*'
+    r'(["\'])(.+?)\4\s*:?\s*$'
 )
 WITH_BASH_RE = re.compile(r'^(\s*)with\s+bash\s*:\s*$')
 # `with RUN:` and `with RUN: <args>` (e.g. `with RUN: -O`,
@@ -381,6 +427,15 @@ def _find_magic_with_lines(src: str):
                 capture = m_sr.group(6)
                 save_run_info[ln_idx] = (path, capture)
                 continue
+            m_ssr = WITH_SCRATCH_SAVE_RE.match(stripped_line)
+            if m_ssr:
+                # Reversed save+run shape: `with Scratch: "name.py"`.
+                # Same dict as the forward shape so Pass 1.4 handles
+                # both identically.
+                capture = m_ssr.group(3)
+                path = m_ssr.group(5)
+                save_run_info[ln_idx] = (path, capture)
+                continue
             if WITH_STR_RE.match(line):
                 str_lines.add(ln_idx)
             if WITH_SCRATCH_RE.match(line):
@@ -493,8 +548,17 @@ def _find_magic_with_lines(src: str):
                 continue
 
         if a.type == tokenize.NAME and a.string in ("Scratch", "_", "__"):
+            # Figure out whether this is `with Scratch:` (or `... as h:`)
+            # and where the colon sits — then peek past the colon for an
+            # immediate STRING token, which signals the reversed save+run
+            # shape `with Scratch: "name.py"` (or `with Scratch as a:
+            # "name.py"`). Same precedence rule as the forward save+run
+            # shape: route to `save_run_info` so the same line never
+            # also lands in `scratch_lines`.
+            capture_name = None
+            after_colon_idx = None
             if b.type == tokenize.OP and b.string == ":":
-                scratch_lines.add(t.start[0])
+                after_colon_idx = i + 3
             elif (
                 b.type == tokenize.NAME and b.string == "as"
                 and i + 4 < len(code)
@@ -502,6 +566,21 @@ def _find_magic_with_lines(src: str):
                 and code[i + 4].type == tokenize.OP
                 and code[i + 4].string == ":"
             ):
+                capture_name = code[i + 3].string
+                after_colon_idx = i + 5
+
+            if after_colon_idx is not None:
+                if (after_colon_idx < len(code)
+                        and code[after_colon_idx].type == tokenize.STRING):
+                    try:
+                        path_str = ast.literal_eval(
+                            code[after_colon_idx].string
+                        )
+                    except Exception:
+                        path_str = None
+                    if isinstance(path_str, str):
+                        save_run_info[t.start[0]] = (path_str, capture_name)
+                        continue
                 scratch_lines.add(t.start[0])
 
     return (str_lines, scratch_lines, bash_lines, run_lines,
@@ -795,7 +874,11 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path,
         if valid:
             target = _resolve_file_path(path_str, files_dir, notebook_dir)
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(body_text)
+            # Clean-save: strip notebook annotations (`# in:` / `# out:` /
+            # `# val:` / `# !err:` / `# err:`) before writing so the file
+            # on disk is a runnable script, not a notebook copy. Iterated
+            # saves stay flat instead of growing taller every run.
+            target.write_text(_strip_for_clean_save(body_text))
             files_written.append(str(target))
 
             # Same `__init__.py` auto-creation as Pass 1, so a save+run
@@ -903,7 +986,13 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path,
         if valid and body_text.strip():
             target = _resolve_file_path(path_str, files_dir, notebook_dir)
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(body_text)
+            # Clean-save: same rationale as Pass 1.4 — the saved file
+            # should be a runnable script, not a notebook with stale
+            # `# in:` / `# out:` / `# val:` / `# !err:` / `# err:` lines.
+            # NOTE: the subprocess still gets the ORIGINAL body_text via
+            # `run_blocks` below, so its own `# in:` directives still
+            # feed stdin (only the FILE on disk is cleaned).
+            target.write_text(_strip_for_clean_save(body_text))
             files_written.append(str(target))
 
             # Same `__init__.py` auto-creation as Pass 1, so a save+RUN
@@ -1229,6 +1318,13 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         f"sys.path.insert(0, {files_dir_repr})\n"
         "_orig_print = builtins.print\n"
         "_orig_input = builtins.input\n"
+        # Stack of active `with Scratch as a:` capture frames. Each frame
+        # is a dict {'out': [str], 'err': [str]}. `_tagged_print` and the
+        # tee'd `sys.stderr.write` push to the topmost frame so the
+        # `as a:` binding gets `a.out` / `a.err` / `a.outs` populated
+        # with whatever the body printed. The stack is push/pop'd by
+        # `__nb_capture__` (below) — empty stack means no capture, no-op.
+        "_capture_stack = []\n"
         "def _tagged_print(*args, **kwargs):\n"
         "    frame = inspect.currentframe().f_back\n"
         "    lineno = frame.f_lineno\n"
@@ -1236,9 +1332,12 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         "    kwargs2 = dict(kwargs); kwargs2['file'] = buf; kwargs2.pop('flush', None)\n"
         "    _orig_print(*args, **kwargs2)\n"
         "    text = buf.getvalue().rstrip('\\n')\n"
-        "    for piece in text.split('\\n'):\n"
+        "    pieces = text.split('\\n')\n"
+        "    for piece in pieces:\n"
         "        sys.stdout.write(f'__OUT__{lineno}__{piece}\\n')\n"
         "    sys.stdout.flush()\n"
+        "    if _capture_stack:\n"
+        "        _capture_stack[-1]['out'].extend(pieces)\n"
         "builtins.print = _tagged_print\n"
         "\n"
         f"_INPUTS = {repr(inputs)}\n"
@@ -1285,6 +1384,59 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         "    def __enter__(self): return __NB_NS__()\n"
         "    def __exit__(self, *exc): return False\n"
         "\n"
+        # Capture wrapper for `with Scratch as a:` (and reversed/save+run
+        # variants). The AST transform routes the `as a:` form through
+        # this so `a.out` / `a.err` / `a.outs` get populated with whatever
+        # the body printed (or wrote to sys.stderr). Without `as` we skip
+        # the wrapper entirely — no need to capture if nobody can see it.
+        #
+        # `out`  -> list[str], one entry per printed LINE (newline-split,
+        #           same pieces _tagged_print writes to stdout markers).
+        # `err`  -> list[str], one entry per stderr LINE (raw write tee).
+        # `outs` -> the joined `\\n`.join(out) string for `print(a.outs)`
+        #           one-liners — the most common 'type the output' shape.
+        #
+        # Stderr capture works by swapping sys.stderr for a tee object
+        # only while the body runs; the original stream is restored in a
+        # finally block. Print failures (or any exception) inside the
+        # body propagate normally; we still pop the frame and restore
+        # stderr so subsequent blocks aren't affected.
+        "class _NB_StderrTee:\n"
+        "    def __init__(self, inner): self._inner = inner; self._buf = ''\n"
+        "    def write(self, s):\n"
+        "        n = self._inner.write(s)\n"
+        "        if _capture_stack:\n"
+        "            self._buf += s\n"
+        "            while '\\n' in self._buf:\n"
+        "                line, self._buf = self._buf.split('\\n', 1)\n"
+        "                _capture_stack[-1]['err'].append(line)\n"
+        "        return n\n"
+        "    def flush(self):\n"
+        "        return self._inner.flush()\n"
+        "    def __getattr__(self, name):\n"
+        "        return getattr(self._inner, name)\n"
+        "\n"
+        "def __nb_capture__(ns_cls, fn):\n"
+        "    cap = {'out': [], 'err': []}\n"
+        "    _capture_stack.append(cap)\n"
+        "    _orig_stderr = sys.stderr\n"
+        "    sys.stderr = _NB_StderrTee(_orig_stderr)\n"
+        "    try:\n"
+        "        result = fn()\n"
+        "    finally:\n"
+        "        # Flush any trailing partial-line stderr text into err[].\n"
+        "        tee = sys.stderr\n"
+        "        if isinstance(tee, _NB_StderrTee) and tee._buf:\n"
+        "            cap['err'].append(tee._buf)\n"
+        "            tee._buf = ''\n"
+        "        sys.stderr = _orig_stderr\n"
+        "        _capture_stack.pop()\n"
+        "    ns = ns_cls(result)\n"
+        "    object.__setattr__(ns, 'out', cap['out'])\n"
+        "    object.__setattr__(ns, 'err', cap['err'])\n"
+        "    object.__setattr__(ns, 'outs', '\\n'.join(cap['out']))\n"
+        "    return ns\n"
+        "\n"
         f"_BARE_LINES = set({bare_lines_repr})\n"
         "\n"
         f"_src = open(r'{read_path}').read()\n"
@@ -1328,15 +1480,23 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         "        call = ast.Call(func=ast.Name(id=fname, ctx=ast.Load()),\n"
         "                        args=[], keywords=[])\n"
         "        if item.optional_vars is not None:\n"
+        # Capture form: route the function call through __nb_capture__
+        # so the body's stdout / stderr land on `a.out` / `a.err` /
+        # `a.outs` in addition to the namespace from `locals()`.
         "            wrapped = ast.Call(\n"
-        "                func=ast.Name(id='__NB_NS__', ctx=ast.Load()),\n"
-        "                args=[call], keywords=[])\n"
+        "                func=ast.Name(id='__nb_capture__', ctx=ast.Load()),\n"
+        "                args=[ast.Name(id='__NB_NS__', ctx=ast.Load()),\n"
+        "                      ast.Name(id=fname, ctx=ast.Load())],\n"
+        "                keywords=[])\n"
         "            target = item.optional_vars\n"
         "            target.ctx = ast.Store()\n"
         "            assign = ast.Assign(targets=[target], value=wrapped)\n"
         "            ast.copy_location(assign, node)\n"
         "            return [func, assign]\n"
         "        else:\n"
+        # No-capture form: nothing reads stdout/stderr afterwards, so
+        # skip the capture wrapper entirely (small perf win, also keeps
+        # behavior unchanged for users who never opted into capture).
         "            wrapped = ast.Call(\n"
         "                func=ast.Name(id='__NB_NS__', ctx=ast.Load()),\n"
         "                args=[call], keywords=[])\n"
@@ -1363,7 +1523,8 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         f"_code = compile(_tree, r'{file_attr_path}', 'exec')\n"
         "_globals = {'__name__': '__main__', '__file__': r'" + str(file_attr_path) + "',\n"
         "            '__nb_Scratch__': __nb_Scratch__,\n"
-        "            '__NB_NS__': __NB_NS__}\n"
+        "            '__NB_NS__': __NB_NS__,\n"
+        "            '__nb_capture__': __nb_capture__}\n"
         "exec(_code, _globals)\n"
     )
 
@@ -1482,9 +1643,15 @@ def _run_run_blocks(blocks: dict, files_dir: Path,
         # in the outer flow can't see these). Each `# in:` value
         # becomes one line on stdin, in source order.
         stdin_inputs = _parse_all_inputs(body_text)
-        stdin_payload = (
-            "".join(s + "\n" for s in stdin_inputs) if stdin_inputs else None
-        )
+        # Always pass a (possibly-empty) stdin payload so subprocess.run
+        # uses a PIPE and closes it after writing. Otherwise (input=None)
+        # the child inherits the parent's real stdin — and any extra
+        # `input()` call beyond the queue (or any input at all when the
+        # queue is empty) would block forever waiting on a tty that
+        # nobody's typing into. Closing the pipe means those input()
+        # calls see EOF and raise EOFError, which surfaces as a normal
+        # `# err:` traceback annotation instead of a hang.
+        stdin_payload = "".join(s + "\n" for s in stdin_inputs)
 
         # Make sandbox/files/ importable inside the subprocess so
         # `import main` (and other helpers Casey wrote with `with
