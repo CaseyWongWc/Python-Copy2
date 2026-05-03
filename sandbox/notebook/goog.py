@@ -222,3 +222,76 @@ with Scratch:
         # out: q
     print("e")
     # out: e
+##########################
+'''challenge activity
+10.1.1: Handling exceptions using try and except.
+712910.5105864.qx3zqy7
+Jump to level 1
+Type the program's output
+
+user_input = input()
+while user_input != "q":
+    try:
+        number = int(user_input)
+        print(number * 3)
+    except:
+        print("x")
+    user_input = input()
+print("e")
+Input
+9
+A
+L
+q
+Output
+1
+2
+3
+4
+Check
+Next
+1
+2
+3
+4
+
+Feedback?'''
+
+with "mypy.py":
+    # in: 9
+    # in: A
+    # in: L
+    # in: q
+    user_input = input()
+    while user_input != "q":
+        try:
+            number = int(user_input)
+            print(number * 3)
+        except:
+            print("x")
+        user_input = input()
+    print("e")
+
+
+##############################################################################
+# Same challenge, but using `as RUN` instead of `as Scratch`.
+# Saves to disk AND runs in a fresh subprocess. All stdout lands as one
+# consolidated # out: block under the LAST body line — no import needed.
+with "mypy.py" as RUN:
+    # in: 9
+    # in: A
+    # in: L
+    # in: q
+    user_input = input()
+    while user_input != "q":
+        try:
+            number = int(user_input)
+            print(number * 3)
+        except:
+            print("x")
+        user_input = input()
+    print("e")
+    # out: 27
+    # out: x
+    # out: x
+    # out: e
