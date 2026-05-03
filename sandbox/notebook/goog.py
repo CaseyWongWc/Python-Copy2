@@ -271,3 +271,5 @@ with "b.py" as RUN:
     # err:     hey=input()
     # err: EOFError: EOF when reading a line
     # !err: subprocess exited with code 1
+with bash:
+    
