@@ -102,6 +102,80 @@ def _idempotency():
 
 results.append(_idempotency())
 
+
+# 8. Stale `# in:` from earlier in source gets shadowed by a fresh
+#    `# in:` typed right before the next block (Casey's "got 1 instead
+#    of 676767" footgun).
+def _stale_input_shadowed():
+    src = (
+        '# in: 1\n'
+        'noop = "between blocks"\n'
+        '# in: 676767\n'
+        'with Scratch:\n'
+        '    v = input()\n'
+        '    print(v)\n'
+    )
+    out = _run(src, fname="_v7_stale.py")
+    ok = "# out: 676767" in out and "# out: 1\n" not in out
+    status = "PASS" if ok else "FAIL"
+    print(f"[{status}] stale `# in:` shadowed by newer batch")
+    if not ok:
+        print(out)
+    return ok
+
+
+# 9. Multi-input batch (3 # in: in a row, 3 input() calls): all values
+#    feed in order — batch-shadowing must NOT eat them.
+def _multi_input_batch():
+    src = (
+        '# in: a\n'
+        '# in: b\n'
+        '# in: c\n'
+        'with Scratch:\n'
+        '    print(input())\n'
+        '    print(input())\n'
+        '    print(input())\n'
+    )
+    out = _run(src, fname="_v7_multi.py")
+    # Each input() echoes value via mock_input AND print() prints it,
+    # so each appears 2x. We just need a, b, c to all show up in order.
+    pa, pb, pc = out.find("# out: a"), out.find("# out: b"), out.find("# out: c")
+    ok = 0 <= pa < pb < pc
+    status = "PASS" if ok else "FAIL"
+    print(f"[{status}] multi-input batch (3 in a row)")
+    if not ok:
+        print(out)
+    return ok
+
+
+# 10. Legacy `# RUN out:` lines get stripped before saving to disk
+#     (so they can't leak into `with "FILE.py" as RUN:` files).
+def _run_prefix_stripped():
+    target_dir = HERE / "_v7smoke_dir"
+    target_dir.mkdir(exist_ok=True)
+    files_dir = target_dir / "files"
+    files_dir.mkdir(exist_ok=True)
+    target = target_dir / "_v7_runstrip.py"
+    target.write_text(
+        'with "stripme.py" as RUN:\n'
+        '    print("hi")\n'
+        '    # RUN out: hi\n'
+    )
+    run_and_annotate(str(target), files_dir=files_dir)
+    saved = (files_dir / "stripme.py").read_text()
+    ok = "RUN out:" not in saved and 'print("hi")' in saved
+    status = "PASS" if ok else "FAIL"
+    print(f"[{status}] `# RUN out:` stripped from saved file")
+    if not ok:
+        print("--- saved ---")
+        print(saved)
+    return ok
+
+
+results.append(_stale_input_shadowed())
+results.append(_multi_input_batch())
+results.append(_run_prefix_stripped())
+
 print()
 print(f"{sum(results)}/{len(results)} v7 cases pass")
 

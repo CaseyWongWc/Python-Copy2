@@ -135,6 +135,7 @@ def _strip_old_annotations(src: str) -> str:
             or stripped.startswith(ERR_PREFIX)
             or stripped.startswith(BASH_ERR_PREFIX)
             or _AUTO_SHOW_RE.match(line)
+            or _RUN_PREFIX_RE.match(line)
         ):
             continue
         keep.append(line)
@@ -146,6 +147,12 @@ _CLEAN_SAVE_IN_RE = re.compile(r"^\s*#\s*in:\s")
 # every re-run so they don't pile up. Match a Python-identifier name
 # followed by `.out:` to avoid eating unrelated comments.
 _AUTO_SHOW_RE = re.compile(r"^\s*#\s*[A-Za-z_]\w*\.out:\s")
+# Legacy v6 RUN annotation (`# RUN out:` / `# RUN err:`). v7 emits plain
+# `# out:` / `# err:` for RUN blocks, but old hand-typed or pasted
+# notebooks still have the prefixed form sitting in source. Strip them
+# on every re-run so they don't (a) pile up and (b) leak into saved
+# files via `with "FILE.py" as RUN:` clean-save passes.
+_RUN_PREFIX_RE = re.compile(r"^\s*#\s*RUN\s+(out|err):\s")
 
 
 def _strip_for_clean_save(src: str) -> str:
@@ -167,6 +174,7 @@ def _strip_for_clean_save(src: str) -> str:
             or stripped.startswith(BASH_ERR_PREFIX)
             or _CLEAN_SAVE_IN_RE.match(line)
             or _AUTO_SHOW_RE.match(line)
+            or _RUN_PREFIX_RE.match(line)
         ):
             continue
         keep.append(line)
@@ -1276,17 +1284,48 @@ def _parse_all_inputs(src: str):
       - `# setin(...)`         -> tuple/list payload
       - `# setin a, b, c`      -> CSV payload
       - `# setin` then `# x`   -> block-style payload
-    Returns the combined list in source order.
+
+    Returns a flat list of (line_no, batch_id, value) triples. Inputs
+    that are CONSECUTIVE in source (only blank lines / unrelated
+    comments between them) share a `batch_id`. The shim's runtime
+    `_piped_input` uses batch_id to drop stale older batches when a
+    newer batch is reachable, so a leftover `# in: 1` from earlier in
+    the file can't silently swallow a fresh `# in: 676767` typed right
+    before a new block. Within a single batch, values are consumed in
+    source order (so multi-input prompts still work).
     """
     inputs = []
     lines = src.splitlines()
+    n = len(lines)
     i = 0
-    while i < len(lines):
+    batch_id = 0
+    last_input_line = -2  # so the very first `# in:` always opens a batch
+
+    def _push(line_no, value):
+        nonlocal batch_id, last_input_line
+        # Open a new batch whenever a non-input/setin line (real code)
+        # appears between this directive and the previous one. Blank
+        # lines and unrelated comments don't break the batch.
+        if last_input_line >= 0:
+            for k in range(last_input_line + 1, line_no - 1):
+                between = lines[k].strip()
+                if not between:
+                    continue
+                if between.startswith("#"):
+                    continue
+                # Real code between us and the last `# in:` -> new batch.
+                batch_id += 1
+                break
+        inputs.append((line_no, batch_id, value))
+        last_input_line = line_no - 1  # convert back to 0-indexed
+
+    while i < n:
         line = lines[i]
+        line_no_1based = i + 1
 
         m = re.match(r"^\s*#\s*in:\s*(.*)$", line)
         if m:
-            inputs.append(m.group(1))
+            _push(line_no_1based, m.group(1))
             i += 1
             continue
 
@@ -1294,25 +1333,28 @@ def _parse_all_inputs(src: str):
         if m:
             tail = m.group(1).strip()
             if tail:
+                values = []
                 if tail.startswith("(") or tail.startswith("["):
                     try:
                         value = ast.literal_eval(tail)
                         if isinstance(value, (list, tuple)):
-                            inputs.extend(str(v) for v in value)
+                            values = [str(v) for v in value]
                         else:
-                            inputs.append(str(value))
+                            values = [str(value)]
                     except Exception:
                         parts = [p.strip().strip("\"'") for p in tail.split(",")]
-                        inputs.extend(p for p in parts if p)
+                        values = [p for p in parts if p]
                 else:
                     parts = [p.strip().strip("\"'") for p in tail.split(",")]
-                    inputs.extend(p for p in parts if p)
+                    values = [p for p in parts if p]
+                for v in values:
+                    _push(line_no_1based, v)
                 i += 1
                 continue
 
             # Block form
             j = i + 1
-            while j < len(lines):
+            while j < n:
                 comment = re.match(r"^\s*#(.*)$", lines[j])
                 if not comment:
                     break
@@ -1321,7 +1363,7 @@ def _parse_all_inputs(src: str):
                     break
                 if re.match(r"^(zy:|fig:|quick:|note:|save:|setin\b|in:)", body):
                     break
-                inputs.append(body)
+                _push(j + 1, body)
                 j += 1
             i = j
             continue
@@ -1396,15 +1438,43 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         "        _capture_stack[-1]['out'].extend(pieces)\n"
         "builtins.print = _tagged_print\n"
         "\n"
+        # v7: input queue is line-aware. Each entry is (src_line,
+        # batch_id, value). At each input() call we pick the most
+        # recent reachable batch (start_line <= current line) and
+        # consume its next value; any older reachable batches that are
+        # still un-consumed get dropped (stale `# in:` from earlier
+        # blocks that never got read can no longer silently swallow a
+        # fresh `# in:` typed right before a new block).
         f"_INPUTS = {repr(inputs)}\n"
-        "_input_iter = iter(_INPUTS)\n"
+        "_input_consumed = [False] * len(_INPUTS)\n"
         "def _piped_input(prompt=''):\n"
         "    frame = inspect.currentframe().f_back\n"
         "    lineno = frame.f_lineno\n"
-        "    try:\n"
-        "        value = str(next(_input_iter))\n"
-        "    except StopIteration:\n"
-        "        return _orig_input(prompt)\n"
+        "    # Reachable = un-consumed `# in:` whose source line <= current.\n"
+        "    reachable = [i for i, (ln, _b, _v) in enumerate(_INPUTS)\n"
+        "                 if not _input_consumed[i] and ln <= lineno]\n"
+        "    if reachable:\n"
+        "        # Drop stale older batches; consume the newest batch in order.\n"
+        "        active_batch = max(_INPUTS[i][1] for i in reachable)\n"
+        "        for i in reachable:\n"
+        "            if _INPUTS[i][1] < active_batch:\n"
+        "                _input_consumed[i] = True\n"
+        "        chosen = next(i for i in reachable\n"
+        "                      if _INPUTS[i][1] == active_batch\n"
+        "                      and not _input_consumed[i])\n"
+        "    else:\n"
+        "        # No reachable inputs. Legacy FIFO fallback: consume the\n"
+        "        # first un-consumed input regardless of line. Keeps v6\n"
+        "        # behavior for cases where input() runs before its `# in:`\n"
+        "        # in source order (e.g. when `# in:` lives inside a block\n"
+        "        # body whose lineno tracking can't reach the call site).\n"
+        "        remaining = [i for i in range(len(_INPUTS))\n"
+        "                     if not _input_consumed[i]]\n"
+        "        if not remaining:\n"
+        "            return _orig_input(prompt)\n"
+        "        chosen = remaining[0]\n"
+        "    _input_consumed[chosen] = True\n"
+        "    value = str(_INPUTS[chosen][2])\n"
         "    sys.stdout.write(f'__OUT__{lineno}__{prompt}{value}\\n')\n"
         "    sys.stdout.flush()\n"
         "    return value\n"
@@ -1744,7 +1814,9 @@ def _run_run_blocks(blocks: dict, files_dir: Path,
         # `runnable` source already, so `_parse_all_inputs(runnable)`
         # in the outer flow can't see these). Each `# in:` value
         # becomes one line on stdin, in source order.
-        stdin_inputs = _parse_all_inputs(body_text)
+        # `_parse_all_inputs` now returns (line_no, batch_id, value)
+        # triples; the subprocess only needs the values, in order.
+        stdin_inputs = [v for (_ln, _b, v) in _parse_all_inputs(body_text)]
         # Always pass a (possibly-empty) stdin payload so subprocess.run
         # uses a PIPE and closes it after writing. Otherwise (input=None)
         # the child inherits the parent's real stdin — and any extra

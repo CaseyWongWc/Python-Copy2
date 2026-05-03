@@ -69,9 +69,9 @@ with bash:
     pwd
     # out: /home/runner/workspace/sandbox/files
     ls | head -3
+    # out: a.py
     # out: asdfasdlfjkdhasdlkfasdf.py
-    # out: demo_run1.py
-    # out: demo_run.py
+    # out: b.py
 
 
 # ---  6) with RUN:  -----------------------------------------------
@@ -117,14 +117,14 @@ with "demo_run.py" as RUN:
 #   - `# in:  hi`    YOU type these to feed input()
 # ===================================================================
 ##############################################################################
-# in: 1
+# in: 99
 
 with "z.py" as a:
     v = input()
-    # out: 1
+    # out: 99
     print(v)
-    # out: 1
-    # a.out: 1
+    # out: 99
+    # a.out: 99
 1
 # val: 1
 # in: 1
@@ -134,15 +134,11 @@ with bash:
     3
     # err: /bin/sh: 1: 3: not found
     # !err: exit code 127
-    python z.py 1
-    # err: Traceback (most recent call last):
-    # err:   File "/home/runner/workspace/sandbox/files/z.py", line 1, in <module>
-    # err:     v = input()
-    # err:         ^^^^^^^
-    # err: EOFError: EOF when reading a line
-    # !err: exit code 1
-    2
-    # err: /bin/sh: 1: 2: not found
+    python z.py <<< "99"
+    # err: /bin/sh: 1: Syntax error: redirection unexpected
+    # !err: exit code 2
+    9
+    # err: /bin/sh: 1: 9: not found
     # !err: exit code 127
 2
 # val: 2
@@ -150,7 +146,6 @@ with bash:
 with "z.py" as RUN:
     v = input()
     print(v)
-    # RUN out: 1
     # err: Traceback (most recent call last):
     # err:   File "/home/runner/workspace/sandbox/files/z.py", line 1, in <module>
     # err:     v = input()
@@ -166,7 +161,6 @@ with bash:
     cat z.py
     # out: v = input()
     # out: print(v)
-    # out: # RUN out: 1
 with "z.py" as _:
     v = input()
     # out: 1
@@ -181,7 +175,6 @@ with bash:
     cat z.py
     # out: v = input()
     # out: print(v)
-    # out: # RUN out: 1
 with "asdfasdlfjkdhasdlkfasdf.py" as _:
     v = input()
     # out: 1
@@ -216,7 +209,6 @@ with bash:
 with "hey2.py" as RUN:
     h=input()
     print("hey")
-    # RUN out: hey
     # err: Traceback (most recent call last):
     # err:   File "/home/runner/workspace/sandbox/files/hey2.py", line 1, in <module>
     # err:     h=input()
@@ -229,7 +221,7 @@ with "hey2.py" as RUN:
     print("hey")
     # out: hey
 
-# in: 3
+# in: 30jkjk
 with r"hey2.py" as Scratch:
     h=input()
     # out: 1
@@ -238,7 +230,7 @@ with r"hey2.py" as Scratch:
 # in: 676767
 with r"hey4.py" as b:
     m=input()
-    # out: 1
+    # out: 676767
     print("hey")
     # out: hey
     # b.out: hey
@@ -251,3 +243,34 @@ with bash:
     # err:       ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: exit code 1
+# in: 67
+# in: abc
+with r"z123.py" as Scratch2:
+     v = input()
+     # out: 67
+     print(v)
+     # out: 67
+     # Scratch2.out: 67
+3
+# val: 3
+# in: g
+with "a.py"  as Scratch:
+    print("hello")
+    # out: hello
+    input()
+    # out: g
+    # val: g
+
+with "b.py":
+    hey=input()
+with bash:
+    python3 b.py
+    # err: Traceback (most recent call last):
+    # err:   File "/home/runner/workspace/sandbox/files/b.py", line 1, in <module>
+    # err:     hey=input()
+    # err:         ^^^^^^^
+    # err: EOFError: EOF when reading a line
+    # !err: exit code 1
+    
+with "b.py" as RUN:
+    hey=input()
