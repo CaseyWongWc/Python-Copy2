@@ -264,11 +264,16 @@ with "a.py"  as Scratch:
 with "b.py":
     hey=input()
 with bash:
-    python3 b.py >>> "123"
+    python3 "b.py" >>> "123"
     # err: /bin/sh: 1: Syntax error: redirection unexpected
     # !err: exit code 2
-    
-with "b.py" as RUN:
+    1
+    # err: /bin/sh: 1: 1: not found
+    # !err: exit code 127
+    python3 b.py <<< "123"
+    # err: /bin/sh: 1: Syntax error: redirection unexpected
+    # !err: exit code 2
+with "b.py" as Scratch:
     hey=input()
     # err: Traceback (most recent call last):
     # err:   File "/home/runner/workspace/sandbox/files/b.py", line 1, in <module>
@@ -276,3 +281,5 @@ with "b.py" as RUN:
     # err:         ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: subprocess exited with code 1
+with "b.py" as RUN:
+    hey=input()
