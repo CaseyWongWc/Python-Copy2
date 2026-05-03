@@ -1,39 +1,100 @@
-with open("test123.py", "w") as file:
-# out: This is a test file.
-    file.write('print("This is a test file.")\n')
-    # val: 30
-    for thing in range(0,5):
-        print(thing)
-        # out: 0
-        # out: 1
-        # out: 2
-        # out: 3
-        # out: 4
-import test123
-with bash:
-    git status
-    # out: On branch main
-    # out: Your branch is up to date with 'origin/main'.
-    # out: 
-    # out: Changes not staged for commit:
-    # out:   (use "git add <file>..." to update what will be committed)
-    # out:   (use "git restore <file>..." to discard changes in working directory)
-    # out: 	modified:   ../notebook/goog.py
-    # out: 
-    # out: no changes added to commit (use "git add" and/or "git commit -a")
-    bash push_replit.sh
-    # out: 📦 Staging all changes...
-    # out: 🔄 Syncing with remote (rebase)...
-    # out: ⚠️  Conflict detected — accepting local version of conflicted files...
-    # out: 🚀 Pushing to origin/main...
-    # out: ✅ Done! Code is live on GitHub/Replit.
-    # err: error: cannot pull with rebase: You have unstaged changes.
-    # err: error: Please commit or stash them.
-    # err: fatal: no rebase in progress
-    # err: Everything up-to-date
-    .git add
-    # err: /bin/sh: 1: .git: not found
-    # !err: exit code 127
+##############################################################################
+##############################################################################
+with "README.MD":
+    '''# zyBooks Chapter 10 (Sections 10.1–10.12)
+    ---
 
+    ## Checklist + scores
 
-    
+    | Section | Earned | Possible | Status | Notes |
+    | --- | --- | --- | --- | --- |
+    | --- | ---: | ---: | --- | --- |
+    | 10.1 | 3 | 10 | ⏳ In progress | Participation: 10.1.1 (1/1), 10.1.2 (2/2). Challenges: 10.1.1 (0/4), 10.1.2 (0/3). |
+    | 10.2 | 0 | 9 | ⬜ Not started | Participation: 10.2.1 (0/1), 10.2.2 (0/3). Challenges: 10.2.1 (0/3), 10.2.2 (0/2). |
+    | 10.3 | 0 | 7 | ⬜ Not started | Participation: 10.3.1 (0/1). Challenges: 10.3.1 (0/4), 10.3.2 (0/2). |
+    | 10.4 | 0 | 4 | ⬜ Not started | Participation: 10.4.1 (0/3). Challenge: 10.4.1 (0/1). |
+    | 10.5 | 0 | 4 | ⬜ Not started | Participation: 10.5.1 (0/1), 10.5.2 (0/2). Challenge: 10.5.1 (0/1). |
+    | 10.6 | 0 | 3 | ⬜ Not started | Participation: 10.6.1 (0/3). |
+    | 10.7 | 0 | 10 | ⬜ Not started | Lab: 10.7.1 (0/10). |
+    | 10.8 | 0 | 10 | ⬜ Not started | Lab: 10.8.1 (0/10). |
+    | 10.9 | 0 | 10 | ⬜ Not started | Lab: 10.9.1 (0/10). |
+    | 10.10 | 0 | 10 | ⬜ Not started | Lab: 10.10.1 (0/10). |
+    | 10.11 | 0 | 10 | ⬜ Not started | Lab: 10.11.1 (0/10). |
+    | 10.12 | 0 | 10 | ⬜ Not started | Lab: 10.12.1 (0/10). |
+
+    ---
+
+    ## Links
+
+    - [Section 10.1](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/1)
+    - [Section 10.2](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/2)
+    - [Section 10.3](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/3)
+    - [Section 10.4](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/4)
+    - [Section 10.5](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/5)
+    - [Section 10.6](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/6)
+    - [Section 10.7](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/7)
+    - [Section 10.8](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/8)
+    - [Section 10.9](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/9)
+    - [Section 10.10](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/10)
+    - [Section 10.11](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/11)
+    - [Section 10.12](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/12)
+    '''
+
+2+3
+# val: 5
+##############################################################################
+##############################################################################
+print(r'''{1
+# out: {1
+# out:       7
+# out:                         9
+# out:       
+# out:       3
+# out: 
+# out:                     5
+# out:            2}
+      7
+                        9
+      
+      3
+
+                    5
+           2}''')
+
+print(1+2)
+# out: 3
+
+2;3
+# val: 2
+# val: 3
+5
+# val: 5
+
+7
+# val: 7
+2
+# val: 2
+4
+# val: 4
+from Helpers.helpings import *
+INFO()
+# val: /workspaces/Python-Copy2/sandbox/files
+# val: Sat May  2 23:37:32 UTC 2026
+# val: ./data2.txt
+# val: ./helpings.py
+# val: ./main.py
+# val: ./temp.py
+# val: ./data3.txt
+# val: ./names.txt
+# val: ./README.MD
+# val: ./S10_1/README.MD
+# val: ./data1.txt
+# val: ./tally.py
+with "tally.py" as Scratch:
+    a = 5
+    b = 7.5
+    total = a + b
+    print(total)
+    # out: 12.5
+1+1
+# val: 2

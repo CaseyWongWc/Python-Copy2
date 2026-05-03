@@ -1,255 +1,66 @@
+
+with open("test123.py", "w") as file:
+# out: This is a test file.
+    file.write('print("This is a test file.")\n')
+    # val: 30
+    for thing in range(0,5):
+        print(thing)
+        # out: 0
+        # out: 1
+        # out: 2
+        # out: 3
+        # out: 4
+import test123
+'''with bash:
+    git status
+    bash push_replit.sh
+    .git add
+
+
+    
+'''
+
+with "demo_run.py" as RUN:
+    print("saved AND run as a subprocess")
+    for i in range(3):
+        print("tick", i)
+        # out: saved AND run as a subprocess
+        # out: tick 0
+        # out: tick 1
+        # out: tick 2
 with bash:
-    echo "This is a shell command running inside the notebook!"
-    # out: This is a shell command running inside the notebook!
-    echo "Current directory contents:"
-    # out: Current directory contents:
-    ls -alF
-    # out: total 52
-    # out: drwxrwxrwx+ 4 codespace codespace 4096 May  2 23:01 ./
-    # out: drwxrwxrwx+ 5 codespace codespace 4096 May  2 22:54 ../
-    # out: drwxrwxrwx+ 2 codespace codespace 4096 May  2 23:02 .run_blocks/
-    # out: -rw-rw-rw-  1 codespace codespace 2356 May  2 23:37 README.MD
-    # out: drwxrwxrwx+ 2 codespace codespace 4096 May  2 22:53 S10_1/
-    # out: -rw-rw-rw-  1 codespace codespace   21 May  2 11:36 data1.txt
-    # out: -rw-rw-rw-  1 codespace codespace   12 May  2 11:36 data2.txt
-    # out: -rw-rw-rw-  1 codespace codespace   28 May  2 11:36 data3.txt
-    # out: -rw-rw-rw-  1 codespace codespace 3106 May  2 23:37 helpings.py
-    # out: -rw-rw-rw-  1 codespace codespace  105 May  2 11:36 main.py
-    # out: -rw-rw-rw-  1 codespace codespace   14 May  2 11:36 names.txt
-    # out: -rw-rw-rw-  1 codespace codespace   41 May  2 23:37 tally.py
-    # out: -rw-rw-rw-  1 codespace codespace  105 May  2 11:36 temp.py
-1+1
-# val: 2
-2
-# val: 2
-
-with "helpings.py":
-    from pickle import GLOBAL
-    from pathlib import Path
-    import shutil
-    import subprocess
-    import builtins
-
-
-    ROOT = Path.cwd()
-
-
-    def here():
-        return ROOT
-
-
-    def make_dir(path):
-        p = ROOT / path
-        p.mkdir(parents=True, exist_ok=True)
-        return p
-
-
-    def make_file(path, content=""):
-        p = ROOT / path
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(content, encoding="utf-8")
-        return p
-
-
-    def remove_path(path):
-        p = ROOT / path
-        if p.is_dir():
-            shutil.rmtree(p)
-        elif p.exists():
-            p.unlink()
-        return p
-
-
-    def run_cmd(*cmd):
-        result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
-        print(result.stdout)
-        if result.stderr:
-            print(result.stderr)
-        return result.returncode
-
-
-    def cmd(*cmd):
-        result = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
-        if result.stderr:
-            return result.stderr
-        return result.stdout
-
-
-    def ret_file(path):
-        p = ROOT / path
-        return p.read_text(encoding="utf-8")
-
-
-    def list_project_files():
-        return cmd("find", ".", "-maxdepth", "2", "-type", "f")
-
-
-    def lsalf():
-        return cmd("ls", "-alF")
-
-
-    def INFO():
-        return str(ROOT) + "\n" + cmd("date") + list_project_files()
-
-
-    def setin(*inputs):
-        """
-        A helper function to set test inputs for the input() function.
-        Usage:
-        setin("input1", "input2", "input3")
-        This will set up the input() function to return "input1" on the first call,
-        "input2" on the second call, and so on.
-        To reset to normal input behavior, call setin() with no arguments or None:
-        setin()
-        """
-        if inputs:
-            input_iter = iter(inputs)
-
-            def mock_input(prompt=""):
-                try:
-                    value = next(input_iter)
-                    print(f"{prompt}{value}")
-                    return value
-                except StopIteration:
-                    raise EOFError("No more inputs for testing")
-
-            builtins.input = mock_input
-        else:
-            builtins.input = builtins._original_input_backup
-
-
-    def quiz(section_id, questions, prompt_label="Answer"):
-        """
-        Run a multi-question participation activity.
-
-        questions = list of (question_text, expected_answer) tuples.
-        Uses your existing setin() for staged inputs.
-
-        Example:
-            setin("True", "False", "True")
-            quiz("11.1.2", [
-                ("car_sticker_price", True),
-                ("todays_temperature", False),
-                ("inventory_quantity", True),
-            ])
-        """
-        print(f"━━━ ✏️  Quiz {section_id} ━━━")
-        correct = 0
-        for i, (item, expected) in enumerate(questions, 1):
-            try:
-                answer = input(f"  {i}) {item}: ")
-            except EOFError:
-                print(f"  ⚠️  No more staged inputs at question {i}")
-                break
-
-            ok = str(answer).strip().lower() == str(expected).strip().lower()
-            if ok:
-                print(f"     ✅ Correct!")
-                correct += 1
-            else:
-                print(f"     ❌ Got '{answer}', expected '{expected}'")
-
-        total = len(questions)
-        print(f"━━━ Score: {correct}/{total} ━━━\n")
-        return correct, total
-##############################################################################
-
-##############################################################################
-with "README.MD":
-    '''# zyBooks Chapter 10 (Sections 10.1–10.12)
-    ---
-
-    ## Checklist + scores
-
-    | Section | Earned | Possible | Status | Notes |
-    | --- | --- | --- | --- | --- |
-    | --- | ---: | ---: | --- | --- |
-    | 10.1 | 3 | 10 | ⏳ In progress | Participation: 10.1.1 (1/1), 10.1.2 (2/2). Challenges: 10.1.1 (0/4), 10.1.2 (0/3). |
-    | 10.2 | 0 | 9 | ⬜ Not started | Participation: 10.2.1 (0/1), 10.2.2 (0/3). Challenges: 10.2.1 (0/3), 10.2.2 (0/2). |
-    | 10.3 | 0 | 7 | ⬜ Not started | Participation: 10.3.1 (0/1). Challenges: 10.3.1 (0/4), 10.3.2 (0/2). |
-    | 10.4 | 0 | 4 | ⬜ Not started | Participation: 10.4.1 (0/3). Challenge: 10.4.1 (0/1). |
-    | 10.5 | 0 | 4 | ⬜ Not started | Participation: 10.5.1 (0/1), 10.5.2 (0/2). Challenge: 10.5.1 (0/1). |
-    | 10.6 | 0 | 3 | ⬜ Not started | Participation: 10.6.1 (0/3). |
-    | 10.7 | 0 | 10 | ⬜ Not started | Lab: 10.7.1 (0/10). |
-    | 10.8 | 0 | 10 | ⬜ Not started | Lab: 10.8.1 (0/10). |
-    | 10.9 | 0 | 10 | ⬜ Not started | Lab: 10.9.1 (0/10). |
-    | 10.10 | 0 | 10 | ⬜ Not started | Lab: 10.10.1 (0/10). |
-    | 10.11 | 0 | 10 | ⬜ Not started | Lab: 10.11.1 (0/10). |
-    | 10.12 | 0 | 10 | ⬜ Not started | Lab: 10.12.1 (0/10). |
-
-    ---
-
-    ## Links
-
-    - [Section 10.1](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/1)
-    - [Section 10.2](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/2)
-    - [Section 10.3](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/3)
-    - [Section 10.4](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/4)
-    - [Section 10.5](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/5)
-    - [Section 10.6](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/6)
-    - [Section 10.7](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/7)
-    - [Section 10.8](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/8)
-    - [Section 10.9](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/9)
-    - [Section 10.10](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/10)
-    - [Section 10.11](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/11)
-    - [Section 10.12](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/12)
-    '''
-
-2+3
-# val: 5
-##############################################################################
-##############################################################################
-print(r'''{1
-# out: {1
-# out:       7
-# out:                         9
-# out:       
-# out:       3
-# out: 
-# out:                     5
-# out:            2}
-      7
-                        9
-      
-      3
-
-                    5
-           2}''')
-
-print(1+2)
-# out: 3
-
-2;3
-# val: 2
-# val: 3
-5
-# val: 5
-
-7
-# val: 7
-2
-# val: 2
-4
-# val: 4
-from Helpers.helpings import *
-INFO()
-# val: /workspaces/Python-Copy2/sandbox/files
-# val: Sat May  2 23:37:32 UTC 2026
-# val: ./data2.txt
-# val: ./helpings.py
-# val: ./main.py
-# val: ./temp.py
-# val: ./data3.txt
-# val: ./names.txt
-# val: ./README.MD
-# val: ./S10_1/README.MD
-# val: ./data1.txt
-# val: ./tally.py
-with "tally.py" as Scratch:
-    a = 5
-    b = 7.5
-    total = a + b
-    print(total)
-    # out: 12.5
-1+1
-# val: 2
+    echo "hi from the shell"
+    # out: hi from the shell
+    pwd
+    # out: /workspaces/Python-Copy2/sandbox/files
+    ls | head -3
+    # out: README.MD
+    # out: S10_1
+    # out: __pycache__
+    ls -alf
+    # out: data2.txt
+    # out: helpings.py
+    # out: main.py
+    # out: .run_blocks
+    # out: temp.py
+    # out: data3.txt
+    # out: test123.py
+    # out: push_replit.sh
+    # out: names.txt
+    # out: demo_run.py
+    # out: ..
+    # out: __pycache__
+    # out: README.MD
+    # out: .
+    # out: S10_1
+    # out: data1.txt
+    # out: tally.py
+    cat data1.txt
+    # out: Tia 31
+    # out: Eve 14
+    # out: Fay 34
+    cat demo_run.py
+    # out: print("saved AND run as a subprocess")
+    # out: for i in range(3):
+    # out:     print("tick", i)
+    
