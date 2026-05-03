@@ -67,11 +67,11 @@ with bash:
     echo "hi from the shell"
     # out: hi from the shell
     pwd
-    # out: /workspaces/Python-Copy2/sandbox/files
+    # out: /home/runner/workspace/sandbox/files
     ls | head -3
     # out: asdfasdlfjkdhasdlkfasdf.py
-    # out: demo_run.py
     # out: demo_run1.py
+    # out: demo_run.py
 
 
 # ---  6) with RUN:  -----------------------------------------------
@@ -83,7 +83,7 @@ with RUN:
     import sys
     print("python:", sys.version_info[:2])
     # out: I am a clean python process
-    # out: python: (3, 13)
+    # out: python: (3, 11)
 
 
 # ---  7) with "X" as Scratch:  ------------------------------------
@@ -136,8 +136,9 @@ with bash:
     # !err: exit code 127
     python z.py 1
     # err: Traceback (most recent call last):
-    # err:   File "/workspaces/Python-Copy2/sandbox/files/z.py", line 1, in <module>
+    # err:   File "/home/runner/workspace/sandbox/files/z.py", line 1, in <module>
     # err:     v = input()
+    # err:         ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: exit code 1
     2
@@ -151,8 +152,9 @@ with "z.py" as RUN:
     print(v)
     # RUN out: 1
     # err: Traceback (most recent call last):
-    # err:   File "/workspaces/Python-Copy2/sandbox/files/z.py", line 1, in <module>
+    # err:   File "/home/runner/workspace/sandbox/files/z.py", line 1, in <module>
     # err:     v = input()
+    # err:         ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: subprocess exited with code 1
 with "z.py":
@@ -202,18 +204,23 @@ with bash:
     # out: print("hey")
     python hey2.py
     # err: Traceback (most recent call last):
-    # err:   File "/workspaces/Python-Copy2/sandbox/files/hey2.py", line 1, in <module>
+    # err:   File "/home/runner/workspace/sandbox/files/hey2.py", line 1, in <module>
     # err:     h=input()
+    # err:       ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: exit code 1
+    2
+    # err: /bin/sh: 1: 2: not found
+    # !err: exit code 127
 # in: 1
 with "hey2.py" as RUN:
     h=input()
     print("hey")
     # RUN out: hey
     # err: Traceback (most recent call last):
-    # err:   File "/workspaces/Python-Copy2/sandbox/files/hey2.py", line 1, in <module>
+    # err:   File "/home/runner/workspace/sandbox/files/hey2.py", line 1, in <module>
     # err:     h=input()
+    # err:       ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: subprocess exited with code 1
 with "hey2.py" as RUN:
@@ -239,7 +246,8 @@ with r"hey4.py" as b:
 with bash:
     python hey4.py
     # err: Traceback (most recent call last):
-    # err:   File "/workspaces/Python-Copy2/sandbox/files/hey4.py", line 1, in <module>
+    # err:   File "/home/runner/workspace/sandbox/files/hey4.py", line 1, in <module>
     # err:     m=input()
+    # err:       ^^^^^^^
     # err: EOFError: EOF when reading a line
     # !err: exit code 1
