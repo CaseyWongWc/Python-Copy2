@@ -42,6 +42,9 @@ TARGET = str(HERE / "goog.py")
 # inlined in goog.py.
 STRIP_AFTER_SAVE = False
 
+# Mark runner context so goog.py can avoid redirect recursion.
+os.environ["GOOG_NOTEBOOK_RUNNER"] = "1"
+
 
 def run_once() -> str:
     result = run_and_annotate(TARGET)
