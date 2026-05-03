@@ -1,3 +1,7 @@
+# in: 9
+# in: A
+# in: L
+# in: q
 user_input = input()
 while user_input != "q":
     try:

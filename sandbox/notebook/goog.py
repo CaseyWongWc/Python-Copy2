@@ -300,7 +300,11 @@ with "mypy.py" as RUN:
     # out: x
     # out: e
 
-
+with Scratch as a:
+    print("1")
+    # out: 1
+a
+# val: Scratch()
 '''9
 J
 M
@@ -308,6 +312,3 @@ A
 8
 q'''
 
-with Scratch as "mypy.py":
-    # in: 9
-print(1)
