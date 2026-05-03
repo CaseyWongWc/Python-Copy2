@@ -188,3 +188,37 @@ with Scratch:
     # out: 
     my_file.close()
     # val: None
+1
+# val: 1
+##############################################################################
+'''CHALLENGE 10.1.1 (carry-over from Ch 10): Handling exceptions.
+user_input = input()
+while user_input != "q":
+    try:
+        number = int(user_input)
+        print(number * 3)
+    except:
+        print("x")
+    user_input = input()
+print("e")
+Input: 9 / 5 / q
+'''
+with Scratch:
+    # in: 9
+    # in: 5
+    # in: q
+    user_input = input()
+    # out: 9
+    while user_input != "q":
+        try:
+            number = int(user_input)
+            print(number * 3)
+            # out: 27
+            # out: 15
+        except:
+            print("x")
+        user_input = input()
+        # out: 5
+        # out: q
+    print("e")
+    # out: e
