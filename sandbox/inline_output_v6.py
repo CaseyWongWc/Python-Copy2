@@ -6,6 +6,8 @@ What's NEW in v6 (on top of v4):
 
 1.  `with "filename.ext":`
         The indented block becomes the file's CONTENTS (raw text, dedented).
+    Optional setting `sandbox.sameLevelRawWithBlocks = true` also lets
+    a same-level triple-quoted body be treated as verbatim raw text.
         The block does NOT have to be valid Python.
         Bare name (e.g. "input.txt") -> goes to <sandbox>/files/<name>.
         Path containing /            -> relative to the notebook directory.
@@ -43,6 +45,7 @@ Everything else from v4 still applies:
 
 import ast
 import io
+import json
 import os
 import re
 import shlex
@@ -57,6 +60,7 @@ OUT_PREFIX = "# out:"
 VAL_PREFIX = "# val:"
 ERR_PREFIX = "# !err:"
 BASH_ERR_PREFIX = "# err:"
+SAME_LEVEL_RAW_WITH_SETTING = "sandbox.sameLevelRawWithBlocks"
 
 
 # ---------- magic comment parsing (auto-save) ----------
@@ -134,6 +138,28 @@ def _strip_old_annotations(src: str) -> str:
             continue
         keep.append(line)
     return "".join(keep)
+
+
+def _find_workspace_settings(start_dir: Path):
+    """Return the nearest workspace settings.json path, if present."""
+    for parent in (start_dir, *start_dir.parents):
+        candidate = parent / ".vscode" / "settings.json"
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def _read_bool_workspace_setting(start_dir: Path, key: str, default: bool) -> bool:
+    """Read a boolean workspace setting, falling back cleanly on any error."""
+    settings_path = _find_workspace_settings(start_dir)
+    if settings_path is None:
+        return default
+    try:
+        data = json.loads(settings_path.read_text())
+    except Exception:
+        return default
+    value = data.get(key, default)
+    return value if isinstance(value, bool) else default
 
 
 # ---------- whitespace normalization ----------
@@ -236,6 +262,7 @@ WITH_SAVE_RUN_RUN_RE = re.compile(
     r'(\s+as\s+RUN|\s*,\s*RUN)'
     r'\s*:\s*(.*?)\s*$'
 )
+RAW_TEXT_MARKERS = {"\"\"\"", "'''"}
 
 
 def _find_magic_with_lines(src: str):
@@ -537,12 +564,50 @@ def _gather_block_end(lines, start_idx: int, with_indent: int) -> int:
     return j
 
 
-def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
+def _gather_raw_marker_end(lines, start_idx: int, marker: str):
+    """Return the index of the closing raw-text marker line, if present."""
+    j = start_idx + 1
+    while j < len(lines):
+        if lines[j].strip() == marker:
+            return j
+        j += 1
+    return None
+
+
+def _extract_str_block_body(lines, start_idx: int, with_indent: int,
+                            allow_same_level_raw: bool):
+    """Extract a `with "X":` body as dedented text or triple-quoted raw text."""
+    if allow_same_level_raw:
+        marker_idx = start_idx + 1
+        while marker_idx < len(lines) and lines[marker_idx].strip() == "":
+            marker_idx += 1
+
+        if marker_idx < len(lines):
+            marker = lines[marker_idx].strip()
+            if marker in RAW_TEXT_MARKERS:
+                closing_idx = _gather_raw_marker_end(lines, marker_idx, marker)
+                if closing_idx is not None:
+                    return lines[marker_idx + 1:closing_idx], closing_idx + 1
+
+    block_end = _gather_block_end(lines, start_idx, with_indent)
+
+    body_end = block_end
+    while body_end > start_idx + 1 and lines[body_end - 1].strip() == "":
+        body_end -= 1
+
+    body_lines = lines[start_idx + 1:body_end]
+    real_indent = _smallest_indent(body_lines, with_indent)
+    return _dedent_body(body_lines, real_indent), block_end
+
+
+def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path,
+                            *, allow_same_level_raw: bool = False):
     """
     Walk the source line by line.
 
-    For every `with "filename":` block:
-      - extract the body, dedent, write to disk
+        For every `with "filename":` block:
+            - extract the body and dedent it, or if enabled by settings honor a
+                triple-quoted same-level raw body, then write to disk
       - replace the `with` line + body lines with blank lines (line numbers
         in the rest of the file are preserved exactly)
 
@@ -635,18 +700,9 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
         with_indent = len(indent_str)
         path_str = m.group(3)
 
-        block_end = _gather_block_end(lines, i, with_indent)
-
-        # Trim trailing blank lines from the body
-        body_end = block_end
-        while body_end > i + 1 and lines[body_end - 1].strip() == "":
-            body_end -= 1
-
-        body_lines = lines[i + 1:body_end]
-        # Use the smallest indent on any non-blank body line as the dedent
-        # amount, so 2-space, 4-space, and tab indents all work.
-        real_indent = _smallest_indent(body_lines, with_indent)
-        dedented = _dedent_body(body_lines, real_indent)
+        dedented, block_end = _extract_str_block_body(
+            lines, i, with_indent, allow_same_level_raw
+        )
 
         target = _resolve_file_path(path_str, files_dir, notebook_dir)
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -672,10 +728,10 @@ def _preprocess_with_blocks(src: str, files_dir: Path, notebook_dir: Path):
                     if not init_file.exists():
                         init_file.write_text("")
 
-        for k in range(i, body_end):
+        for k in range(i, block_end):
             end = "\n" if lines[k].endswith("\n") else ""
             pass1[k] = end
-        i = body_end
+        i = block_end
 
     # ---- Pass 1.4: extract `with "X" as Scratch:` save+run blocks ----
     # Combined "save the body to disk AND run it sandboxed" form. Walks
@@ -1610,6 +1666,9 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     files_dir.mkdir(parents=True, exist_ok=True)
 
     original = src_path.read_text()
+    allow_same_level_raw = _read_bool_workspace_setting(
+        src_path.parent, SAME_LEVEL_RAW_WITH_SETTING, default=False
+    )
     # Quietly fix common phone-typing whitespace mistakes (leading tabs,
     # non-breaking spaces) BEFORE anything else looks at the source, so
     # the preprocessor, parser, and our own error reporters all see a
@@ -1619,7 +1678,8 @@ def run_and_annotate(path: str, *, skip_none: bool = False,
     # PRE-PROCESS the magic `with` blocks
     (runnable, files_written, bash_commands, run_blocks,
      save_run_results) = _preprocess_with_blocks(
-        cleaned, files_dir, notebook_dir
+        cleaned, files_dir, notebook_dir,
+        allow_same_level_raw=allow_same_level_raw
     )
 
     # Pre-flight parse the runnable source. If it has an

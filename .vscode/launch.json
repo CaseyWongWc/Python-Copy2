@@ -1,13 +1,15 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Python: Run notebook goog via main",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/sandbox/notebook/main.py",
-      "console": "integratedTerminal",
-      "purpose": ["debug-in-terminal"]
-    }
-  ]
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Notebook Main",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/sandbox/notebook/main.py",
+            "console": "integratedTerminal",
+            "purpose": [
+                "debug-in-terminal"
+            ]
+        }
+    ]
 }

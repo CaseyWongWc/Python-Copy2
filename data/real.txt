@@ -1,31 +1,20 @@
-hello
-world
-
-iejrier
-
-e
-
-g
-
-oo
-
-
-
-Hydrangea
 {
-    1,2
-    3
-    4,5
+  "python.defaultInterpreterPath": "${workspaceFolder}/.vscode/python-goog-runner",
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.env.linux": {
+    "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+    "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+  },
+  "editor.formatOnPaste": false,
+  "editor.autoIndentOnPaste": true,
+  "editor.multiCursorPaste": "spread",
+  "editor.pasteAs.preferences": [
 
+
+  
+  ],
+  "editor.autoIndent": "none",
+  "editor.overtypeOnPaste": false,
+  "editor.pasteAs.enabled": true,
+  "sandbox.sameLevelRawWithBlocks": false
 }
-
-_years
-# hello?
-
-I don't have enough context to determine what code should go at that location. Could you provide more details about:
-
-1. What this file is supposed to do?
-2. What programming language or format this should be?
-3. What should happen after the closing brace and `_years` comment?
-
-This will help me suggest appropriate code for the placeholder.

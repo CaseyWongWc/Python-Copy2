@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REAL_PY="/workspaces/Python-Copy2/.venv/bin/python"
-GOOG="/workspaces/Python-Copy2/sandbox/notebook/goog.py"
-MAIN="/workspaces/Python-Copy2/sandbox/notebook/main.py"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-if [[ "${1-}" == "$GOOG" ]]; then
-  exec "$REAL_PY" "$MAIN"
+REAL_PY="$WORKSPACE_DIR/.venv/bin/python"
+GOOG_PATH="$WORKSPACE_DIR/sandbox/notebook/goog.py"
+MAIN_PATH="$WORKSPACE_DIR/sandbox/notebook/main.py"
+
+ARG1="${1-}"
+if [[ -n "$ARG1" ]]; then
+  ARG1_REAL="$(realpath -m "$ARG1" 2>/dev/null || true)"
+  if [[ "$ARG1" == "$GOOG_PATH" || "$ARG1_REAL" == "$GOOG_PATH" ]]; then
+    exec "$REAL_PY" "$MAIN_PATH"
+  fi
 fi
 
 exec "$REAL_PY" "$@"

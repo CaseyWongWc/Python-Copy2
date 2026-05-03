@@ -1,0 +1,6 @@
+1) Execution jumps to an except block only if an error occurs in the preceding try block.
+    True
+    Code that might produce an error, such as conversion of user input or container indexing operations, should often use exception-handling code.
+2) After an error occurs in a try block, and the following except block has executed, execution resumes after the error in the try block.
+    False
+    Execution proceeds to the code that follows the except block; the code in the try block after the error is skipped.
