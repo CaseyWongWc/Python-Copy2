@@ -1,4 +1,4 @@
-# zyBooks Chapter 10 (Sections 10.1–10.12)
+'''# zyBooks Chapter 10 (Sections 10.1–10.12)
 ---
 
 ## Checklist + scores
@@ -35,3 +35,4 @@
 - [Section 10.10](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/10)
 - [Section 10.11](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/11)
 - [Section 10.12](https://learn.zybooks.com/zybook/CPPCS2520NguyenSpring2026/chapter/10/section/12)
+'''

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REAL_PY="/workspaces/Python-Copy2/.venv/bin/python"
+GOOG="/workspaces/Python-Copy2/sandbox/notebook/goog.py"
+MAIN="/workspaces/Python-Copy2/sandbox/notebook/main.py"
+
+if [[ "${1-}" == "$GOOG" ]]; then
+  exec "$REAL_PY" "$MAIN"
+fi
+
+exec "$REAL_PY" "$@"
