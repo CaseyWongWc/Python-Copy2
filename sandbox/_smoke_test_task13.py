@@ -190,5 +190,42 @@ _run_case(
 print("✅ (e) `with RUN:` with no `# in:` queue exits cleanly (no hang)")
 
 
+# (f) a.out filters out prints from helper modules (e.g. setin's mock_input
+#     echo). The capture only collects prints whose caller frame is in the
+#     notebook file itself, so input echoes from `Helpers/helpings.py:mock_input`
+#     (which calls `print(f"{prompt}{value}")`) stay out of `a.out`.
+HELPER_FILTER_SOURCE = (
+    "import builtins, inspect\n"
+    "# Stand-in for `Helpers.helpings.mock_input` — defined in a separate\n"
+    "# file and imported, so its frame's filename is NOT the notebook.\n"
+    "import os, tempfile\n"
+    "_helper_src = '''def mock_input(prompt=\"\"):\n"
+    "    print(f\"{prompt}HELPER\")\n"
+    "    return \"HELPER\"\n"
+    "'''\n"
+    "_d = tempfile.mkdtemp()\n"
+    "_p = os.path.join(_d, '_h.py')\n"
+    "open(_p,'w').write(_helper_src)\n"
+    "import sys; sys.path.insert(0, _d)\n"
+    "from _h import mock_input\n"
+    "builtins.input = mock_input\n"
+    "with Scratch as a:\n"
+    "    x = input('> ')\n"
+    "    print('user-print', x)\n"
+    "a.out\n"
+)
+_run_case(
+    "(f) a.out skips prints from helper modules",
+    HELPER_FILTER_SOURCE,
+    [
+        ("a.out has only the user's print, not the helper echo",
+         lambda s: "# val: ['user-print HELPER']" in s),
+        ("helper echo still shows as `# out:` annotation on input line",
+         lambda s: "# out: > HELPER" in s),
+    ],
+)
+print("✅ (f) `a.out` filters out prints from helper modules / mock_input echoes")
+
+
 print()
 print("✅ all task-13 smoke-test cases passed")

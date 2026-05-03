@@ -100,6 +100,13 @@ features Casey actually uses:
         `with Scratch:` (no `as`) skips capture — nothing reads it, so
         the wrapper isn't installed.
 
+        `h.out` only collects prints whose CALLER frame lives in the
+        notebook file itself. Prints emitted by helper modules (e.g.
+        `Helpers/helpings.py`'s `mock_input` echo from `setin(...)`)
+        still appear as `# out:` annotations on the input() line for
+        traceability, but they stay out of `h.out` so the captured
+        list isn't polluted with input echoes or other helper noise.
+
   - `# in: <value>` comments
         build a queue feeding `input()` calls in source order. Real stdin is
         used once the queue is empty. Old `# setin` directives still work and

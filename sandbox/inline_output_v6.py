@@ -1308,6 +1308,7 @@ def _build_shim(read_path: Path, file_attr_path: Path,
     bare_lines_repr = repr(sorted(bare_lines))
     files_dir_repr = repr(str(files_dir.resolve()))
     notebook_dir_repr = repr(str(notebook_dir.resolve()))
+    notebook_file_repr = repr(str(file_attr_path.resolve()))
     return (
         "import sys, builtins, inspect, ast, io\n"
         # Prepend sandbox/notebook/ first, then sandbox/files/. Net order
@@ -1324,6 +1325,7 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         # `as a:` binding gets `a.out` / `a.err` / `a.outs` populated
         # with whatever the body printed. The stack is push/pop'd by
         # `__nb_capture__` (below) — empty stack means no capture, no-op.
+        f"_NB_FILE = {notebook_file_repr}\n"
         "_capture_stack = []\n"
         "def _tagged_print(*args, **kwargs):\n"
         "    frame = inspect.currentframe().f_back\n"
@@ -1336,7 +1338,12 @@ def _build_shim(read_path: Path, file_attr_path: Path,
         "    for piece in pieces:\n"
         "        sys.stdout.write(f'__OUT__{lineno}__{piece}\\n')\n"
         "    sys.stdout.flush()\n"
-        "    if _capture_stack:\n"
+        # Only capture into `a.out` when the print() came from the user's\n
+        # notebook file itself. Prints from helper modules (e.g.\n
+        # `Helpers/helpings.py`'s `mock_input` echo) emit `# out:` markers\n
+        # for traceability but stay out of `a.out` so Casey's capture\n
+        # stays clean of input echoes and other helper noise.\n
+        "    if _capture_stack and frame.f_code.co_filename == _NB_FILE:\n"
         "        _capture_stack[-1]['out'].extend(pieces)\n"
         "builtins.print = _tagged_print\n"
         "\n"
