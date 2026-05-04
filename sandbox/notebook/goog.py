@@ -3360,3 +3360,468 @@ with "main.py" as f:
 # !err:   File "/home/runner/workspace/sandbox/notebook/Helpers/helpings.py", line 154, in mock_input
 # !err:     raise EOFError("No more inputs for testing")
 # !err: EOFError: No more inputs for testing
+'''activity
+14.6.2: Recursive exploration.
+
+Full screen
+712910.5105864.qx3zqy7
+Organize the code statements to complete explore()'s recursive case. The recursive explore() function outputs all possible reorderings of a list's elements.
+
+Click here for Explore()'s parameters
+explore() has two list parameters:
+
+remain_vals contains the elements not yet picked.
+picked_vals contains the elements picked to be part of the current ordering.
+Base case: When all elements are picked, all the elements are output in the current ordering.
+
+Recursive case: For each element that is not picked yet:
+
+Create new_remain as a copy of remain_vals excluding the element.
+Create new_picked as a copy of picked_vals with the element appended.
+Call explore() recursively with new_remain and new_picked as the arguments.
+Click here for example
+
+How to use this tool
+Unused
+main.py
+
+Load default template...
+    
+    
+    
+
+Check
+All tests passed.
+
+1: Compare output
+Input
+7 13 28
+Your output
+All possible ways to order a list of size 3:
+7 13 28 
+7 28 13 
+13 7 28 
+13 28 7 
+28 7 13 
+28 13 7 
+2: Compare output
+Input
+6
+Your output
+All possible ways to order a list of size 1:
+6 
+3: Compare output
+Input
+27 34
+Your output
+All possible ways to order a list of size 2:
+27 34 
+34 27 
+4: Compare output
+Input
+6 7 8 9
+Your output
+All possible ways to order a list of size 4:
+6 7 8 9 
+6 7 9 8 
+6 8 7 9 
+6 8 9 7 
+6 9 7 8 
+6 9 8 7 
+7 6 8 9 
+7 6 9 8 
+7 8 6 9 
+7 8 9 6 
+7 9 6 8 
+7 9 8 6 
+8 6 7 9 
+8 6 9 7 
+8 7 6 9 
+8 7 9 6 
+8 9 6 7 
+8 9 7 6 
+9 6 7 8 
+9 6 8 7 
+9 7 6 8 
+9 7 8 6 
+9 8 6 7 
+9 8 7 6 '''
+
+'''## 14.6 Recursive exploration of all possibilities
+
+Recursion is a powerful tool for exploring all possibilities, such as all possible reorderings of a word's letters, all possible subsets of items, all possible paths between cities, etc. This section provides several examples of using recursion for such exploration.
+
+Consider the problem of printing all possible combinations (or "scramblings") of a word's letters. For example, the letters of "abc" can be scrambled in 6 ways: abc, acb, bac, bca, cab, cba. Those possibilities can be obtained by thinking of three choices: Choosing the first letter ("a", "b", or "c"), then choosing the second letter (if "a" was the first choice, then second possible choices are "b" or "c"; if "b" was the first choice, then second possible choices are "a" and "c"; etc.), then choosing the third letter. The choices can be depicted using a tree. Each level represents a choice. Each node in the tree shows the unchosen letters on the left, and the chosen letters on the right, as in the animation figure below.
+
+Such a tree forms the basis for a recursive exploration function to generate all possible combinations of a string's letters. The function will take two parameters, one for the unchosen letters, and one for the already chosen letters. The base case will be when no letters exist in the unchosen letters, in which case the chosen letters are printed. The recursive case will call the function once for each letter in the unchosen letters. The following animation depicts how such a recursive algorithm would traverse the tree. The leaves of the tree (the bottommost nodes) represent the base case.
+
+### PARTICIPATION ACTIVITY: Exploring all possibilities viewed as a tree of choices.
+
+Static figure: A tree of choices shown has 4 levels and 16 nodes. Each node's value contains the letters a, b, and c, as well as a slash. A legend explains the format for node values: remaining-letters / chosen-letters. The root node has the value a b c /, meaning all letters are remaining and none are chosen. Following are a description and table representation of the tree. The root node has 3 children which form the second level. The second level has the label "Choose 1st letter", and from left to right, the second level's nodes have the values b c / a, a c / b,  and a b / c, respectively. Each of the 3 nodes on the second level has 2 children, so the third level has 6 nodes. The third level is labeled "Choose 2nd letter," and from left to right, the third level's nodes have the values  c / a b, b / a c, c / b a, a / b c, b / c a, and a / c b, respectively. Each of the 6 nodes on the third level has 1 child, so the fourth level also has 6 nodes. The fourth level is labeled "Choose 3rd letter," and from left to right, the nodes have the values / a b c, / a c b, / b a c, / b c a, / c a b, and / c b a, respectively. The following table shows the relationships between the nodes at different levels. While values are repeated in the table to show the parent node for each child node, values are not repeated in the tree.
+
+RootChoose 1st letterChoose 2nd letterChoose 3rd letter
+a b c slashb c slash ac slash a bslash a b c
+a b c slashb c slash ab slash a cslash a c b
+a b c slasha c slash bc slash b aslash b a c
+a b c slasha c slash ba slash b cslash b c a
+a b c slasha b slash cb slash c aslash c a b
+a b c slasha b slash ca slash c bslash c b a
+
+Step 1: "a" is chosen from "abc", then "b" is chosen from "bc". Finally, "c" is chosen from "c". This step refers to the first row in the table.
+Step 2: "b" has already been chosen from "bc". "c" can also be chosen. "acb" is chosen from "b". This step refers to columns 3 and 4 in the second row in the table.
+Step 3: "b" is chosen from "abc". This step refers to the third and fourth rows in the table.
+Step 4: "c" is chosen from "abc". This step refers to the fifth and sixth rows in the table.
+
+The program below receives a word from the user then jumbles all of its letters in to every possible ordering. The base case is that all letters have been used. In the recursive case, a remaining letter is moved to the scrambled letters, recursively explored, then put back. This is done for each remaining letter.
+
+> **Scramble a word's letters in every possible way.**
+> ```python
+> def scramble(r_letters, s_letters):
+>     """
+>     Output every possible combination of a word.
+>     Each recursive call moves a letter from
+>     r_letters (remaining letters) to
+>     s_letters (scrambled letters)
+>     """
+>     if len(r_letters) == 0:
+>         # Base case: All letters used
+>         print(s_letters)
+>     else:
+>         # Recursive case: For each call to scramble()
+>         # move a letter from remaining to scrambled
+>         for i in range(len(r_letters)):
+>             # The letter at index i will be scrambled
+>             scramble_letter = r_letters[i]
+>             
+>             # Remove letter to scramble from remaining letters list
+>             remaining_letters = r_letters[:i] + r_letters[i+1:]
+>             
+>             # Scramble letter
+>             scramble(remaining_letters, s_letters + scramble_letter)
+> 
+> word = input("Enter a word to be scrambled: ")
+> scramble(word, "")
+> ```
+> ```
+> Enter a word to be scrambled: cat
+> cat
+> cta
+> act
+> atc
+> tca
+> tac
+> ```
+
+Recursion is useful for finding all possible subsets of a set of items. The following example is a shopping spree in which you may select a 3-item subset from a larger set of items. The program should print all possible 3-item subsets given the larger set. The program also happens to print the total price value of those items.
+
+The shopping_bag_combinations() function has a parameter for the current bag contents, and a parameter for the remaining items from which to choose. The base case is that the current bag already has 3 items. The recursive case is to move one of the remaining items to the bag, recursively call the function, then move the item back from the bag to the remaining items.
+
+> **Shopping spree in which you can fit 3 items in your shopping bag.**
+> ```python
+> max_items_in_bag = 3
+> 
+> def shopping_bag_combinations(curr_bag, remaining_items):
+>     """
+>     Output every combination of items that fit
+>     in a shopping bag. Each recursive call moves
+>     one item into the shopping bag.
+>     """
+>     if len(curr_bag) == max_items_in_bag:
+>         # Base case: Shopping bag full
+>         bag_value = 0
+>         for item in curr_bag:
+>             bag_value += item["price"]
+>             print(f'{item["name"]}  ', end=" ")
+>         print(f"= {bag_value}")
+>     else:
+>         # Recursive case: Move one of the remaining items
+>         # to the shopping bag.
+>         for index, item in enumerate(remaining_items):
+>             # Move item into bag
+>             curr_bag.append(item)
+>             remaining_items.pop(index)
+> 
+>             shopping_bag_combinations(curr_bag, remaining_items)
+> 
+>             # Take item out of bag
+>             remaining_items.insert(index, item)
+>             curr_bag.pop()
+> 
+> items = [
+>     {
+>         "name": "Milk",
+>         "price": 1.25
+>     },
+>     {
+>         "name": "Belt",
+>         "price": 23.55
+>     },
+>     {
+>         "name": "Toys",
+>         "price": 19.05
+>     },
+>     {
+>         "name": "Cups",
+>         "price": 11.85
+>     }
+> ]
+> 
+> bag = []
+> shopping_bag_combinations(bag, items)
+> ```
+> ```
+> Milk   Belt   Toys   = 43.85
+> Milk   Belt   Cups   = 36.65
+> Milk   Toys   Belt   = 43.85
+> Milk   Toys   Cups   = 32.15
+> Milk   Cups   Belt   = 36.65
+> Milk   Cups   Toys   = 32.15
+> Belt   Milk   Toys   = 43.85
+> Belt   Milk   Cups   = 36.65
+> Belt   Toys   Milk   = 43.85
+> Belt   Toys   Cups   = 54.45
+> Belt   Cups   Milk   = 36.65
+> Belt   Cups   Toys   = 54.45
+> Toys   Milk   Belt   = 43.85
+> Toys   Milk   Cups   = 32.15
+> Toys   Belt   Milk   = 43.85
+> Toys   Belt   Cups   = 54.45
+> Toys   Cups   Milk   = 32.15
+> Toys   Cups   Belt   = 54.45
+> Cups   Milk   Belt   = 36.65
+> Cups   Milk   Toys   = 32.15
+> Cups   Belt   Milk   = 36.65
+> Cups   Belt   Toys   = 54.45
+> Cups   Toys   Milk   = 32.15
+> Cups   Toys   Belt   = 54.45
+> ```
+
+Recursion is useful for finding all possible paths. In the following example, a salesman must travel to 3 cities: Boston, Chicago, and Los Angeles. The salesman wants to know all possible paths among those three cities, starting from any city. A recursive exploration of all travel paths can be used. The base case is that the salesman has traveled to all cities. The recursive case is to travel to a new city, explore possibilities, then return to the previous city.
+
+> **Find distance of traveling to 3 cities.**
+> ```python
+> num_cities = 3
+> city_names = []
+> distances = []
+> 
+> def travel_paths(curr_path, need_to_visit):
+>     if len(curr_path) == num_cities:  # Base case: Visited all cities
+>         total_distance = 0
+>         for i in range(len(curr_path)):
+>             print(f"{city_names[curr_path[i]]}   ", end=" ")
+> 
+>             if i > 0:
+>                 total_distance += distances[curr_path[i-1]][curr_path[i]]
+> 
+>         print(f"= {total_distance}")
+>     else:  # Recursive case: Travel to each city
+>         for i in range(len(need_to_visit)):
+>             # Visit city
+>             city = need_to_visit[i]
+>             need_to_visit.pop(i)
+>             curr_path.append(city)
+> 
+>             travel_paths(curr_path, need_to_visit)
+> 
+>             need_to_visit.insert(i, city)
+>             curr_path.pop()
+> 
+> distances.append([0])
+> distances[0].append(960)  # Boston-Chicago
+> distances[0].append(2960) # Boston-Los Angeles
+> distances.append([960])   # Chicago-Boston
+> distances[1].append(0)
+> distances[1].append(2011) # Chicago-Los Angeles
+> distances.append([2960])  # Los Angeles-Boston
+> distances[2].append(2011) # Los Angeles-Chicago
+> distances[2].append(0)
+> 
+> city_names = ["Boston", "Chicago", "Los Angeles"]
+> 
+> path = []
+> need_to_visit = [0, 1, 2] # (Need to visit all 3 cities)
+> travel_paths(path, need_to_visit)
+> ```
+> ```
+> Boston    Chicago    Los Angeles    = 2971
+> Boston    Los Angeles    Chicago    = 4971
+> Chicago    Boston    Los Angeles    = 3920
+> Chicago    Los Angeles    Boston    = 4971
+> Los Angeles    Boston    Chicago    = 3920
+> Los Angeles    Chicago    Boston    = 2971
+> ```
+
+### PARTICIPATION ACTIVITY: Recursive exploration.
+
+**1.** What is the output of: scramble("xy", "")? Determine your answer by manually tracing the code, not by running the program.
+Answer: xy yx
+*Hint: The first recursive call selects the first letter as "x".*
+*The first call selects x, then makes a recursive call with y remaining, yielding xy. That first call then selects y, then makes a recursive call with x remaining, yielding yx.*
+
+**2.** You wish to generate all possible 3-letter subsets from the letters in an N-letter word (N>3). Which of the above recursive functions is the closest (just enter the function's name)?
+Answer: shopping_bag_combinations
+*Hint: Not just reordering, but choosing items from a larger set.*
+*shopping_bag_combinations consists of generating all possible subsets from a list of items. The N letters are like the list of items.*
+
+### CHALLENGE ACTIVITY: Enter the output of recursive exploration.
+
+**Level 1:**
+
+What is the output?
+
+```python
+def reorder_nums(remain_nums, reordered_nums):
+    if len(remain_nums) == 0:
+        print(reordered_nums[0], reordered_nums[1], reordered_nums[2], sep='')
+    else:
+        for i in range(len(remain_nums)):
+            tmp_remain_nums = remain_nums[:] # Make a copy.
+            tmp_removed_num = tmp_remain_nums[i] 
+            tmp_remain_nums.pop(i) # Remove element at i
+            reordered_nums.append(tmp_removed_num)
+            reorder_nums(tmp_remain_nums, reordered_nums)
+            reordered_nums.pop() # Remove last element
+
+nums_to_reorder = []
+result_nums = []
+
+nums_to_reorder.append(${numbers[0]})
+nums_to_reorder.append(${numbers[1]})
+nums_to_reorder.append(${numbers[2]})
+
+reorder_nums(nums_to_reorder, result_nums)
+```
+
+*The code recursively generates and outputs all combinations of nums_to_reorder values: ${numbers[0]}, ${numbers[1]}, and ${numbers[2]}.
+
+For each value in nums_to_reorder:
+
+  - 
+  The first output is the current value, followed by the remaining two values of nums_to_reorder in order.
+    
+      
+        Ex: If the current value is ${numbers[0]}, the output is `${numbers[0]}${numbers[1]}${numbers[2]}`.
+      
+    
+  
+  - 
+    The second output is the current value, followed by the remaining two values of nums_to_reorder, but in reverse order.
+    
+      
+        Ex: If the current value is ${numbers[0]}, the output is `${numbers[0]}${numbers[2]}${numbers[1]}`.
+      
+    
+  
+
+Thus, the output is:
+
+```
+${numbers[0]}${numbers[1]}${numbers[2]}
+${numbers[0]}${numbers[2]}${numbers[1]}
+${numbers[1]}${numbers[0]}${numbers[2]}
+${numbers[1]}${numbers[2]}${numbers[0]}
+${numbers[2]}${numbers[0]}${numbers[1]}
+${numbers[2]}${numbers[1]}${numbers[0]}
+```*
+
+**Level 2:**
+
+What is the output?
+
+```python
+def reorder_nums(remain_nums, reordered_nums):
+    if len(remain_nums) == 0:
+        print(reordered_nums[0], reordered_nums[1], reordered_nums[2], sep='')
+    else:
+        for i in reversed(range(len(remain_nums))): # New: This line changed
+            tmp_remain_nums = remain_nums[:] # Make a copy.
+            tmp_removed_num = tmp_remain_nums[i] 
+            tmp_remain_nums.pop(i) # Remove element at i
+            reordered_nums.append(tmp_removed_num)
+            reorder_nums(tmp_remain_nums, reordered_nums)
+            reordered_nums.pop() # Remove last element
+
+nums_to_reorder = []
+result_nums = []
+
+nums_to_reorder.append(${numbers[0]})
+nums_to_reorder.append(${numbers[1]})
+nums_to_reorder.append(${numbers[2]})
+
+reorder_nums(nums_to_reorder, result_nums)
+```
+
+*The code recursively generates and outputs all combinations of nums_to_reorder values: ${numbers[0]}, ${numbers[1]}, and ${numbers[2]}.
+
+For each value in the reversed order of nums_to_reorder:
+
+  - 
+  The first output is the current value, followed by the remaining two values of nums_to_reorder in reverse order.
+    
+      
+        Ex: If the current value is ${numbers[2]}, the output is `${numbers[2]}${numbers[1]}${numbers[0]}`.
+      
+    
+  
+  - 
+    The second output is the current value, followed by the remaining two values of nums_to_reorder, but in order.
+    
+      
+        Ex: If the current value is ${numbers[2]}, the output is `${numbers[2]}${numbers[0]}${numbers[1]}`.
+      
+    
+  
+
+Thus, the output is:
+
+```
+${numbers[2]}${numbers[1]}${numbers[0]}
+${numbers[2]}${numbers[0]}${numbers[1]}
+${numbers[1]}${numbers[2]}${numbers[0]}
+${numbers[1]}${numbers[0]}${numbers[2]}
+${numbers[0]}${numbers[2]}${numbers[1]}
+${numbers[0]}${numbers[1]}${numbers[2]}
+```*
+
+### CHALLENGE ACTIVITY: Recursive exploration.
+
+Organize the code statements to complete explore()'s recursive case. The recursive explore() function outputs all possible reorderings of a list's elements.
+
+Base case: When all elements are picked, all the elements are output in the current ordering.
+
+Recursive case: For each element that is not picked yet:
+
+Create new_remain as a copy of remain_vals excluding the element.
+Create new_picked as a copy of picked_vals with the element appended.
+Call explore() recursively with new_remain and new_picked as the arguments.
+
+**Solution:**
+```python
+def explore(remain_vals, picked_vals):
+    # Base case: All values are picked
+    if len(remain_vals) == 0:
+        for val in picked_vals:
+            print(val, end=" ")
+        print()
+
+    # Recursive case
+    else:
+    for i, val in enumerate(remain_vals):
+      new_remain = remain_vals[:i] + remain_vals[i+1:]
+      new_picked = picked_vals + [val]
+      explore(new_remain, new_picked)
+
+vals_to_pick = []
+picks = []
+
+for token in input().split():
+    vals_to_pick.append(int(token))
+
+print(f"All possible ways to order a list of size {len(vals_to_pick)}:")
+
+explore(vals_to_pick, picks)
+```
+
+Exploring further:
+ 
+ - More on recursion trees from Wikipedia.org.'''
