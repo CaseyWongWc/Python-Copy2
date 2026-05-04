@@ -1,0 +1,27 @@
+        def search(char_list, match_char, lower_index, upper_index):
+            range_size = (upper_index - lower_index) + 1
+            mid_index = (lower_index + upper_index) // 2
+            mid_char = char_list[mid_index]
+
+            print(f"Searching range from index {lower_index} to {upper_index}")
+            # out: Searching range from index 0 to 0
+            print(f"{lower_index} to {upper_index}")
+            # out: 0 to 0
+            if match_char == mid_char:
+                print(f"{match_char} is found at index {mid_index}")
+            elif range_size == 1:
+                print(f"{match_char} is not in the list")
+                # out: /workspaces/Python-Copy2/.vscode/python-goog-runner /workspaces/Python-Copy2/sandbox/notebook/goog.py is not in the list
+            else:
+                if match_char < mid_char:
+                    search(char_list, match_char, lower_index, mid_index)
+                else:
+                    search(char_list, match_char, mid_index + 1, upper_index)
+
+        match = input()
+        data_input = input().split()
+        search(data_input, match, 0, len(data_input) - 1)
+        # val: None
+        # f.out: Searching range from index 0 to 0
+        # f.out: 0 to 0
+        # f.out: /workspaces/Python-Copy2/.vscode/python-goog-runner /workspaces/Python-Copy2/sandbox/notebook/goog.py is not in the list

@@ -1,6 +1,13 @@
-1) If a sorted list has elements numbered 0 to 50 and the item being searched for happens to be at location 6, how many times will the find() function be called?
-# ⭐ val: 3
-2) If an alphabetically sorted list (ascending) has elements numbered 0 to 50, and the item at element 0 is "Bananas", how many recursive calls to find() will be made during the failed search for "Apples"?
-# ⭐ val: 7
-3) A list of 5 elements is: A B D E F. A is element 0 and F is element 4. find(lst,"C",0,4) is called to search for item C. Write the last call to find() that would occur when searching for item C.
-# ⭐ val: find(lst, "C",2,2)
+'''
+1) How many calls are made to the gcd function for gcd(12, 8)?
+    # 3 calls
+        - gcd(12, 8)
+        - gcd(4, 8)
+        - gcd(4, 4)
+2) How many calls are made to the gcd function for gcd(5, 3)?
+    # 4 calls
+        - gcd(5, 3)
+        - gcd(2, 3)
+        - gcd(2, 1)
+        - gcd(1, 1)
+ '''
