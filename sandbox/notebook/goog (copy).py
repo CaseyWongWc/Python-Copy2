@@ -898,7 +898,7 @@ with _:
         # f.out: Searching range from index 2 to 2
         # f.out: C is not in the list
     f
-    # val: Scratch(a=['A', 'B', 'D', 'E', 'F'], find=<function __sc_14__.<locals>.__sc_13__.<locals>.find at 0x7f478f91aa20>, out=['Searching range from index 0 to 4', 'Searching range from index 0 to 2', 'Searching range from index 2 to 2', 'C is not in the list'], err=[], outs='Searching range from index 0 to 4\nSearching range from index 0 to 2\nSearching range from index 2 to 2\nC is not in the list')
+    # val: Scratch(a=['A', 'B', 'D', 'E', 'F'], find=<function __sc_14__.<locals>.__sc_13__.<locals>.find at 0x7fa3be876980>, out=['Searching range from index 0 to 4', 'Searching range from index 0 to 2', 'Searching range from index 2 to 2', 'C is not in the list'], err=[], outs='Searching range from index 0 to 4\nSearching range from index 0 to 2\nSearching range from index 2 to 2\nC is not in the list')
 ####################################################
 '''Figure 14.2.2: Recursively searching a sorted list.'''
 with _:
@@ -2006,7 +2006,7 @@ with _:
         # out: 1! is: 1
         # f.out: 1! is: 1
     f
-    # val: Scratch(ins='1', nfact=<function __sc_34__.<locals>.__sc_32__.<locals>.nfact at 0x7f478f9607c0>, out=['1! is: 1'], err=[], outs='1! is: 1')
+    # val: Scratch(ins='1', nfact=<function __sc_34__.<locals>.__sc_32__.<locals>.nfact at 0x7fa3be8b8360>, out=['1! is: 1'], err=[], outs='1! is: 1')
     # in: 6
     with "main2.py" as f1:
         def nfact(n):
@@ -2025,7 +2025,7 @@ with _:
         # out: 6! is: 720
         # f1.out: 6! is: 720
     f1
-    # val: Scratch(ins='6', nfact=<function __sc_34__.<locals>.__sc_33__.<locals>.nfact at 0x7f478f960900>, out=['6! is: 720'], err=[], outs='6! is: 720')
+    # val: Scratch(ins='6', nfact=<function __sc_34__.<locals>.__sc_33__.<locals>.nfact at 0x7fa3be8b84a0>, out=['6! is: 720'], err=[], outs='6! is: 720')
 ####################################################
 '''participation activity
 14.4.2: Creating a recursive function.
@@ -2074,7 +2074,7 @@ with "main.py" as f:
     rec_neg(-3)
     # val: 0
 f
-# val: Scratch(rec_neg=<function __sc_35__.<locals>.rec_neg at 0x7f478f960680>, out=[], err=[], outs='')
+# val: Scratch(rec_neg=<function __sc_35__.<locals>.rec_neg at 0x7fa3be8b8220>, out=[], err=[], outs='')
 
 ####################################################
 '''challenge activity
@@ -2149,7 +2149,7 @@ with "main.py" as f:
     print_smiley(4)
     # val: (: (: (: (: happy :) :) :) :)
 f
-# val: Scratch(print_smiley=<function __sc_36__.<locals>.print_smiley at 0x7f478f960a40>, out=[], err=[], outs='')
+# val: Scratch(print_smiley=<function __sc_36__.<locals>.print_smiley at 0x7fa3be8b85e0>, out=[], err=[], outs='')
 #in: 4
 with "main2.py" as f:
     def print_smiley(n):
@@ -3121,7 +3121,7 @@ Exploring further:
 14.6.1: Exploring all possibilities viewed as a tree of choices.'''
 
 
-with "main.py" as f:
+with "main2.py" as f:
     
     
 
@@ -3227,122 +3227,6 @@ def fibonacci_zb(n):
 start_num = int(input())
 print(f'fibonacci({start_num}) is {fibonacci_zb(start_num)}')
 # expected for input 7 -> fibonacci(7) is 21
-
-
-############################################################################
-'''## 14.8 LAB: All permutations of names
-
-Write a recursive function called print_all_permutations() that, given a list of names and an empty list, will print all possible orderings of the names.
-
-Ex: If the input is:
-Julia Lucas Mia -1
-
-then the output is:
-Julia Lucas Mia
-Julia Mia Lucas
-Lucas Julia Mia
-Lucas Mia Julia
-Mia Julia Lucas
-Mia Lucas Julia
-'''
-# 14.8 ready-to-paste solution below
-with "main.py" as f:
-    def print_all_permutations(permList, nameList):
-        if len(nameList) == 0:
-            print(' '.join(permList))
-        else:
-            for i in range(len(nameList)):
-                new_perm = permList + [nameList[i]]
-                new_remain = nameList[:i] + nameList[i+1:]
-                print_all_permutations(new_perm, new_remain)
-
-    name_list = []
-    name = input()
-    while name != '-1':
-        name_list.append(name)
-        name = input()
-    perm_list = []
-    print_all_permutations(perm_list, name_list)
-# in: Julia
-# in: Lucas
-# in: Mia
-# in: -1
-# expected:
-# Julia Lucas Mia / Julia Mia Lucas / Lucas Julia Mia / Lucas Mia Julia / Mia Julia Lucas / Mia Lucas Julia
-# status: ready, awaiting Casey check
-
-
-############################################################################
-'''## 14.9 LAB: Number pattern (zyBooks 14.9.1)
-
-Write a recursive function called print_num_pattern() that outputs the following number pattern.
-
-Given a positive integer as input (Ex: 12), subtract another positive integer (Ex: 3) continually until a negative value is reached, and then continually add the second integer until the first integer is again reached. For this lab, do not end output with a newline.
-
-Do not modify the given main program.
-
-Ex: input 12 / 3 -> 12 9 6 3 0 -3 0 3 6 9 12
-
-**Test Cases (verified):**
-  12 / 3  -> 12 9 6 3 0 -3 0 3 6 9 12   ✅
-  17 / 5  -> 17 12 7 2 -3 2 7 12 17     ✅
-  6 / 4   -> 6 2 -2 2 6                  ✅
-  8 / 2   -> 8 6 4 2 0 -2 0 2 4 6 8     ✅
-'''
-# 14.9 ready-to-paste solution below
-with "main.py" as f:
-    def print_num_pattern(num1, num2):
-        # ✅ <-
-        print(num1, end=' ')
-        if num1 < 0:
-            return
-        print_num_pattern(num1 - num2, num2)
-        print(num1, end=' ')
-        # ✅ <-
-
-    if __name__ == "__main__":
-        user_num1 = int(input())
-        user_num2 = int(input())
-        print_num_pattern(user_num1, user_num2)
-# in: 12
-# in: 3
-# expected: 12 9 6 3 0 -3 0 3 6 9 12
-# status: ready, awaiting submission
-
-############################################################################
-'''## 14.10 LAB: Count the digits (zyBooks 14.10.1)
-
-Write a recursive function called digit_count() that takes a non-negative integer as a parameter and returns the number of digits in the integer.
-
-Hint: The digit count increases by 1 whenever the input number is divided by 10.
-
-Ex: input 345 -> 3
-
-**Edge cases (verified):**
-  0          -> 1   ✅
-  5          -> 1   ✅
-  10         -> 2   ✅
-  99         -> 2   ✅
-  345        -> 3   ✅
-  1000000    -> 7   ✅
-  9999999999 -> 10  ✅
-'''
-# 14.10 ready-to-paste solution below
-with "main.py" as f:
-    def digit_count(num):
-        # ✅ <-
-        if num < 10:
-            return 1
-        return 1 + digit_count(num // 10)
-        # ✅ <-
-
-    if __name__ == "__main__":
-        num = int(input())
-        digit = digit_count(num)
-        print(digit)
-# in: 345
-# expected: 3
-# status: ready, awaiting submission
 # !err: --- ERROR ---
 # !err: Traceback (most recent call last):
 # !err:   File "/home/runner/workspace/sandbox/notebook/Helpers/helpings.py", line 150, in mock_input
