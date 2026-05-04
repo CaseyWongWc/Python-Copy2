@@ -898,7 +898,7 @@ with _:
         # f.out: Searching range from index 2 to 2
         # f.out: C is not in the list
     f
-    # val: Scratch(a=['A', 'B', 'D', 'E', 'F'], find=<function __sc_14__.<locals>.__sc_13__.<locals>.find at 0x7f478f91aa20>, out=['Searching range from index 0 to 4', 'Searching range from index 0 to 2', 'Searching range from index 2 to 2', 'C is not in the list'], err=[], outs='Searching range from index 0 to 4\nSearching range from index 0 to 2\nSearching range from index 2 to 2\nC is not in the list')
+    # val: Scratch(a=['A', 'B', 'D', 'E', 'F'], find=<function __sc_14__.<locals>.__sc_13__.<locals>.find at 0x7fa5c1206a20>, out=['Searching range from index 0 to 4', 'Searching range from index 0 to 2', 'Searching range from index 2 to 2', 'C is not in the list'], err=[], outs='Searching range from index 0 to 4\nSearching range from index 0 to 2\nSearching range from index 2 to 2\nC is not in the list')
 ####################################################
 '''Figure 14.2.2: Recursively searching a sorted list.'''
 with _:
@@ -2006,7 +2006,7 @@ with _:
         # out: 1! is: 1
         # f.out: 1! is: 1
     f
-    # val: Scratch(ins='1', nfact=<function __sc_34__.<locals>.__sc_32__.<locals>.nfact at 0x7f478f9607c0>, out=['1! is: 1'], err=[], outs='1! is: 1')
+    # val: Scratch(ins='1', nfact=<function __sc_34__.<locals>.__sc_32__.<locals>.nfact at 0x7fa5c124c7c0>, out=['1! is: 1'], err=[], outs='1! is: 1')
     # in: 6
     with "main2.py" as f1:
         def nfact(n):
@@ -2025,7 +2025,7 @@ with _:
         # out: 6! is: 720
         # f1.out: 6! is: 720
     f1
-    # val: Scratch(ins='6', nfact=<function __sc_34__.<locals>.__sc_33__.<locals>.nfact at 0x7f478f960900>, out=['6! is: 720'], err=[], outs='6! is: 720')
+    # val: Scratch(ins='6', nfact=<function __sc_34__.<locals>.__sc_33__.<locals>.nfact at 0x7fa5c124c900>, out=['6! is: 720'], err=[], outs='6! is: 720')
 ####################################################
 '''participation activity
 14.4.2: Creating a recursive function.
@@ -2074,7 +2074,7 @@ with "main.py" as f:
     rec_neg(-3)
     # val: 0
 f
-# val: Scratch(rec_neg=<function __sc_35__.<locals>.rec_neg at 0x7f478f960680>, out=[], err=[], outs='')
+# val: Scratch(rec_neg=<function __sc_35__.<locals>.rec_neg at 0x7fa5c124c680>, out=[], err=[], outs='')
 
 ####################################################
 '''challenge activity
@@ -2149,7 +2149,7 @@ with "main.py" as f:
     print_smiley(4)
     # val: (: (: (: (: happy :) :) :) :)
 f
-# val: Scratch(print_smiley=<function __sc_36__.<locals>.print_smiley at 0x7f478f960a40>, out=[], err=[], outs='')
+# val: Scratch(print_smiley=<function __sc_36__.<locals>.print_smiley at 0x7fa5c124ca40>, out=[], err=[], outs='')
 #in: 4
 with "main2.py" as f:
     def print_smiley(n):
