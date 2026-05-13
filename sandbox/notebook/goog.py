@@ -324,7 +324,7 @@ with _:
         '''
     with bash:
         
-        # COMMANDS (run in /workspaces/Python-Copy2)
+       ''' # COMMANDS (run in /workspaces/Python-Copy2)
         python3 -m venv .venv
         source .venv/bin/activate
         # err: /bin/sh: 1: source: not found
@@ -333,15 +333,34 @@ with _:
         # out: Requirement already satisfied: pip in /usr/local/python/3.12.1/lib/python3.12/site-packages (26.1.1)
         pip install numpy
         # out: Requirement already satisfied: numpy in /usr/local/python/3.12.1/lib/python3.12/site-packages (2.4.4)
-        python -c "import numpy as np; print(np.__version__)"
+        python -c "import numpy as np; print(np.__version__)"'''
         # out: 2.4.4
     with "main.py" as f:
         cmd("ls","-alf")
+        # val: myfile.txt
+        # val: .venv
+        # val: mycsv.csv
+        # val: main.py
+        # val: PA 15.3.1: Python for data science.txt
+        # val: myfile.py
+        # val: ..
+        # val: .
+        # val: myfile.md
+        # val:  '
+        # val:  _     ___
+        # val: #_~`--'__ `===-,
+        # val: `.`.     `#.,;《
+        # val: ,_|_|     ## #《
+        # val: `__.__    `####《
+        # val:      ~~< ,###'~
+        # val:         》##'
+        # val: Wolves
+        # val: '
 
     with "main.py" as f:
         import numpy as np
         # !err: ModuleNotFoundError: No module named 'numpy'
-        # !err:   at line 328: python3 -m venv .venv
+        # !err:   at line 330: # err: /bin/sh: 1: source: not found
         # import pandas as pd
         # import sklearn as sk
         # import matplotlib.pyplot as plt
