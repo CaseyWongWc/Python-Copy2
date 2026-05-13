@@ -16,20 +16,10 @@ with """ '\n _     ___\n#_~`--'__ `===-,\n`.`.     `#.,;《\n,_|_|     ## #《\n
   # f.out: hello
 with bash:
   ls -alf
-  # out: total 8
-  # out: drwxr-xr-x 1 runner runner 506 May  8 04:11 .
-  # out: drwxr-xr-x 1 runner runner 472 May  8 03:19 ..
-  # out: -rw-r--r-- 1 runner runner  15 May  8 04:11  '
-  # out:  _     ___
-  # out: #_~`--'__ `===-,
-  # out: `.`.     `#.,;《
-  # out: ,_|_|     ## #《
-  # out: `__.__    `####《
-  # out:      ~~< ,###'~
-  # out:         》##'
-  # out: Wolves
-  # out: '.py
-  # out: -rw-r--r-- 1 runner runner  15 May  8 04:11  '
+  # out: total 4
+  # out: drwxr-xr-x 1 runner runner 250 May 13 01:13 .
+  # out: drwxr-xr-x 1 runner runner 472 May 13 01:13 ..
+  # out: -rw-r--r-- 1 runner runner  15 May 13 01:13  '
   # out:  _     ___
   # out: #_~`--'__ `===-,
   # out: `.`.     `#.,;《
