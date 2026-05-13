@@ -1753,7 +1753,7 @@ with "main.py" as f:
     # f.out:  ['g' 'h']]
     my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
     my_array.sort(axis=0) 
-    
+    p
 
 
 
