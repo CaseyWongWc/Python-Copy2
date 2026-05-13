@@ -560,5 +560,6 @@ Provide section feedback
 '''
 ##############################################################################
 ####################################################Participation activity 15.4.2: Jupyter notebook.
-
+with "myfile.txt":
+    
 # INFO()
