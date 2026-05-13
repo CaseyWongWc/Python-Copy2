@@ -1533,7 +1533,7 @@ f
 ####################################################participation activity 15.5.2: Array shape.
 with "myfile.py" as RUN:
     #Match the shape to the array.
-    print("(4,)")
+    print("(4,)","")
     print("(2, 2, 3)")
     print("(1,)")
     print("( )")
@@ -1547,10 +1547,24 @@ with "myfile.py" as RUN:
     print("[ [10, 20, 30, 40], [50, 60, 70] ]")
     print("[ [10, 20, 30, 40], [50, 60, 70, 80] ]")
     print("[3.1415]")
+    # out: (4,)
+    # out: (2, 2, 3)
+    # out: (1,)
+    # out: ( )
+    # out: invalid array
+    # out: (2, 4)
+    # out: (4, 2)
+    # out: ["a", "b", "c", "d"]
+    # out: [ [ [1, 2, 9], [3, 2, 6] ], [ [8, 8, 4], [9, 8, 7] ] ]
+    # out: [ [1, 2], [3, 4], [5, 6], [7, 8] ]
+    # out: 3.1415
+    # out: [ [10, 20, 30, 40], [50, 60, 70] ]
+    # out: [ [10, 20, 30, 40], [50, 60, 70, 80] ]
+    # out: [3.1415]
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:18:44 UTC 2026
+# val: Wed May 13 04:21:37 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv

@@ -1,7 +1,15 @@
-import numpy as np
-# import pandas as pd
-# import sklearn as sk
-# import matplotlib.pyplot as plt
-# import seaborn as sns
-# import scipy.stats as sp.stats
-# import statsmodels as sm
+#Match the shape to the array.
+print("(4,)")
+print("(2, 2, 3)")
+print("(1,)")
+print("( )")
+print("invalid array")
+print("(2, 4)")
+print("(4, 2)")
+print('["a", "b", "c", "d"]')
+print("[ [ [1, 2, 9], [3, 2, 6] ], [ [8, 8, 4], [9, 8, 7] ] ]")
+print("[ [1, 2], [3, 4], [5, 6], [7, 8] ]")
+print("3.1415")
+print("[ [10, 20, 30, 40], [50, 60, 70] ]")
+print("[ [10, 20, 30, 40], [50, 60, 70, 80] ]")
+print("[3.1415]")
