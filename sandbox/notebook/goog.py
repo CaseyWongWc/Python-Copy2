@@ -1712,7 +1712,8 @@ with "myfile.md":
         print(my_array)
         ```
     '''
-with "main."
+with "main.py" as f:
+    
 
 
 INFO()
