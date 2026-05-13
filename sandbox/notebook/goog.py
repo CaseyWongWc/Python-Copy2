@@ -324,8 +324,9 @@ with _:
         '''
 
     with "myfile.py" as f:
-    # !err: SyntaxError: invalid syntax (body line 6)
-            import numpy as np
+            import umpy as np
+            # !err: ModuleNotFoundError: No module named 'numpy'
+            # !err:   at line 320: | matplotlib.pyplot | plt | Matplotlib allows the creation of data visualizations in Python. The functions mostly expect NumPy arrays. |
             # import pandas as pd
             # import sklearn as sk
             # import matplotlib.pyplot as plt
