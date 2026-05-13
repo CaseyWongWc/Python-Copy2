@@ -604,7 +604,7 @@ with _:
         '''
     with bash:
         cat myfile.txt
-        cat F
+        cat First\ Jupyter\ notebook.ipynb
         # out: '''
         # out: the Jupyter notebook loads the miles per gallon dataset and creates a scatter plot of miles per gallon against weight and engine size (number of cylinders) for each car. the notebook also calculates summary statistics for weight.
         # out:         
