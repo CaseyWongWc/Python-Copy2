@@ -1521,7 +1521,7 @@ with Scratch as f:
     # val: [[1, 2, 3], [4, 5, 6]]
     hey2=np.array(hey)
     hey2.shape,hey2.size
-    
+    hey2
 f
 # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[1, 2, 3], [4, 5, 6]], hey2=array([[1, 2, 3],
 # val:        [4, 5, 6]]), out=[], err=[], outs='')
