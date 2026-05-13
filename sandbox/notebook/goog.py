@@ -634,6 +634,457 @@ with _:
         # out: 
         # out: Yes, it's worth it! Data science skills are in high demand.
 ##############################################################################
+'''## 15.5 NumPy
+
+### Introduction to NumPy
+
+The NumPy (pronounced "Num-pie") package provides tools for mathematical computations in Python. Ex: NumPy includes functions to perform common linear algebra operations, fast fourier transforms, and statistics. NumPy is used frequently in data science and statistical analysis. NumPy is also frequently used with other data science packages, such as pandas and Matplotlib. NumPy can be downloaded and installed from
+https://numpy.org/install/.
+
+NumPy provides a multidimensional array object, conceptually similar to a list, consisting of an ordered set of elements of the same type. NumPy arrays benefit from having more mathematical support than lists and also perform mathematical operations faster than lists, because a NumPy array is a wrapper around fast native code that is compiled to run on a specific processor instead of in the Python interpreter. 
+
+To use NumPy in a program, the package is often imported with the alias `np`.
+
+> **Summing arrays vs summing lists.**
+> ```python
+> import numpy as np
+> 
+> list1 = [15.5, 25.11, 19.0]
+> list2 = [12.2, 1.3, 6.38] 
+> 
+> # Create two 1-dimensional (1D) arrays
+> # with the elements of the above lists
+> array1 = np.array(list1)
+> array2 = np.array(list2)
+> 
+> # Concatenate two lists
+> print("Concatenation of list1 and list2 =", end=" ")
+> print(list1 + list2)
+> print()
+> 
+> # Sum two lists
+> print("Sum of list1 and list2 =", end=" ")
+> for i in range(len(list1)):
+>     print(list1[i] + list2[i], end=" ")  
+> print("\n")
+> 
+> # Sum two 1D arrays
+> print("Sum of array1 and array2 =", end=" ")
+> print(array1 + array2)
+> ```
+> ```
+> Concatenation of list1 and list2 = [15.5, 25.11, 19.0, 12.2, 1.3, 6.38]
+> 
+> Sum of list1 and list2 = 27.7 26.41 25.38 
+> 
+> Sum of array1 and array2 = [27.7  26.41 25.38]
+> ```
+
+### PARTICIPATION ACTIVITY: NumPy.
+
+**1.** What is a benefit of using NumPy over list operations?
+- Faster mathematical operations ✓
+- More built-in list functions
+- Easier access of array elements
+*NumPy has more support for math operations and is able to complete math operations much faster than performing similar operations with lists. In the above example, multiple constructs and operations (a for loop, range() function, len() function, access operations) are used to sum 2 lists, whereas 2 NumPy arrays are just added together to achieve the same result.*
+
+**2.** What operation is not done with NumPy?
+- Array subtraction
+- List concatenation ✓
+- Array multiplication
+*NumPy's primary object is an array, not a list. NumPy is used for mathematical computations, whereas list concatenation can be done in Python without NumPy.*
+
+**3.** ```
+import numpy as np
+```
+
+Which term is an alias?
+- numpy
+- as
+- np ✓
+*"np" is the common alias term used when importing NumPy. The alias term is defined by the programmer and can be any term of the programmer's choosing.*
+
+**4.** NumPy is often used for which field?
+- Statistical analysis ✓
+- Mobile application development
+- Web programming
+*Statistical analysis requires complex mathematical computations, which is why NumPy's mathematical operations are often used.*
+
+### NumPy arrays
+
+The NumPy array data type is called ndarray, where "nd" stands for N-dimensional and N can be any number of dimensions.
+
+ 
+- A zero-dimensional array consists of a scalar object. Ex: 2.
+- A one-dimensional array consists of a container of scalars. Ex: [2, 4, 6, 8].
+- A two-dimensional array consists of a container of containers of scalars. 2D arrays have rows and columns. Ex: [ [2, 4, 6, 8], [12, 14, 16, 18] ], which appears as
+
+```
+[[2 4 6 8]
+ [12 14 16 18]]
+```
+
+when output to the screen.
+
+An N-dimensional array has N levels of nested containers. At each level, all containers must have the same number of elements. The shape of an array is a tuple of the lengths of each of the array's dimensions. The size of an array is the total number of elements in an array. Ex: The shape of the 2D array [ [2, 4, 6, 8], [12, 14, 16, 18] ] is (2, 4) and the size of the array is 8.
+
+An array is created using NumPy's array() function.
+
+### LAB ACTIVITY: Array shape and size attributes.
+
+Click Run to execute the code and see the shape and size of the array. Modify the array and click Run to see the modified shape and size.
+
+### PARTICIPATION ACTIVITY: Array shape.
+
+### Array axes
+
+A NumPy array axis is a direction along each array dimension. 1D arrays have 1 axis, 2D arrays have 2 axes, etc. Discussion of axes occurs most frequently when dealing with 2D arrays. In a 2D array, axis 0 is the first axis that runs down the array's rows and axis 1 is the second axis that runs across the array's columns.
+
+Many NumPy functions and methods take an axis argument which determines along which axis the function should operate.
+
+### PARTICIPATION ACTIVITY: Array axes.
+
+Step 1: Caption: In a 2D array, axis 0 indicates the direction along the array's rows and axis 1 indicates the direction along the array's columns. 
+Animation: Displays a 2-dimensional array with 4 rows and 3 columns. The array values are: 
+row 0, col 0: 12
+row 0, col 1: 57
+row 0, col 2: 89
+row 1, col 0: 94
+row 1, col 1: 23
+row 1, col 2: 68
+row 2, col 0: 72
+row 2, col 1: 10
+row 2, col 2: 45
+row 3, col 0: 26
+row 3, col 1: 41
+row 3, col 2: 32
+An arrow runs vertically from row 0 to row 3 with the label "axis 0". An arrow runs horizontally from column 0 to column 2 with the label "axis 1". 
+
+Step 2: Caption: Many NumPy array functions and methods, such as numpy.delete() and ndarray.sort(), take an axis argument to indicate which axis to work along.
+Animation: Two function calls appear: np.delete(ndarray, obj=1, axis=1) and ndarray.sort(axis=0).
+
+Step 3: Caption: The delete() function removes the row (axis 0) or column (axis 1) indicated by the index. When index is 1 and axis is 1, the second column is removed. The returned array has a (4, 2) shape.
+Animation: A copy of the original array is made and moves to be under the np.delete(ndarray, obj=1, axis=1) function call. A red strikeout line is placed over the second column of the copied array and then the second column is deleted. The new array has 4 rows and 2 columns with the following values:
+row 0, col 0: 12
+row 0, col 1: 89
+row 1, col 0: 94
+row 1, col 1: 68
+row 2, col 0: 72
+row 2, col 1: 45
+row 3, col 0: 26
+row 3, col 1: 32
+
+Step 4: Caption: The array sort() method can take an axis argument to indicate which axis to sort along. If axis is 0, sorting happens ascending order in each column downwards along the rows.
+Animation: A copy of the original array is made and moves to be under the ndarray.sort(axis=0) function call. Each column of the copied array is sorted in ascending order. The new array has 4 rows and 3 columns with the following values:
+row 0, col 0: 12
+row 0, col 1: 10
+row 0, col 2: 32
+row 1, col 0: 26
+row 1, col 1: 23
+row 1, col 2: 45
+row 2, col 0: 72
+row 2, col 1: 41
+row 2, col 2: 68
+row 3, col 0: 94
+row 3, col 1: 57
+row 3, col 2: 89
+
+### PARTICIPATION ACTIVITY: Array axes.
+
+**1.** How many axes does a 3D array have?
+- 1
+- 2
+- 3 ✓
+*An array has an axis for each dimension.*
+
+**2.** In a 2D array, which axis is the second or last axis?
+- 0
+- 1 ✓
+*The axes are counted like indexes, so the second or last axis of a 2D array is axis 1.*
+
+**3.** In a 2D array, the 0 axis runs along the array's _____.
+- rows ✓
+- columns
+*The 0 axis indicates the direction along the array's rows.*
+
+### Creating and modifying arrays
+
+A NumPy array is an ordered, indexed, and mutable container. NumPy provides many functions to create and modify arrays. Though mutable, NumPy arrays have a fixed shape, so any operation to change an array's shape actually creates a new version (a new Python object) of the array with the intended modification, leaving the original unchanged.
+
+If the elements in the array are unknown before creation, certain NumPy functions create placeholder values that can be changed during a program's run. Ex: `np.zeros((1, 3))` creates a (1, 3) shape array filled with 0s and `np.ones((1, 3))` creates a (1, 3) shape array filled with 1s.
+
+Some NumPy operations are instance methods of the object, Ex: array.sort(), while other NumPy operations are functions of the NumPy module, Ex: np.delete(). This material takes an object-oriented approach and uses array methods. NumPy functions are used where array methods don't exist.
+
+> **Array functions.**
+> | Function/Method | Description | Example |
+> | --- | --- | --- |
+> | array(object) | Returns an ndarray based on a given object, like a list. | # Creates a 1D (4,) array based off of a list array1D = np.array([1, 2, 3, 4])  # Creates a 2D (2, 2) array based off of 2 lists array2D = np.array([ [1, 2], [3, 4] ]) |
+> | zeros(arrShape) ones(arrayShape) full(arrayShape, value) | Returns an ndarray of a specified shape filled with zeros, ones, or a specified value. | # Creates a 2D (2, 2) array filled with 6s # [ [6, 6], [6, 6] ] array_6fill = np.full((2, 2), 6) |
+> | array[row_index, col_index] | Returns the element located at indices [row_index, col_index]. | array2D = np.array([ [1, 2], [3, 4] ])  # Returns 3: Element located at second row (index 1), first column (index 0) elem_1_0 = array2D[1, 0] |
+> | delete(ndarray, obj, axis) | Returns a new ndarray with a row or column deleted from the given ndarray. Deletes the row or column indicated by obj. If axis = 0, delete row. If axis = 1, delete column. | array2D = np.array([ [1, 2], [3, 4] ])  # Returns a new 1D (1x2) array with the second row (obj 1, axis 0) ([3,4]) removed # [1, 2] new_a1D = np.delete(array2D, 1, axis=0) |
+> | ndarray.sort(axis) | Sorts an ndarray in place in ascending order along an axis. If axis=None, the array is flattened into a 1D array, and then sorted. If no argument is passed, sorting occurs along the last axis (axis 1 for a 2D array). | my_array = np.array([2, 4, 1, 3])  # Sorts a 1D array in place # [1, 2, 3, 4] my_array.sort() |
+> | ndarray.ravel() | Returns a flattened (1D) version of the given ndarray. | array_7 = np.array([ [7, 7], [7, 7] ])  # Returns a new flattened 1D (4,) version of a 2D (2, 2) array # [7, 7, 7, 7] array_7flat = array_7.ravel() |
+> | ndarray.reshape(new_shape) | Returns a new ndarray containing the elements of the given ndarray with a new shape. | array1D = np.array([1, 2, 3, 4])  # Returns a new reshaped 2D (2, 2) version of a 1D (4,) array # [ [1, 2], [3, 4] ] a_reshaped = array1D.reshape((2,2)) |
+> | ndarray.transpose() | Returns the transpose of an ndarray. | # Returns a new transposed version of a_reshaped # [[1, 3], [2, 4]] array1_transposed = a_reshaped.transpose() |
+
+### PARTICIPATION ACTIVITY: Array functions.
+
+**1.**
+```
+my_array2 = np.______(my_array, 1, axis=0)
+print(my_array2)
+```
+Answer: delete
+*Hint: `d____e`*
+*The delete() function returns a new version of a given array with a specified row or column deleted. `axis=0` indicates a row is deleted, and the second argument, 1, indicates that the deleted row is at index 1 (the second row).*
+
+**2.**
+```
+my_array2 = np._____(my_array)
+print(my_array2)
+```
+Answer: ravel
+*Hint: The array is flattened from a 2D array to a 1D array.*
+*The ravel() function returns a flattened version of the given array, meaning all elements appear in a single row.*
+
+**3.**
+```
+my_array._____(axis=0)
+print(my_array)
+```
+Answer: sort
+*Hint: Each column is in ascending order.*
+*The sort() method sorts an array in place (in ascending order) along an axis. When sorting a 2D array, if axis=0, each column is sorted along the direction of the rows.*
+
+**4.**
+```
+my_array.sort(axis=____)
+print(my_array)
+```
+Answer: 1 or -1
+*Hint: Each row is in ascending order.*
+*When sorting a 2D array, if axis=1, each row is sorted along the direction of the columns. For each row of the array, each character in the first column was already a lesser value than the character in the second column, so sorting along axis 1 did not change the original array.*
+
+### Mathematical operations
+
+The NumPy package contains many mathematical operations and functions to be performed on arrays. Mathematical operations between arrays are performed between the matching elements of each array. Ex: [5 5 5] + [1 2 3] computes [5+1 5+2 5+3], or [6 7 8].
+
+> **Math operators and functions.**
+> | Expression | Description |
+> | --- | --- |
+> | array1 + array2 | Element-wise addition |
+> | array1 - array2 | Element-wise subtraction |
+> | array1 * array2 | Element-wise multiplication |
+> | array1 / array2 | Element-wise division |
+> | np.sqrt(array1) | Square root of array elements |
+> | np.log(array1) | Logarithm of array elements |
+> | np.sin(array1) | Sine of array elements |
+> | np.max(array1) | Maximum of array elements |
+> | np.median(array1) | Median of array elements |
+> | np.std(array1) | Standard deviation of array elements |
+> | np.var(array1) | Variance of array elements |
+> | np.dot(array1, array2) | Dot product of   array1 and array2 |
+> | np.matmul(array1, array2) | Also the dot product of array1 and array2 but with subtle differences from dot() when either array has dimension >= 3 |
+> | np.cross(array1, array2) | Cross product of array1 and array2 |
+
+> **Common NumPy math operations and functions.**
+> ```python
+> import numpy as np
+> 
+> array1 = np.array([10, 20, 30, 40])
+> array2 = np.array([1, 2, 3, 4])
+> 
+> # Some common array operations
+> 
+> print("Adding arrays (array1 + array2)")
+> print(array1 + array2)
+> 
+> print("\nSubtracting arrays (array1 - array2)")
+> print(array1 - array2)
+> 
+> print("\nMultiplying arrays (array1 * array2)")
+> print(array1 * array2)
+> 
+> print("\nCalculating dot product of arrays")
+> print(np.dot(array1, array2))
+> 
+> print("\nFinding square root of each element in array1")
+> print(np.sqrt(array1))
+> 
+> print("\nFinding minimum element in array1")
+> print(array1.min())
+> 
+> print("\nFinding maximum element in array1")
+> print(array1.max())
+> ```
+> ```
+> Adding arrays (array1 + array2)
+> [11 22 33 44]
+> 
+> Subtracting arrays (array1 - array2)
+> [ 9 18 27 36]
+> 
+> Multiplying arrays (array1 * array2)
+> [10  40  90 160]
+> 
+> Calculating dot product of arrays
+> 300
+> 
+> Finding square root of each element in array1
+> [3.16227766 4.47213595 5.47722558 6.32455532]
+> 
+> Finding minimum element in array1
+> 10
+> 
+> Finding maximum element in array1
+> 40
+> ```
+
+### PARTICIPATION ACTIVITY: Math operators and functions.
+
+**1.** All NumPy mathematical functions can take a scalar argument.
+Answer: **True**
+*A scalar is a zero-dimensional array, so any function that takes an array argument can also take a scalar argument.*
+
+**2.** Operators such as , and == can compare arrays.
+Answer: **True**
+*Like arithmetic operators, comparison operations are performed between the matching elements of each array. Ex:
+
+```
+array1 = numpy.array( [23, 68] )
+array2 = numpy.array( [42, -5] )
+array1 < array2
+```
+
+returns `[True, False]`*
+
+**3.** The min() method returns a 1D array.
+Answer: **False**
+*ndarray's min() method returns the smallest value in an array, which is  a scalar, or a 0-dimensional array. Ex: 
+```
+my_array = np.array([12, 6, 2, 8])
+print(my_array.min())
+```
+
+outputs array's minimum value, 2.*
+
+### CHALLENGE ACTIVITY: Using NumPy. (5 Levels)
+
+**Level 1:**
+
+**Task:**
+Create a 2-dimensional array containing the arrays [...].
+
+**Explanation pattern:**
+A 2-dimensional NumPy array is created using `np.array()`, where the argument is an array that contains multiple arrays of the same length.
+
+**Code structure:**
+```python
+# Load the necessary package
+import numpy as np
+
+# Create an array
+my_array =
+# Your code goes here
+# Print the array
+print(my_array)
+```
+
+**Level 2:**
+
+**Task:**
+In [...], sort each [...] along the direction of the [...]s in ascending order.
+
+**Explanation pattern:**
+`[...].sort()` takes an axis argument that determines along which axis the array should be sorted. axis=[...] sorts each [...] along the direction of the [...]s.
+
+**Code structure:**
+```python
+# Load necessary package
+import numpy as np
+
+# Create array
+___ = np.array([___])
+
+# Sort array
+# Your code goes here
+# Print the array
+print(___)
+```
+
+**Level 3:**
+
+**Task:**
+Delete the [...] of [...].
+
+**Explanation pattern:**
+`np.delete()` takes in three positional arguments: array, index, and axis. axis=[...] indicates a [...] is deleted, and the second argument, [...], indicates that the deleted [...] is at index [...] (the [...]).
+
+**Code structure:**
+```python
+# Load necessary package
+import numpy as np
+
+# Create array
+___ = np.array([___])
+
+# Delete the ___ ___ of array
+___ =
+# Your code goes here
+# Print the array
+print(___)
+```
+
+**Level 4:**
+
+**Task:**
+Flatten [...].
+
+**Explanation pattern:**
+`np.ravel()` returns a flattened (1D) version of the given array.
+
+**Code structure:**
+```python
+# Load necessary package
+import numpy as np
+
+# Create array
+___ = np.array([___])
+
+# Flatten array
+___ =
+# Your code goes here
+# Print the array
+print(___)
+```
+
+**Level 5:**
+
+**Task:**
+Return the [...] of elements in [...].
+
+**Explanation pattern:**
+Simple functions can have an array or scalar argument, so finding the [...] of elements in [...] is done using `np.[...]([...])`.
+
+**Code structure:**
+```python
+# Load necessary package
+import numpy as np
+
+# Create array
+___ = np.array([___])
+
+# Find ___ of array elements
+___ =
+# Your code goes here
+# Print the array
+print(___)
+```
+
+Exploring further:
+
+-  NumPy documentation
+- NumPy tutorial'''
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
