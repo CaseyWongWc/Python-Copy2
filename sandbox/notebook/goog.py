@@ -1571,9 +1571,7 @@ with "myfile.py" as RUN:
 ####################################################participation activity 15.5.4: Array axes.
 with "myfile.txt":
     '''
-1)
-How many axes does a 3D array have?
-2)
+    1) H
     '''
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
