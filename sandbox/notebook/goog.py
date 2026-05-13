@@ -1717,23 +1717,57 @@ with "main.py" as f:
 
     my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
     print(my_array)
+    # out: [['c' 'd']
+    # out:  ['e' 'f']
+    # out:  ['a' 'b']
+    # out:  ['g' 'h']]
 
     my_array2 = np.delete(my_array, 1, axis=0)
     print(my_array2)
+    # out: [['c' 'd']
+    # out:  ['a' 'b']
+    # out:  ['g' 'h']]
 
     my_array2 = np.ravel(my_array)
     print(my_array2)
+    # out: ['c' 'd' 'e' 'f' 'a' 'b' 'g' 'h']
 
     my_array.sort(axis=0)
+    # val: None
     print(my_array)
+    # out: [['a' 'b']
+    # out:  ['c' 'd']
+    # out:  ['e' 'f']
+    # out:  ['g' 'h']]
 
-    my_array.sort(axis=1)
+    my_array.sort(axis=2)
+    # val: None
     print(my_array)
+    # out: [['a' 'b']
+    # out:  ['c' 'd']
+    # out:  ['e' 'f']
+    # out:  ['g' 'h']]
+    # f.out: [['c' 'd']
+    # f.out:  ['e' 'f']
+    # f.out:  ['a' 'b']
+    # f.out:  ['g' 'h']]
+    # f.out: [['c' 'd']
+    # f.out:  ['a' 'b']
+    # f.out:  ['g' 'h']]
+    # f.out: ['c' 'd' 'e' 'f' 'a' 'b' 'g' 'h']
+    # f.out: [['a' 'b']
+    # f.out:  ['c' 'd']
+    # f.out:  ['e' 'f']
+    # f.out:  ['g' 'h']]
+    # f.out: [['a' 'b']
+    # f.out:  ['c' 'd']
+    # f.out:  ['e' 'f']
+    # f.out:  ['g' 'h']]
 
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:38:28 UTC 2026
+# val: Wed May 13 04:46:00 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
