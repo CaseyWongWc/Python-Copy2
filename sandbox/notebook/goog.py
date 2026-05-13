@@ -1,5 +1,5 @@
 from Helpers.helpings import *
-from sandbox_drafts.goog_cheatsheet import 
+from sandbox_drafts.goog_cheatsheet import *
 '''15.1 Introduction to data science
 Data science
 Data science is an interdisciplinary field focused on discovering patterns and describing relationships using data. Data science uses techniques from computer science and statistics. Data scientists use computers to write code and store, modify, and visualize large datasets. Data scientists can also build, test, and interpret a data model, a representation of a real-life system that organizes data elements and informs how the elements relate to one another. Ex: The FBI's Most Wanted list is a model that contains data elements such as eye color, hair color, known accomplices, etc. related to each suspect on the list. The data model can be used to make predictions for new data.
