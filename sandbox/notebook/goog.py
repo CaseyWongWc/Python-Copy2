@@ -16,10 +16,9 @@ with """ '\n _     ___\n#_~`--'__ `===-,\n`.`.     `#.,;《\n,_|_|     ## #《\n
   # f.out: hello
 with bash:
   ls -alf
-  # out: total 4
-  # out: drwxr-xr-x 1 runner runner 250 May 13 01:13 .
-  # out: drwxr-xr-x 1 runner runner 472 May 13 01:13 ..
-  # out: -rw-r--r-- 1 runner runner  15 May 13 01:25  '
+  # out: ..
+  # out: .
+  # out:  '
   # out:  _     ___
   # out: #_~`--'__ `===-,
   # out: `.`.     `#.,;《
