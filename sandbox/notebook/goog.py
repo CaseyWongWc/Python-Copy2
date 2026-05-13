@@ -65,12 +65,19 @@ Each characteristic of a penguin, such as bill length, body mass, and sex, is a 
 with Scratch:
     with open("mycsv.csv","w") as f:
         f.write("species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex\n")
+        # val: 78
         f.write("Adelie,Dream,36.5,18.0,181,3750,female\n")
+        # val: 39
         f.write("Chinstrap,Dream,43.5,18.1,195,3800,female\n")
+        # val: 42
         f.write("Gentoo,Dream,48.7,15.7,220,5000,female\n")
+        # val: 39
         f.write("Adelie,Biscoe,36.3,19.3,180,3250,male\n")
+        # val: 38
         f.write("Gentoo,Biscoe,45.3,14.5,210,4500,male\n")
+        # val: 38
         f.write("Dream,Biscoe,18.1,8.5,150,1500,male\n")
+        # val: 36
 # 
 '''participation activity
 15.1.4: Features and instances.
@@ -367,6 +374,7 @@ with _:
         import scipy.stats as sp_stats
         import statsmodels as sm
     f
+    # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, pd=<module 'pandas' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/pandas/__init__.py'>, sk=<module 'sklearn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/sklearn/__init__.py'>, plt=<module 'matplotlib.pyplot' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/matplotlib/pyplot.py'>, sns=<module 'seaborn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/seaborn/__init__.py'>, sp_stats=<module 'scipy.stats' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/scipy/stats/__init__.py'>, sm=<module 'statsmodels' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/statsmodels/__init__.py'>, out=[], err=[], outs='')
     
 with "myfile.txt":
     '''
@@ -612,11 +620,19 @@ with _:
         #waht now?
     with _:
         print("You've completed sections 15.1-15.4 of the data science course!")
+        # out: You've completed sections 15.1-15.4 of the data science course!
         print("\nNext steps:")
+        # out: 
+        # out: Next steps:
         print("1. Continue to section 15.5: NumPy - learn array operations")
+        # out: 1. Continue to section 15.5: NumPy - learn array operations
         print("2. Practice with pandas DataFrames for data manipulation")
+        # out: 2. Practice with pandas DataFrames for data manipulation
         print("3. Build a small data analysis project combining these concepts")
+        # out: 3. Build a small data analysis project combining these concepts
         print("\nYes, it's worth it! Data science skills are in high demand.")
+        # out: 
+        # out: Yes, it's worth it! Data science skills are in high demand.
 ##############################################################################
 '''## 15.5 NumPy
 
@@ -1520,11 +1536,18 @@ with Scratch as f:
     hey+=[[1,2,3]]
     hey+=[[4,5,6]]
     hey
+    # val: [[1, 2, 3], [4, 5, 6]]
     hey2=np.array(hey)
     (hey2.shape)
+    # val: (2, 3)
     (hey2.size)
+    # val: 6
     hey2
+    # val: array([[1, 2, 3],
+    # val:        [4, 5, 6]])
 f
+# val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[1, 2, 3], [4, 5, 6]], hey2=array([[1, 2, 3],
+# val:        [4, 5, 6]]), out=[], err=[], outs='')
 ####################################################participation activity 15.5.2: Array shape.
 with "myfile.py" as RUN:
     #Match the shape to the array.
@@ -1581,7 +1604,10 @@ with Scratch:
     hey+=[[3,5,6]]
     hey2=np.array(hey)
     hey2.sort(axis=0)
+    # val: None
     hey2
+    # val: array([[   3,    2,    3],
+    # val:        [8787,    5,    6]])
 ####################################################Table Table 15.5.1: Array functions.
 with "mypy.py" as RUN:
     import numpy as np
@@ -1709,18 +1735,52 @@ with "main.py" as f:
 
     my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
     print(my_array)
+    # out: [['c' 'd']
+    # out:  ['e' 'f']
+    # out:  ['a' 'b']
+    # out:  ['g' 'h']]
 
     my_array2 = np.delete(my_array, 1, axis=0)
     print(my_array2)
+    # out: [['c' 'd']
+    # out:  ['a' 'b']
+    # out:  ['g' 'h']]
 
     my_array2 = np.ravel(my_array)
     print(my_array2)
+    # out: ['c' 'd' 'e' 'f' 'a' 'b' 'g' 'h']
 
     my_array.sort(axis=1)
+    # val: None
     print(my_array)
+    # out: [['c' 'd']
+    # out:  ['e' 'f']
+    # out:  ['a' 'b']
+    # out:  ['g' 'h']]
     my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
     my_array.sort(axis=0) 
+    # val: None
     print(my_array)
+    # out: [['a' 'b']
+    # out:  ['c' 'd']
+    # out:  ['e' 'f']
+    # out:  ['g' 'h']]
+    # f.out: [['c' 'd']
+    # f.out:  ['e' 'f']
+    # f.out:  ['a' 'b']
+    # f.out:  ['g' 'h']]
+    # f.out: [['c' 'd']
+    # f.out:  ['a' 'b']
+    # f.out:  ['g' 'h']]
+    # f.out: ['c' 'd' 'e' 'f' 'a' 'b' 'g' 'h']
+    # f.out: [['c' 'd']
+    # f.out:  ['e' 'f']
+    # f.out:  ['a' 'b']
+    # f.out:  ['g' 'h']]
+    # f.out: [['a' 'b']
+    # f.out:  ['c' 'd']
+    # f.out:  ['e' 'f']
+    # f.out:  ['g' 'h']]
 ####################################################Figure 15.5.2: Common NumPy math operations and functions.
 with "main1.py" as RUN:
     import numpy as np
@@ -1770,7 +1830,7 @@ with "main1.py" as RUN:
     # out: 
     # out: Finding maximum element in array1
     # out: 40
-with "Scratch.py" as f:
+with Scratc as f:
     import numpy as np
     import time
     hey=[]
@@ -1778,13 +1838,30 @@ with "Scratch.py" as f:
     hey+=[[1, 2, 3, 4]]
     hey2=np.array(hey)
     hey2*hey2
+    # val: array([[ 100,  400,  900, 1600],
+    # val:        [   1,    4,    9,   16]])
 
 INFO()
-# !err: --- ERROR ---
-# !err: /workspaces/Python-Copy2/sandbox/notebook/goog.py:1550: SyntaxWarning: invalid escape sequence '\_'
-# !err:   print("[ [10, 20, 30, 40], [50, 60, 70] ]")
-# !err: Traceback (most recent call last):
-# !err:   File "<string>", line 224, in <module>
-# !err:   File "/workspaces/Python-Copy2/sandbox/notebook/goog.py", line 2, in <module>
-# !err:     from sandbox_drafts.goog_cheatsheet import *
-# !err: ModuleNotFoundError: No module named 'sandbox_drafts'
+# val: /workspaces/Python-Copy2/sandbox/files
+# val: Wed May 13 04:56:32 UTC 2026
+# val: ./myfile.txt
+# val: ./.venv/pyvenv.cfg
+# val: ./Scratch.py
+# val: ./mycsv.csv
+# val: ./main.py
+# val: ./PA 15.3.1: Python for data science.txt
+# val: ./myfile.py
+# val: ./main1.py
+# val: ./mypy.py
+# val: ./myfile.md
+# val: ./First Jupyter notebook.ipynb
+# val: ./ '
+# val:  _     ___
+# val: #_~`--'__ `===-,
+# val: `.`.     `#.,;《
+# val: ,_|_|     ## #《
+# val: `__.__    `####《
+# val:      ~~< ,###'~
+# val:         》##'
+# val: Wolves
+# val: '
