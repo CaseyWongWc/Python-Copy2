@@ -1493,6 +1493,7 @@ with "main.py" as RUN:
     #import numpy as np
     #which term is an alias?
     print("np is an alias for the NumPy package.")
+    #NumPy is often used for which field?
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
