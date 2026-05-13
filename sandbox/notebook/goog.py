@@ -342,38 +342,20 @@ with _:
         pip install numpy
         python -c "import numpy as np; print(np.__version__)'''
         #cmd("ls","-alf")
-        # val: myfile.txt
-        # val: .venv
-        # val: mycsv.csv
-        # val: main.py
-        # val: PA 15.3.1: Python for data science.txt
-        # val: myfile.py
-        # val: ..
-        # val: .
-        # val: myfile.md
-        # val:  '
-        # val:  _     ___
-        # val: #_~`--'__ `===-,
-        # val: `.`.     `#.,;《
-        # val: ,_|_|     ## #《
-        # val: `__.__    `####《
-        # val:      ~~< ,###'~
-        # val:         》##'
-        # val: Wolves
-        # val: '
         cmd("python3", "-m", "venv", ".venv")
         # val: 
         cmd(".venv/bin/activate")
         cmd("python", "-m", "pip", "install", "--upgrade", "pip")
         cmd("pip", "install", "numpy")
         cmd("python", "-c", "import numpy as np; print(np.__version__)")
-        # !err: FileNotFoundError: [Errno 2] No such file or directory: 'source'
-        # !err:   at line 339: '''
+        # !err: PermissionError: [Errno 13] Permission denied: '.venv/bin/activate'
+        # !err:   at line 339: python3 -m venv .venv
+        import numpy as np
 
     with "main.py" as f:
         import numpy as np
         # !err: ModuleNotFoundError: No module named 'numpy'
-        # !err:   at line 345: cmd("ls","-alf")
+        # !err:   at line 345: # val: myfile.txt
         # import pandas as pd
         # import sklearn as sk
         # import matplotlib.pyplot as plt
