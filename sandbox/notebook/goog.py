@@ -1697,7 +1697,8 @@ with "myfile.md":
 
         ```python
         my_array2 = np.ravel(my_array)
-        
+        print(my_array2)
+        ```
     3) my_array._____(axis=0)
     4) my_array.sort(axis=____)
     '''
