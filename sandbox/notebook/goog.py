@@ -1582,14 +1582,17 @@ with Scratch:
     import numpy as np
     import time
     hey=[]
-    hey+=[[1,2,3]]
+    hey+=[[8787,2,3]]
     hey+=[[4,5,6]]
     hey2=np.array(hey)
     hey2.sort(axis=0)
+    # val: None
     hey2
+    # val: array([[1, 2, 3],
+    # val:        [4, 5, 6]])
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:21:37 UTC 2026
+# val: Wed May 13 04:30:51 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
