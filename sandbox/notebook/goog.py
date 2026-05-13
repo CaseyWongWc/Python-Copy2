@@ -64,6 +64,7 @@ Each characteristic of a penguin, such as bill length, body mass, and sex, is a 
 '''
 with Scratch:
     with open("mycsv.csv","w") as f:
+        
 
 
 
