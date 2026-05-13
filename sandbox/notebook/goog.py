@@ -595,7 +595,7 @@ with _:
         - click "file", then "download as". download the Jupyter notebook as a notebook or HTML file.
         '''
     with bash:
-    #     cat myfile.txt
+        # cat myfile.txt
         cat First\ Jupyter\ notebook.ipynb | head -n 50
         #     # out: {
 INFO()
