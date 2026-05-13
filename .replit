@@ -49,10 +49,6 @@ author = 27304601
 task = "shell.exec"
 args = "bash push_replit.sh"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "git pull"
-
 [[workflows.workflow]]
 name = "pull"
 mode = "sequential"
