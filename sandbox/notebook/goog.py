@@ -158,6 +158,7 @@ UnitedHealth Group provides insurance for nearly 50 million customers. As part o
 with "myfile.txt":
     '''
     variety
+    -electronic health records contain data on patient measurements, test results, medical history, image
     '''
     
 
