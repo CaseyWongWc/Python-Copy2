@@ -620,27 +620,23 @@ with _:
         #waht now?
     with _:
         print("You've completed sections 15.1-15.4 of the data science course!")
-        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-        # !err: exit code 2
+        # out: You've completed sections 15.1-15.4 of the data science course!
         print("\nNext steps:")
-        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-        # !err: exit code 2
+        # out: 
+        # out: Next steps:
         print("1. Continue to section 15.5: NumPy - learn array operations")
-        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-        # !err: exit code 2
+        # out: 1. Continue to section 15.5: NumPy - learn array operations
         print("2. Practice with pandas DataFrames for data manipulation")
-        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-        # !err: exit code 2
+        # out: 2. Practice with pandas DataFrames for data manipulation
         print("3. Build a small data analysis project combining these concepts")
-        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-        # !err: exit code 2
+        # out: 3. Build a small data analysis project combining these concepts
         print("\nYes, it's worth it! Data science skills are in high demand.")
-        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-        # !err: exit code 2
-
+        # out: 
+        # out: Yes, it's worth it! Data science skills are in high demand.
+##############################################################################
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 03:55:54 UTC 2026
+# val: Wed May 13 03:56:42 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
