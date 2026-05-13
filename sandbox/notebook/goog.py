@@ -31,7 +31,7 @@ Designing an experiment to compare three marketing strategies in different marke
 Feedback?'''
 with "myfile.txt":
     '''
-    1)
+    1)cre
     '''
 with bash:
     ls -alf
