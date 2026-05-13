@@ -385,4 +385,5 @@ with "myfile.txt":
     3)create and evaluate a machine learning model from a prepared dataset
         -scikit-learn provides methods for many types of machine learning: classification, regression, and clustering. scikit-learn also provides methods for preparing data and tuning models: dimensionality reduction, model selection, and preprocessing of data.
     '''
-####################################################
+##############################################################################
+INFO()
