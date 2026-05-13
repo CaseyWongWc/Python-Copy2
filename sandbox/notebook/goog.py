@@ -1578,7 +1578,8 @@ with "myfile.txt":
     3) In a 2D array, the 0 axis runs along the array's _____.
         - rows
     '''
-with S
+with Scratch:
+    
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:21:37 UTC 2026
