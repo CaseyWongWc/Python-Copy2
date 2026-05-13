@@ -1454,7 +1454,7 @@ How was this section?
 Provide section feedback
 '''
 ####################################################Figure 15.5.1: Summing arrays vs summing lists.
-with "my"
+with "main"
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
