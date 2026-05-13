@@ -337,6 +337,7 @@ with _:
         # out: 2.4.4
     with "main.py" as f:
         cmd("ls","-alf")
+        cmd()
         # val: myfile.txt
         # val: .venv
         # val: mycsv.csv
