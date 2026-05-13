@@ -101,7 +101,50 @@ with "myfile.txt":
     3)type of store
         -type of store is a feature, or variable, in the dataset. It is a characteristic that can be measured or observed for each transaction.
     '''
+'''ig data
+The rise of data science over the last 20 years is partially a result of big data. Big data describes datasets with large volume, created and updated with high velocity, that have variety in structure and format. As more companies and organizations collect and use big data, the demand for people with data science skills grows.
 
+participation activity
+15.1.5: Big data at Twitter.
+
+
+1
+
+2
+
+3
+
+4
+
+Twitter users create approximately 400 billion events per day.
+VolumeVarietyVelocityDaily tweets: 12 TBAnnual tweets: 4.3 PB
+ 2,100Big data is everywhere on Twitter.                    #bigdata
+
+Step 1: The Twitter logo appears. Step 2: The header Volume appears. Daily and annual tweet volume is displayed under the Volume header. Six computer icons are shown next to daily usage. Step 3: The header Variety appears. A sketch of a tweet appears under the Variety header, with each icon revealed one at a time. Step 4: The header Velocity appears. A large number of comment, heart, and retweet icons appear under the Velocity heading.
+
+Captions
+In early 2022, Twitter had 200 million active daily users and about 1.3 billion accounts. These accounts generated big data.
+Storing new tweets takes about 12 terabytes (TB) per day, or the storage of about six MacBook Pros. Storing all tweets posted in a year takes 4.3 petabytes (PB), or about 2,100 MacBook Pros.
+Twitter users do more than tweet. User events on Twitter include tweets, hashtags, images, likes, shares, follows, blocks, re-tweets, and comments.
+Twitter users create approximately 400 billion events per day.
+Playing step 4: Twitter users create approximately 400 billion events per day. Step finished playing
+
+Feedback?
+participation activity
+15.1.6: Big data in healthcare.
+Big data is used by hospitals and medical researchers to track patient outcomes and suggest possible treatment options. For each application of big data in healthcare, which "V" of big data is described?
+
+How to use this tool
+Variety
+Volume
+Velocity
+Electronic health records contain data on patient measurements, test results, medical history, image scans, and other characteristics.
+Wearable devices like a smartwatch can track a patient's exercise, heart rate, and sleeping habits. Data from these devices are sent to a patient's doctor or care team in real time.
+UnitedHealth Group provides insurance for nearly 50 million customers. As part of providing insurance coverage, UnitedHealth Group manages medical records and claims data for each individual customer.
+
+Reset
+
+Feedback?'''
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
