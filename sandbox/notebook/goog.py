@@ -580,5 +580,5 @@ with "myfile.txt":
     3)what does the + button do in a Jupyter notebook?
         -add a new cell directly below the current cell. the plus button adds a new cell
         directly below the current or active cell. adding a new cell is useful for splitting code cells into smaller chunks, or adding text explanations within the notebook.
-        
+    '''
 # INFO()
