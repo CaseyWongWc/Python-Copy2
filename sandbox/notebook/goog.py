@@ -1576,6 +1576,7 @@ with "myfile.txt":
     2) In a 2D array, which axis is the second or last axis?
         - 1
     3) In a 2D array, the 0 axis runs along the array's _____.
+        - rows
     '''
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
