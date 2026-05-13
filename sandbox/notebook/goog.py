@@ -147,7 +147,14 @@ Reset
 Feedback?
 Variety
 Volume
-Velocity'''
+Velocity
+
+
+Electronic health records contain data on patient measurements, test results, medical history, image scans, and other characteristics.
+Wearable devices like a smartwatch can track a patient's exercise, heart rate, and sleeping habits. Data from these devices are sent to a patient's doctor or care team in real time.
+UnitedHealth Group provides insurance for nearly 50 million customers. As part of providing insurance coverage, UnitedHealth Group manages medical records and claims data for each individual customer.
+
+'''
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
