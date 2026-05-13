@@ -38,4 +38,3 @@ with open("goog.py") as f:
 # !err:     with open("goog.py") as f:
 # !err:          ^^^^^^^^^^^^^^^
 # !err: FileNotFoundError: [Errno 2] No such file or directory: 'goog.py'
-ls
