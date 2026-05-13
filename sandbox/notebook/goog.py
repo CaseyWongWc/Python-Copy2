@@ -1706,6 +1706,8 @@ with "myfile.md":
         print(my_array)
         ```
     4) my_array.sort(axis=____)
+
+        ```python
     '''
 
 
