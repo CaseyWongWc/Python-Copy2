@@ -1741,7 +1741,13 @@ with "main.py" as f:
     # out:  ['g' 'h']]
 
     my_array.sort(axis=1)
+    # val: None
     print(my_array)
+    # out: [['a' 'b']
+    # out:  ['c' 'd']
+    # out:  ['e' 'f']
+    # out:  ['a' 'b']
+    # out:  ['g' 'h']]
     # f.out: [['c' 'd']
     # f.out:  ['e' 'f']
     # f.out:  ['a' 'b']
@@ -1754,13 +1760,15 @@ with "main.py" as f:
     # f.out:  ['c' 'd']
     # f.out:  ['e' 'f']
     # f.out:  ['g' 'h']]
-    # !err: AxisError: axis 2 is out of bounds for array of dimension 2
-    # !err:   at line 1667: \["c" "d"\]
+    # f.out: [['a' 'b']
+    # f.out:  ['c' 'd']
+    # f.out:  ['e' 'f']
+    # f.out:  ['g' 'h']]
 
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:49:29 UTC 2026
+# val: Wed May 13 04:49:54 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
