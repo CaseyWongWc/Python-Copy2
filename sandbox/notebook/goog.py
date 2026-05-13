@@ -32,6 +32,8 @@ Feedback?'''
 with "myfile.txt":
     '''
     1)creating an interactive graph of product sales in the past 18 months
+    2)building a user interface for a data storage system containing data on product sales
+    3)designing an experiment to compare three marketing strategies in different markets
     '''
 with bash:
     ls -alf
