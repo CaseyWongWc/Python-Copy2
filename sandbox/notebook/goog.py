@@ -43,18 +43,3 @@ with "myfile.txt":
 
 
 
-with bash:
-    ls -alf
-    # out: myfile.txt
-    # out: ..
-    # out: .
-    # out:  '
-    # out:  _     ___
-    # out: #_~`--'__ `===-,
-    # out: `.`.     `#.,;《
-    # out: ,_|_|     ## #《
-    # out: `__.__    `####《
-    # out:      ~~< ,###'~
-    # out:         》##'
-    # out: Wolves
-    # out: '
