@@ -1499,7 +1499,7 @@ with "main.py" as RUN:
     # out: np is an alias for the NumPy package.
     # out: NumPy is often used for data science.
 ####################################################Try 15.5.1: Array shape and size attributes.
-with "main"
+with "main.py"
     
 
 INFO()
