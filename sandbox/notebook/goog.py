@@ -1455,7 +1455,7 @@ Provide section feedback
 '''
 ####################################################Figure 15.5.1: Summing arrays vs summing lists.
 with "main.py" as f:
-    print(f.read())
+    
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
