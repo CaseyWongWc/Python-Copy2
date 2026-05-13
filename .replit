@@ -33,12 +33,34 @@ args = "Start application"
 name = "Start application"
 author = "agent"
 
-[workflows.workflow.metadata]
-outputType = "console"
-
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python sandbox/notebook/main.py"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "push"
+mode = "sequential"
+author = 27304601
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "push_replit.sh"
+
+[[workflows.workflow]]
+name = "pull"
+mode = "sequential"
+author = 27304601
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git pull"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash push_replit.sh"
 
 [postMerge]
 path = "scripts/post-merge.sh"

@@ -1,2 +1,0 @@
-h=input()
-print("hey")

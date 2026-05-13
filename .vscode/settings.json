@@ -1,6 +1,14 @@
 {
     "python.defaultInterpreterPath": "${workspaceFolder}/.vscode/python-goog-runner",
     "python.terminal.activateEnvironment": true,
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.(py|txt|md|sh)$",
+                "cmd": "bash ${workspaceFolder}/push_replit.sh"
+            }
+        ]
+    },
     "terminal.integrated.env.linux": {
         "VIRTUAL_ENV": "${workspaceFolder}/.venv",
         "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"

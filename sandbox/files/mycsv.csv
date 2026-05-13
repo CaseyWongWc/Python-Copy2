@@ -1,0 +1,7 @@
+species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
+Adelie,Dream,36.5,18.0,181,3750,female
+Chinstrap,Dream,43.5,18.1,195,3800,female
+Gentoo,Dream,48.7,15.7,220,5000,female
+Adelie,Biscoe,36.3,19.3,180,3250,male
+Gentoo,Biscoe,45.3,14.5,210,4500,male
+Dream,Biscoe,18.1,8.5,150,1500,male
