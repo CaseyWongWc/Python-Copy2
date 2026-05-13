@@ -323,7 +323,6 @@ with _:
         | statsmodels | sm | statsmodels adds functionality to Python to estimate many different kinds of statistical models, make inferences from those models, and explore data. |
         '''
     with "myfile.py" as f:
-        #
         import numpy as np
         import pandas as pd
         import sklearn as sk
