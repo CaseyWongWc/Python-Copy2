@@ -1584,6 +1584,7 @@ with Scratch:
     hey=[]
     hey+=[[1,2,3]]
     hey+=[[4,5,6]]
+    
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:21:37 UTC 2026
