@@ -1845,11 +1845,13 @@ with _ as f:
     hey_1_2=np.array(hey_1)
     hey_1_2
     # val: array([], shape=(2, 0), dtype=float64)
+    hey2=
 f
-# val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[], []], hey2=array([], shape=(2, 0), dtype=float64), out=[], err=[], outs='')
+# val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[10, 20, 30, 40], [1, 2, 3, 4]], hey2=array([[10, 20, 30, 40],
+# val:        [ 1,  2,  3,  4]]), hey_1=[[], []], hey_1_2=array([], shape=(2, 0), dtype=float64), out=[], err=[], outs='')
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 05:01:28 UTC 2026
+# val: Wed May 13 05:02:09 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./Scratch.py
