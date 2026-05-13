@@ -1494,6 +1494,7 @@ with "main.py" as RUN:
     #which term is an alias?
     print("np is an alias for the NumPy package.")
     #NumPy is often used for which field?
+    print("NumPy is often used for data science.")
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
