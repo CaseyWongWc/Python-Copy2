@@ -1702,6 +1702,7 @@ with "myfile.md":
     3) my_array._____(axis=0)
 
         ```python
+        my_array.sort(axis=0)
         
     4) my_array.sort(axis=____)
     '''
