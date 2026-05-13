@@ -1579,7 +1579,8 @@ with "myfile.txt":
         - rows
     '''
 with Scratch:
-    impo
+    import numpy as np
+    
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:21:37 UTC 2026
