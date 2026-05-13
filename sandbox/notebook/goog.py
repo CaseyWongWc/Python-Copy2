@@ -1763,8 +1763,7 @@ with "main.py" as f:
     # f.out:  ['c' 'd']
     # f.out:  ['e' 'f']
     # f.out:  ['g' 'h']]
-####################################################participation activity
-15.5.6: Math operators and functions.
+####################################################
 
 
 
