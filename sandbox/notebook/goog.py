@@ -1604,17 +1604,16 @@ with "mypy.py" as RUN:
     # Sort array
     my_array.sort(axis=0)
     print(my_array)
-    # err: Traceback (most recent call last):
-    # err:   File "/workspaces/Python-Copy2/sandbox/files/mycsv.csv", line 1, in <module>
-    # err:     species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
-    # err:     ^^^^^^^
-    # err: NameError: name 'species' is not defined
-    # !err: subprocess exited with code 1
+    # out: [[3 4]]
+    # out: [[1 2]
+    # out:  [3 4]]
 
 ####################################################participation activity 15.5.5: Array functions.
+
+
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:37:50 UTC 2026
+# val: Wed May 13 04:38:28 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
@@ -1622,6 +1621,7 @@ INFO()
 # val: ./PA 15.3.1: Python for data science.txt
 # val: ./myfile.py
 # val: ./main1.py
+# val: ./mypy.py
 # val: ./myfile.md
 # val: ./First Jupyter notebook.ipynb
 # val: ./ '
