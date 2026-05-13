@@ -1830,7 +1830,7 @@ with "main1.py" as RUN:
     # out: 
     # out: Finding maximum element in array1
     # out: 40
-with Scratc as f:
+with Scratch as f:
     import numpy as np
     import time
     hey=[]
