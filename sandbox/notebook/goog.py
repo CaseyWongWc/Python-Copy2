@@ -618,7 +618,7 @@ with _:
         #cat First\ Jupyter\ notebook.ipynb
         
         #waht now?
-
+    
         print("You've completed sections 15.1-15.4 of the data science course!")
         # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
         # !err: exit code 2
