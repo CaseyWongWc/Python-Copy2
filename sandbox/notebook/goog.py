@@ -36,7 +36,7 @@ with "myfile.txt":
     2)building a user interface for a data storage system containing data on product sales
         -computer scientists design websites, develop software, and build data storage tools. They would be most likely to build a user interface for a data storage system.
     3)designing an experiment to compare three marketing strategies in different markets
-        
+        -statisticians design experiments and apply models to discover trends and patterns in a dataset. They would be most likely to design an experiment to compare three marketing strategies in different markets.
     '''
 with bash:
     ls -alf
