@@ -343,7 +343,7 @@ with _:
         pip install numpy
         python -c "import numpy as np; print(np.__version__)'''
         cmd("ls","-alf")
-        cmd("")
+        cmd("p")
         # val: myfile.txt
         # val: .venv
         # val: mycsv.csv
