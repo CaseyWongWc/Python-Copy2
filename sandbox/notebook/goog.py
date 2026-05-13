@@ -592,5 +592,5 @@ with _:
         - copy code cell `In[3]`. in the new cell, change the `"weight"` feature to `"horsepower"`.
         - click "file", then "download as". download the Jupyter notebook as a notebook or HTML file.
         '''
-    with "my"
+    with "mynotebook"
 # INFO()
