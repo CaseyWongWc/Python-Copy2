@@ -47,7 +47,7 @@ author = 27304601
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "bash push_replit.sh"
+args = "push_replit.sh"
 
 [[workflows.workflow]]
 name = "pull"
