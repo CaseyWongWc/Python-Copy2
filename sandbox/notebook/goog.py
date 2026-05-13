@@ -298,8 +298,7 @@ Many Python packages exist for data manipulation, visualization, and modeling. D
 - scikit-learn ✓
 *scikit-learn provides methods for many types of machine learning: classification, regression, and clustering. scikit-learn also provides methods for preparing data and tuning models: dimensionality reduction, model selection, and preprocessing of data.*'''
 ####################################################
-with "participation activity
-15.3.1: Python for data science.":
+with "myfile.txt":
     '''
     1)python code is more difficult to read than code in most other programming languages.
         -false. python was originally designed with readability in mind. python developers have several philosophies related to design, including: "readability counts" and "simple is better than complex."
@@ -309,7 +308,7 @@ with "participation activity
         -true. python is a popular choice for data science programs and has many available resources.
     '''
 with "scratch.py" as f:
-
+    
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
