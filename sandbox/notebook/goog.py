@@ -458,7 +458,106 @@ The Jupyter notebook loads the miles per gallon dataset and creates a scatter pl
 -  Examine the code and text below. 
 -  Add a new heading and text inside the first text cell.
 -  Copy code cell `In[3]`. In the new cell, change the `"weight"` feature to `"horsepower"`.
--  Click "File", then "Download as". Download the Jupyter notebook as a notebook or HTML file.'''
+-  Click "File", then "Download as". Download the Jupyter notebook as a notebook or HTML file.
+
+Skip to main content
+
+zyBooks
+My library >
+CS 2520: Python for Programmers home >
+15.4: Intro to Jupyter Notebooks
+zyBooks catalog
+Help/FAQ
+Casey Wong
+You have unverified email(s). Use My Profile to send another verification email.
+
+
+15.3 Introduction to Python for data science
+15.4 Introduction to Jupyter Notebooks
+Jupyter
+Jupyter is an interactive development environment (IDE) for writing and testing code in data science and scientific computing. In Jupyter, code is written in an interactive document called a Jupyter notebook. A notebook contains cells, which organize code, text, and output all in one place for testing, presenting, and sharing. The three types of cells are code cells, markdown (text) cells, and raw (output) cells. Each cell can be run independently.
+
+participation activity
+15.4.1: Jupyter notebooks.
+
+
+1
+
+2
+
+3
+
+4
+
+Running the code generates a scatter plot in a raw cell below the code cell. Raw cells contain output and are labeled with "Out" and the matching code cell number. Ex: Out[1]
+Markdown cellCode cellRaw cell
+Step 1: A screenshot of the Jupyter notebook interface appears. The notebook interface has a markdown cell with the text "What is the relationship between a car's weight and miles per gallon?", then a code cell. Step 2: The first code cell contains the Python program: from seaborn import scatterplot, load_dataset car_data = load_dataset('mpg') scatterplot(data=car_data, x='weight', y='mpg') Step 3: The "Run" button is highlighted on the menu bar. Step 4: The scatter plot appears in a raw cell labeled Out[1] below the code cell.
+
+Captions
+Jupyter notebooks have code cells, markdown cells, and raw cells. This notebook's first cell is a markdown cell: "What is the relationship... ?" Markdown cells are not labeled.
+Code cells are numbered and labeled with "In". Ex: Code cell In[1] contains code to load the dataset and produce a scatter plot.
+Clicking the "Run" button executes Python functions contained in a single code cell.
+Running the code generates a scatter plot in a raw cell below the code cell. Raw cells contain output and are labeled with "Out" and the matching code cell number. Ex: Out[1]
+Playing step 4: Running the code generates a scatter plot in a raw cell below the code cell. Raw cells contain output and are labeled with "Out" and the matching code cell number. Ex: Out[1] Step finished playing
+
+Feedback?
+participation activity
+15.4.2: Jupyter notebook.
+1)
+Small segments of code and output in Jupyter notebooks are called _____.
+2)
+The Run button executes ________ contained in a Jupyter notebook.
+3)
+Jupyter can be used to write and execute code in _________.
+
+Feedback?
+Using Jupyter notebooks
+Jupyter notebooks are used throughout this zyBook to illustrate data science applications. For information about installing and using Jupyter Notebook on a personal computer, check out the Jupyter installation guide.
+
+Note: Sample notebooks contain code to run a short analysis and can be modified to test new parameter values or different modeling functions. Clicking the "File" menu and "Download as" saves a notebook into a local working directory to save progress.
+
+participation activity
+15.4.3: Jupyter menu icons.
+
+Start
+New code cellRearrange code cellsRestart kernelCopyRun current cellRestart kernel
+and run all cellsChange cell typePaste
+Step 1: The Jupyter notebook menu bar appears. Step 2-7: Arrows appear pointing to each button on the menu bar.
+
+Captions
+
+Feedback?
+participation activity
+15.4.4: Jupyter notebooks in the zyBook.
+1)
+Which is a selectable type of cell in the menu bar?
+2)
+What does the double right triangle button do in a Jupyter notebook?
+3)
+What does the + button do in a Jupyter notebook?
+
+Feedback?
+Try 15.4.1: Getting started with Jupyter notebooks.
+
+Full screen
+The Jupyter notebook loads the miles per gallon dataset and creates a scatter plot of miles per gallon against weight and engine size (number of cylinders) for each car. The notebook also calculates summary statistics for weight.
+
+Click the double right arrow icon to restart the kernel and run all cells.
+Examine the code and text below.
+Add a new heading and text inside the first text cell.
+Copy code cell In[3]. In the new cell, change the "weight" feature to "horsepower".
+Click "File", then "Download as". Download the Jupyter notebook as a notebook or HTML file.
+
+
+Feedback?
+How was this section?
+
+|
+
+
+Provide section feedback
+15.5 NumPy
+'''
 ##############################################################################
 
 # INFO()
