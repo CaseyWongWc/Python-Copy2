@@ -575,6 +575,5 @@ with "myfile.txt":
     1)which is a selectable type of cell in the menu bar?
         -markdown. a markdown cell contains descriptive text that can be formatted. the three types of cells are labeled code, markdown, and raw.
     2)what does the double right triangle button do in a Jupyter notebook?
-        -restart the kernel and run all cells. the double right triangle button restarts the Python
-        
+        -restart the kernel and run all cells. the double right triangle button restarts the Python kernel and runs all cells in the Jupyter notebook. restarting the kernel ensures that all code runs from
 # INFO()
