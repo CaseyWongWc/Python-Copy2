@@ -569,5 +569,5 @@ with "myfile.txt":
     3)Jupyter can be used to write and execute code in _________.
         -multiple languages. Jupyter was originally developed to support three programming languages: Julia, Python, and R. together, these three programming languages inspired the name: Ju (Julia) + pyt (Python) + er (R). today, Jupyter supports over 100 programming languages.
     '''
-####################################################P
+####################################################Participation activity 15.4.4: Jupyter notebooks in the zyBook.
 # INFO()
