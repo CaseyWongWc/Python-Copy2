@@ -93,7 +93,14 @@ Type of store
 Feedback?'''
 
 with "myfile.txt":
-    
+    '''
+    1)transactions
+        -transactions are instances, or data points, in the dataset. Each transaction is an individual observation that contains information about a specific credit card transaction.
+    2)sales amount
+        -sales amount is a feature, or variable, in the dataset. It is a characteristic that can be measured or observed for each transaction.
+    3)type of store
+        -type of store is a feature, or variable, in the dataset. It is a characteristic that can be measured or observed for each transaction.
+    '''
 
 
 INFO()
