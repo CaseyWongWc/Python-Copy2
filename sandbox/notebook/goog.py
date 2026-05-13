@@ -561,5 +561,12 @@ Provide section feedback
 ##############################################################################
 ####################################################Participation activity 15.4.2: Jupyter notebook.
 with "myfile.txt":
-    
+    '''
+    1)small segments of code and output in Jupyter notebooks are called _____.
+        -cells. each cell should contain a small segment of code or output, with a specific purpose. ex: creating a scatter plot and fitting a model are often done in separate cells.
+    2)the run button executes ________ contained in a Jupyter notebook.
+        -selected code. the run button executes code only from one cell at a time. the restart and run all button executes all code after restarting the kernel.
+    3)Jupyter can be used to write and execute code in _________.
+        -multiple languages. Jupyter was originally developed to support three programming languages: Julia, Python, and R. together, these three programming languages inspired the name: Ju (Julia) + pyt (Python) + er (R). today, Jupyter supports over 100 programming languages.
+    '''
 # INFO()
