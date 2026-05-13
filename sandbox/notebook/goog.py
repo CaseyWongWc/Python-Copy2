@@ -1610,7 +1610,14 @@ with "mypy.py" as RUN:
 
 ####################################################participation activity 15.5.5: Array functions.
 with "myfile.txt":
-    
+    '''
+    Given the initialized array and console output, fill in the blanks.
+
+    1) my_array2 = np.______(my_array, 1, axis=0)
+    2) my_array2 = np._____(my_array)
+    3) my_array._____(axis=0)
+    4) my_array.sort(axis=____)
+    '''
 
 
 
