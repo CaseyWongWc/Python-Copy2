@@ -1607,7 +1607,7 @@ with "mycsv.csv" as RUN:
     # out: [[3 4]]
     # out: [[1 2]
     # out:  [3 4]]
-    
+
 ####################################################participation activity 15.5.5: Array functions.
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
