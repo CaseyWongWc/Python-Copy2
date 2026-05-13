@@ -1488,6 +1488,9 @@ with "main.py" as RUN:
 with "main.py" as RUN:
     #what is a benefit of using NumPy over list operations?
     print("NumPy arrays perform mathematical operations faster than lists.")
+    #what operation is not done with NumPy?
+    print("NumPy does not perform list concatenation.")
+    #import numpy as np
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
