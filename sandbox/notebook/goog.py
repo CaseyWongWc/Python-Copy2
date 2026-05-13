@@ -341,7 +341,7 @@ with _:
         python -m pip install --upgrade pip
         pip install numpy
         python -c "import numpy as np; print(np.__version__)'''
-        cmd("ls","-alf")
+        #cmd("ls","-alf")
         # val: myfile.txt
         # val: .venv
         # val: mycsv.csv
