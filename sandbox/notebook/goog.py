@@ -1495,7 +1495,7 @@ with "main.py" as RUN:
     # out: Shape of my_array: (2, 3)
     # out: Size of my_array: 6
 ####################################################Try 15.5.1: Array shape and size attributes.
-with "main.py" as RUN:
+with "main.py" as f:
     import numpy as np
 
     # Create an array
@@ -1510,7 +1510,7 @@ with "main.py" as RUN:
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:10:19 UTC 2026
+# val: Wed May 13 04:10:59 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
