@@ -310,8 +310,7 @@ with '''PA 15.3.1: Python for data science.txt''' as f:
 with "scratch.py" as f:
     
 with bash:
-    rm -rf __pycache__
-    
+    rm 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 03:04:21 UTC 2026
