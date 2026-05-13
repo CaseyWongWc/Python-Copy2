@@ -47,10 +47,6 @@ author = 27304601
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Project"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "Start application"
 
 [[workflows.workflow.tasks]]
