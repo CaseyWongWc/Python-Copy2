@@ -1830,7 +1830,7 @@ with "main1.py" as RUN:
     # out: 
     # out: Finding maximum element in array1
     # out: 40
-
+with Scratch:
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
