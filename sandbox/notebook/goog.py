@@ -324,12 +324,12 @@ with _:
         '''
     with bash:
         
-# COMMANDS (run in /workspaces/Python-Copy2)
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install numpy
-python -c "import numpy as np; print(np.__version__)"
+        # COMMANDS (run in /workspaces/Python-Copy2)
+        python3 -m venv .venv
+        source .venv/bin/activate
+        python -m pip install --upgrade pip
+        pip install numpy
+        python -c "import numpy as np; print(np.__version__)"
 
     with "main.py" as f:
             import numpy as np
