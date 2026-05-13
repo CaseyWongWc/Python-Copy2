@@ -324,7 +324,7 @@ with _:
         '''
 
     with "myfile.py" as f:
-            import Numpy as np
+            import umpy as np
             # !err: ModuleNotFoundError: No module named 'numpy'
             # !err:   at line 320: | matplotlib.pyplot | plt | Matplotlib allows the creation of data visualizations in Python. The functions mostly expect NumPy arrays. |
             # import pandas as pd
