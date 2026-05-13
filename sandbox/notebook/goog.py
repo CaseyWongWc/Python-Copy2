@@ -31,3 +31,11 @@ Designing an experiment to compare three marketing strategies in different marke
 Feedback?'''
 with open("goog.py") as f:
     print(f.read())
+# !err: --- ERROR ---
+# !err: Traceback (most recent call last):
+# !err:   File "<string>", line 224, in <module>
+# !err:   File "/workspaces/Python-Copy2/sandbox/notebook/goog.py", line 32, in <module>
+# !err:     with open("goog.py") as f:
+# !err:          ^^^^^^^^^^^^^^^
+# !err: FileNotFoundError: [Errno 2] No such file or directory: 'goog.py'
+ls
