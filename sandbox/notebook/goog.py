@@ -386,10 +386,82 @@ with "myfile.txt":
         -scikit-learn provides methods for many types of machine learning: classification, regression, and clustering. scikit-learn also provides methods for preparing data and tuning models: dimensionality reduction, model selection, and preprocessing of data.
     '''
 ##############################################################################
+'''## 15.4 Introduction to Jupyter Notebooks
 
+### Jupyter
+
+Jupyter is an interactive development environment (IDE) for writing and testing code in data science and scientific computing. In Jupyter, code is written in an interactive document called a Jupyter notebook. A notebook contains cells, which organize code, text, and output all in one place for testing, presenting, and sharing.  The three types of cells are code cells, markdown (text) cells, and raw (output) cells. Each cell can be run independently.
+
+### PARTICIPATION ACTIVITY: Jupyter notebooks.
+
+Step 1: A screenshot of the Jupyter notebook interface appears. The notebook interface has a markdown cell with the text "What is the relationship between a car's weight and miles per gallon?", then a code cell. Step 2: The first code cell contains the Python program:
+from seaborn import scatterplot, load_dataset
+car_data = load_dataset('mpg')
+scatterplot(data=car_data, x='weight', y='mpg')
+Step 3: The "Run" button is highlighted on the menu bar.
+Step 4: The scatter plot appears in a raw cell labeled Out[1] below the code cell.
+
+### PARTICIPATION ACTIVITY: Jupyter notebook.
+
+**1.** Small segments of code and output in Jupyter notebooks are called _____.
+- blocks
+- cells ✓
+- chunks
+*Each cell should contain a small segment of code or output, with a specific purpose. Ex: Creating a scatter plot and fitting a model are often done in separate cells.*
+
+**2.** The Run button executes ________ contained in a Jupyter notebook.
+- all code
+- selected code ✓
+*The Run button executes code only from one cell at a time. The Restart and Run All button executes all code after restarting the kernel.*
+
+**3.** Jupyter can be used to write and execute code in _________.
+- Python
+- multiple languages ✓
+*Jupyter was originally developed to support three programming languages: Julia, Python, and R. Together, these three programming languages inspired the name: Ju (Julia) + pyt (Python) + er (R). Today, Jupyter supports over 100 programming languages.*
+
+### Using Jupyter notebooks
+
+Jupyter notebooks are used throughout this zyBook to illustrate data science applications. 
+For information about installing and using Jupyter Notebook on a personal computer, check out the Jupyter installation guide. 
+
+Note: Sample notebooks contain code to run a short analysis and can be modified to test new parameter values or different modeling functions. Clicking the "File" menu and "Download as" saves a notebook into a local working directory to save progress.
+
+### PARTICIPATION ACTIVITY: Jupyter menu icons.
+
+Step 1: The Jupyter notebook menu bar appears. Step 2-7: Arrows appear pointing to each button on the menu bar.
+
+### PARTICIPATION ACTIVITY: Jupyter notebooks in the zyBook.
+
+**1.** Which is a selectable type of cell in the menu bar?
+- Input
+- Kernel
+- Markdown ✓
+*A markdown cell contains descriptive text that can be formatted. The three types of cells are labeled code, markdown, and raw.*
+
+**2.** What does the double right triangle button do in a Jupyter notebook?
+- Run current cell only
+- Run all cells
+- Restart the kernel and run all cells ✓
+*The double right triangle button restarts the Python kernel and runs all cells in the Jupyter notebook. Restarting the kernel ensures that all code runs from top to bottom.*
+
+**3.** What does the + button do in a Jupyter notebook?
+- Add a new cell directly below the current cell ✓
+- Add a new cell at the end of the notebook
+- Create a new notebook
+*The plus button adds a new cell directly below the current or active cell. Adding a new cell is useful for splitting code cells into smaller chunks, or adding text explanations within the notebook.*
+
+### LAB ACTIVITY: Getting started with Jupyter notebooks.
+
+The Jupyter notebook loads the miles per gallon dataset and creates a scatter plot of miles per gallon against weight and engine size (number of cylinders) for each car. The notebook also calculates summary statistics for weight.
+
+-  Click the double right arrow icon to restart the kernel and run all cells. 
+-  Examine the code and text below. 
+-  Add a new heading and text inside the first text cell.
+-  Copy code cell `In[3]`. In the new cell, change the `"weight"` feature to `"horsepower"`.
+-  Click "File", then "Download as". Download the Jupyter notebook as a notebook or HTML file.'''
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 03:38:34 UTC 2026
+# val: Wed May 13 03:38:51 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
