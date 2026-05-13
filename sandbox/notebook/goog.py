@@ -92,7 +92,8 @@ Type of store
 
 Feedback?'''
 
-with
+with "myfile.txt":
+    
 
 
 INFO()
