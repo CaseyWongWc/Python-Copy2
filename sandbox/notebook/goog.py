@@ -1479,10 +1479,8 @@ with "main.py" as RUN:
     # Sum two 1D arrays
     print("Sum of array1 and array2 =", end=" ")
     print(array1 + array2)  
-    # out: NumPy arrays perform mathematical operations faster than lists.
-    # out: NumPy does not perform list concatenation.
-    # out: np is an alias for the NumPy package.
-    # out: NumPy is often used for data science.
+    # out: Shape of my_array: (2, 3)
+    # out: Size of my_array: 6
 ####################################################Participation activity 15.5.1: NumPy.
 with "main.py" as RUN:
     #what is a benefit of using NumPy over list operations?
@@ -1494,11 +1492,10 @@ with "main.py" as RUN:
     print("np is an alias for the NumPy package.")
     #NumPy is often used for which field?
     print("NumPy is often used for data science.")
-    # out: NumPy arrays perform mathematical operations faster than lists.
-    # out: NumPy does not perform list concatenation.
-    # out: np is an alias for the NumPy package.
-    # out: NumPy is often used for data science.
+    # out: Shape of my_array: (2, 3)
+    # out: Size of my_array: 6
 ####################################################Try 15.5.1: Array shape and size attributes.
+
 with "main.py" as RUN:
     import numpy as np
 
@@ -1507,16 +1504,14 @@ with "main.py" as RUN:
 
     # Print the shape and size of the array
     print("Shape of my_array:", my_array.shape)
-    # out: Shape of my_array: (2, 3)
     print("Size of my_array:", my_array.size)
+    # out: Shape of my_array: (2, 3)
     # out: Size of my_array: 6
-    # f.out: Shape of my_array: (2, 3)
-    # f.out: Size of my_array: 6
     
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:11:37 UTC 2026
+# val: Wed May 13 04:12:06 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
