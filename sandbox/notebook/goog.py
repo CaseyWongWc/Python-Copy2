@@ -1831,6 +1831,15 @@ with "main1.py" as RUN:
     # out: Finding maximum element in array1
     # out: 40
 with Scratch:
+    import numpy as np
+    import time
+    hey=[]
+    hey+=[[10, 20, 30, 40]]
+    hey+=[[1, 2, 3, 4]]
+    hey2=np.array(hey)
+    hey2*hey2
+    # val: array([[100, 400, 900, 1600],
+    # val:        [  1,   4,   9,   16]])
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
