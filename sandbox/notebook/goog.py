@@ -577,4 +577,6 @@ with "myfile.txt":
     2)what does the double right triangle button do in a Jupyter notebook?
         -restart the kernel and run all cells. the double right triangle button restarts the Python kernel and runs all cells in the Jupyter notebook. restarting the kernel ensures that all code runs from
         top to bottom.
+    3)what does the + button do in a Jupyter notebook?
+    
 # INFO()
