@@ -43,3 +43,4 @@ with "myfile.txt":
 
 
 
+INFO()
