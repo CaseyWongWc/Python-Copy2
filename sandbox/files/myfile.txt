@@ -1,9 +1,9 @@
-"PA 15.3.1: Python for data science.txt"
 '''
-1)python code is more difficult to read than code in most other programming languages.
-    -false. python was originally designed with readability in mind. python developers have several philosophies related to design, including: "readability counts" and "simple is better than complex."
-2)python is a good choice for a data science project that prioritizes performance.
-    -false. other languages, like julia, perform calculations faster and use less memory.
-3)python is a good choice for a data science project that uses packages developed by other data scientists.
-    -true. python is a popular choice for data science programs and has many available resources.
+the Jupyter notebook loads the miles per gallon dataset and creates a scatter plot of miles per gallon against weight and engine size (number of cylinders) for each car. the notebook also calculates summary statistics for weight.
+        
+- click the double right arrow icon to restart the kernel and run all cells. 
+- examine the code and text below. 
+- add a new heading and text inside the first text cell.
+- copy code cell `In[3]`. in the new cell, change the `"weight"` feature to `"horsepower"`.
+- click "file", then "download as". download the Jupyter notebook as a notebook or HTML file.
 '''
