@@ -1500,7 +1500,16 @@ with "main.py" as RUN:
     # out: NumPy is often used for data science.
 ####################################################Try 15.5.1: Array shape and size attributes.
 with "main.py" as RUN:
-    
+    import numpy as np
+
+    # Create an array
+    my_array = np.array([ [1, 2, 3], [4, 5, 6] ])
+
+    # Print the shape and size of the array
+    print("Shape of my_array:", my_array.shape)
+    print("Size of my_array:", my_array.size)
+    # out: Shape of my_array: (2, 3)
+    # out: Size of my_array: 6
     
 
 INFO()
