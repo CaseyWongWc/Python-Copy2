@@ -62,7 +62,8 @@ Researchers at the Palmer Archipelago in the Antarctic collected data on three l
 Each individual penguin in this dataset is an instance. In the dataset, each row represents a different instance.
 Each characteristic of a penguin, such as bill length, body mass, and sex, is a feature. In the dataset, each column represents a different feature.
 '''
-with Scratch
+with Scratch:
+    with open
 
 
 
