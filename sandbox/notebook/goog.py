@@ -1713,7 +1713,22 @@ with "myfile.md":
         ```
     '''
 with "main.py" as f:
-    
+    import numpy as np
+
+    my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
+    print(my_array)
+
+    my_array2 = np.delete(my_array, 1, axis=0)
+    print(my_array2)
+
+    my_array2 = np.ravel(my_array)
+    print(my_array2)
+
+    my_array.sort(axis=0)
+    print(my_array)
+
+    my_array.sort(axis=1)
+    print(my_array)
 
 
 INFO()
