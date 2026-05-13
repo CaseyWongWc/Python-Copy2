@@ -1590,8 +1590,7 @@ with Scratch:
     hey2
     # val: array([[   3,    2,    3],
     # val:        [8787,    5,    6]])
-####################################################participation activity
-15.5.5: Array functions.
+####################################################participation activity 15.5.5: Array functions.
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:31:43 UTC 2026
