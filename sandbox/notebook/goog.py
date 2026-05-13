@@ -1536,7 +1536,7 @@ with "myfile.py" as RUN:
     print("(4,)", '["a", "b", "c", "d"]')
     print("(2, 2, 3)","[ [ [1, 2, 9], [3, 2, 6] ], [ [8, 8, 4], [9, 8, 7] ] ]")
     print("(1,)","[3.1415]")
-    print("( )",)
+    print("( )", "invalid array")
     print("invalid array")
     print("(2, 4)")
     print("(4, 2)")
