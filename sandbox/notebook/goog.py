@@ -1453,7 +1453,7 @@ How was this section?
 
 Provide section feedback
 '''
-####################################################Figure 15.5.1: Array axes.
+####################################################Figure 15.5.1: Summing arrays vs summing lists.
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
