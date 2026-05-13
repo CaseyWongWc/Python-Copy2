@@ -1516,7 +1516,7 @@ with Scratch as f:
     import time
     hey=[]
     hey+=[1,2,3]
-    he
+    hey
     hey2=np.array(hey)
 f
 # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, out=[], err=[], outs='')
