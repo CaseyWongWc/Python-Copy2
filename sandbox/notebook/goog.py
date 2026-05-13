@@ -29,5 +29,5 @@ Building a user interface for a data storage system containing data on product s
 Designing an experiment to compare three marketing strategies in different markets
 
 Feedback?'''
-with "goog.py" as f:
+with open("goog.py") as f:
     print(f.read())
