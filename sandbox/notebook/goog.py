@@ -578,5 +578,6 @@ with "myfile.txt":
         -restart the kernel and run all cells. the double right triangle button restarts the Python kernel and runs all cells in the Jupyter notebook. restarting the kernel ensures that all code runs from
         top to bottom.
     3)what does the + button do in a Jupyter notebook?
-    
+        -add a new cell directly below the current cell. the plus button adds a new cell
+        
 # INFO()
