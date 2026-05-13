@@ -373,7 +373,7 @@ with _:
         import matplotlib.pyplot as plt
         import seaborn as sns
         #import scipy.stats as sp.stats
-        import statsmodels as sm
+        #import statsmodels as sm
     f
     # val: Scratch(out=[], err=[], outs='')
     
