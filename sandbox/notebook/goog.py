@@ -1487,6 +1487,7 @@ with "main.py" as RUN:
 ####################################################Participation activity 15.5.1: NumPy.
 with "main.py" as RUN:
     #what is a benefit of using NumPy over list operations?
+    print("NumPy arrays perform mathematical operations faster than lists.")
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
