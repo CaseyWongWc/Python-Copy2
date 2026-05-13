@@ -1609,7 +1609,7 @@ with "mypy.py" as RUN:
     # out:  [3 4]]
 
 ####################################################participation activity 15.5.5: Array functions.
-
+with "m"
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
