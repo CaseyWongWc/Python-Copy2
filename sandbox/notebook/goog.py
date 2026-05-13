@@ -605,7 +605,7 @@ with _:
     with bash:
         # cat myfile.txt
         #cat First\ Jupyter\ notebook.ipynb | head -n 10
-        c
+        cat F
         # out: {
         # out:  "cells": [
         # out:   {
