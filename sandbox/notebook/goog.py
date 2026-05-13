@@ -1512,7 +1512,7 @@ with "main1.py" as RUN:
     # out: Shape of my_array: (2, 3)
     # out: Size of my_array: 6
 with Scratch as f:
-    
+    im
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
