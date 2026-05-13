@@ -615,50 +615,10 @@ with _:
         # out:     "# This is a heading\n",
         # out:     "\n",
         # out:     "This is a text cell. Data scientists use text cells in a Jupyter notebook to write comments about a dataset or notes about  findings. Double click this Markdown cell to change the text, and click Run to format the text.\n",
-        # out:     "\n",
-        # out:     "## This is a smaller heading\n",
-        # out:     "\n",
-        # out:     "Text cells can contain:\n",
-        # out:     "\n",
-        # out:     "- Bulleted lists\n",
-        # out:     "- Like this\n",
-        # out:     "\n",
-        # out:     "Or\n",
-        # out:     "\n",
-        # out:     "1. Numbered lists\n",
-        # out:     "2. Like this"
-        # out:    ]
-        # out:   },
-        # out:   {
-        # out:    "cell_type": "code",
-        # out:    "execution_count": 2,
-        # out:    "id": "9a25f640",
-        # out:    "metadata": {},
-        # out:    "outputs": [],
-        # out:    "source": [
-        # out:     "# This is a code cell\n",
-        # out:     "# In Python, hashtags are used to write comments, or text \n",
-        # out:     "# It's good practice to use comments to write notes above a function or command"
-        # out:    ]
-        # out:   },
-        # out:   {
-        # out:    "cell_type": "code",
-        # out:    "execution_count": 3,
-        # out:    "id": "ffe14357",
-        # out:    "metadata": {},
-        # out:    "outputs": [
-        # out:     {
-        # out:      "data": {
-        # out:       "text/html": [
-        # out:        "<div>\n",
-        # out:        "<style scoped>\n",
-        # out:        "    .dataframe tbody tr th:only-of-type {\n",
-        # out:        "        vertical-align: middle;\n",
-        # out:        "    }\n",
-        #     # out: {
+
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 03:51:20 UTC 2026
+# val: Wed May 13 03:51:44 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
