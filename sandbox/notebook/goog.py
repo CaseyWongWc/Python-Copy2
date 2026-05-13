@@ -39,6 +39,7 @@ with "myfile.txt":
     3)designing an experiment to compare three marketing strategies in different markets
         -statisticians design experiments and apply models to discover trends and patterns in a dataset. They would be most likely to design an experiment to compare three marketing strategies in different markets.
     '''
+    
 '''Datasets
 Data scientists uncover patterns and make predictions from datasets. A dataset is a collection of information. Datasets consist of features and instances. A feature, or variable, is a characteristic that can be measured or observed on an observational unit. Features are recorded for individual instances, or observational units, in the dataset. Instances are also called data points or observations.
 
