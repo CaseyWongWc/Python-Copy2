@@ -324,8 +324,7 @@ with _:
         '''
 
     with "myfile.py" as f:
-    # !err: SyntaxError: invalid syntax (body line 6)
-        1
+    # !err: SyntaxError: invalid syntax (body line 7)
         import numpy as np
         import pandas as pd
         import sklearn as sk
