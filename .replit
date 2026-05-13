@@ -41,22 +41,26 @@ args = "python sandbox/notebook/main.py"
 outputType = "console"
 
 [[workflows.workflow]]
-name = "yes"
+name = "push"
 mode = "sequential"
 author = 27304601
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Start application"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "bash push_replit.sh"
 
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git pull"
+
 [[workflows.workflow]]
-name = "small yes"
+name = "pull"
 mode = "sequential"
 author = 27304601
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git pull"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
