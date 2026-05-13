@@ -307,7 +307,8 @@ with '''PA 15.3.1: Python for data science.txt''' as f:
     3)python is a good choice for a data science project that uses packages developed by other data scientists.
         -true. python is a popular choice for data science programs and has many available resources.
     '''
-#table 15.3.2
+#table 15.3.2: Common data science packages in Python.
+
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 03:04:21 UTC 2026
 # val: ./myfile.txt
