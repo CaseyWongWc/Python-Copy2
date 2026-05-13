@@ -1700,6 +1700,8 @@ with "myfile.md":
         print(my_array2)
         ```
     3) my_array._____(axis=0)
+
+        
     4) my_array.sort(axis=____)
     '''
 
