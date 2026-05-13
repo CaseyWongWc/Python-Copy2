@@ -954,7 +954,12 @@ with _:
         
         #waht now?
 
-        
+        print("You've completed sections 15.1-15.4 of the data science course!")
+        print("\nNext steps:")
+        print("1. Continue to section 15.5: NumPy - learn array operations")
+        print("2. Practice with pandas DataFrames for data manipulation")
+        print("3. Build a small data analysis project combining these concepts")
+        print("\nYes, it's worth it! Data science skills are in high demand.")
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
