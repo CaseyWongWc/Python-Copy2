@@ -38,8 +38,10 @@ with "myfile.txt":
     3)designing an experiment to compare three marketing strategies in different markets
         -statisticians design experiments and apply models to discover trends and patterns in a dataset. They would be most likely to design an experiment to compare three marketing strategies in different markets.
     '''
+    
 with bash:
     ls -alf
+    # out: myfile.txt
     # out: ..
     # out: .
     # out:  '
@@ -52,10 +54,3 @@ with bash:
     # out:         》##'
     # out: Wolves
     # out: '
-# !err: --- ERROR ---
-# !err: Traceback (most recent call last):
-# !err:   File "<string>", line 224, in <module>
-# !err:   File "/workspaces/Python-Copy2/sandbox/notebook/goog.py", line 32, in <module>
-# !err:     with open("goog.py") as f:
-# !err:          ^^^^^^^^^^^^^^^
-# !err: FileNotFoundError: [Errno 2] No such file or directory: 'goog.py'
