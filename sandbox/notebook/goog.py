@@ -309,6 +309,7 @@ with "myfile.txt" as f:
         -true. python is a popular choice for data science programs and has many available resources.
     '''
 #table 15.3.2: Common data science packages in Python.
+with _:
     with "myfile.md" as f:
         '''
         | Import name | Common alias | Description |
