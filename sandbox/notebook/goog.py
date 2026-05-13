@@ -11,6 +11,7 @@ yes
 # val: Wolves
 # val: '
 with """ '\n _     ___\n#_~`--'__ `===-,\n`.`.     `#.,;《\n,_|_|     ## #《\n`__.__    `####《\n     ~~< ,###'~\n        》##'\nWolves\n'""" as f:
+    
   print("hello")
   # out: hello
   # f.out: hello
