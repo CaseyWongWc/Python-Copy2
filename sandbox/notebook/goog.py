@@ -1516,7 +1516,7 @@ with Scratch as f:
     import time
     hey=[]
     hey+=[[1,2,3]]
-    hey+=[4,5,6]
+    hey+=[[4,5,6]]
     hey
     # val: [1, 2, 3, 4, 5, 6]
     hey2=np.array(hey)
