@@ -1534,7 +1534,7 @@ f
 with "myfile.py" as RUN:
     #Match the shape to the array.
     print("(4,)", '["a", "b", "c", "d"]')
-    print("(2, 2, 3)","")
+    print("(2, 2, 3)","[ [ [1, 2, 9], [3, 2, 6] ], [ [8, 8, 4], [9, 8, 7] ] ]")
     print("(1,)")
     print("( )")
     print("invalid array")
