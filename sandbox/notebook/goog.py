@@ -1609,7 +1609,80 @@ with "mypy.py" as RUN:
     # out:  [3 4]]
 
 ####################################################participation activity 15.5.5: Array functions.
+'''participation activity
 
+## 
+
+15.5.5: Array functions.
+
+Given the initialized array and console output, fill in the blanks.
+
+import numpy as np
+
+my\_array \= np.array( \[  \["c", "d"\], \["e", "f"\], \["a", "b"\], \["g", "h"\] \] )
+print(my\_array)
+
+  
+
+\[\["c" "d"\]
+ \["e" "f"\]
+ \["a" "b"\]
+ \["g" "h"\]\]
+
+  
+  
+
+1)
+
+my\_array2 \= np.\_\_\_\_\_\_(my\_array, 1, axis\=0)
+print(my\_array2)
+
+  
+
+\[\["c" "d"\]
+ \["a" "b"\]
+ \["g" "h"\]\]
+
+Check Show answer
+
+2)
+
+my\_array2 \= np.\_\_\_\_\_(my\_array)
+print(my\_array2)
+
+  
+
+\["c" "d" "e" "f" "a" "b" "g" "h"\]
+
+Check Show answer
+
+3)
+
+my\_array.\_\_\_\_\_(axis\=0)
+print(my\_array)
+
+  
+
+\[\["a" "b"\]
+ \["c" "d"\]
+ \["e" "f"\]
+ \["g" "h"\]\]
+
+Check Show answer
+
+4)
+
+my\_array.sort(axis\=\_\_\_\_)
+print(my\_array)
+
+  
+
+\[\["c" "d"\]
+ \["e" "f"\]
+ \["a" "b"\]
+ \["g" "h"\]\]
+
+Check Show answer'''
 with "myfile.txt":
     '''
     Given the initialized array and console output, fill in the blanks.
