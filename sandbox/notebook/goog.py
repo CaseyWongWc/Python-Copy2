@@ -1735,15 +1735,9 @@ with "main.py" as f:
     my_array.sort(axis=1)
     # val: None
     print(my_array)
-    # out: [['a' 'b']
-    # out:  ['c' 'd']
+    # out: [['c' 'd']
     # out:  ['e' 'f']
-    # out:  ['g' 'h']]
-
-
-    # out: [['a' 'b']
-    # out:  ['c' 'd']
-    # out:  ['e' 'f']
+    # out:  ['a' 'b']
     # out:  ['g' 'h']]
     # f.out: [['c' 'd']
     # f.out:  ['e' 'f']
@@ -1753,19 +1747,18 @@ with "main.py" as f:
     # f.out:  ['a' 'b']
     # f.out:  ['g' 'h']]
     # f.out: ['c' 'd' 'e' 'f' 'a' 'b' 'g' 'h']
-    # f.out: [['a' 'b']
-    # f.out:  ['c' 'd']
+    # f.out: [['c' 'd']
     # f.out:  ['e' 'f']
+    # f.out:  ['a' 'b']
     # f.out:  ['g' 'h']]
-    # f.out: [['a' 'b']
-    # f.out:  ['c' 'd']
-    # f.out:  ['e' 'f']
-    # f.out:  ['g' 'h']]
+     my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
+
+
 
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:50:09 UTC 2026
+# val: Wed May 13 04:51:12 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
