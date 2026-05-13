@@ -299,6 +299,14 @@ Many Python packages exist for data manipulation, visualization, and modeling. D
 *scikit-learn provides methods for many types of machine learning: classification, regression, and clustering. scikit-learn also provides methods for preparing data and tuning models: dimensionality reduction, model selection, and preprocessing of data.*'''
 ####################################################
 with "myfile.txt":
+    '''
+    1)python code is more difficult to read than code in most other programming languages.
+        -false. python was originally designed with readability in mind. python developers have several philosophies related to design, including: "readability counts" and "simple is better than complex."
+    2)python is a good choice for a data science project that prioritizes performance.
+        -false. other languages, like julia, perform calculations faster and use less memory.
+    3)python is a good choice for a data science project that uses packages developed by other data scientists.
+        -true. python is a popular choice for data science programs and has many available resources.
+    '''
 
 
 INFO()
