@@ -1496,7 +1496,7 @@ with "main.py" as RUN:
     # out: Size of my_array: 6
 ####################################################Try 15.5.1: Array shape and size attributes.
 
-with "main.py" as RUN:
+with "main1.py" as RUN:
     import numpy as np
 
     # Create an array
