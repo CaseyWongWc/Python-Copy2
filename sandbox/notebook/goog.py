@@ -1781,7 +1781,8 @@ with "main.py" as f:
     # f.out:  ['c' 'd']
     # f.out:  ['e' 'f']
     # f.out:  ['g' 'h']]
-####################################################Figure 15.5.2: Common NumPy math operations and functions.
+####################################################participation activity 15.5.6: Math operators and functions.
+with "main1.py" as RUN:
     import numpy as np
 
     array1 = np.array([10, 20, 30, 40])
