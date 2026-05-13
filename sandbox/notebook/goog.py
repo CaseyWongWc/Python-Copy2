@@ -336,7 +336,7 @@ with _:
         python -c "import numpy as np; print(np.__version__)"
         # out: 2.4.4
     with "main.py" as f:
-        cmd("ls","")
+        cmd("ls","-alf")
 
     with "main.py" as f:
         import numpy as np
