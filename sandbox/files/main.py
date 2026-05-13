@@ -1,9 +1,8 @@
-#what is a benefit of using NumPy over list operations?
-print("NumPy arrays perform mathematical operations faster than lists.")
-#what operation is not done with NumPy?
-print("NumPy does not perform list concatenation.")
-#import numpy as np
-#which term is an alias?
-print("np is an alias for the NumPy package.")
-#NumPy is often used for which field?
-print("NumPy is often used for data science.")
+import numpy as np
+
+# Create an array
+my_array = np.array([ [1, 2, 3], [4, 5, 6] ])
+
+# Print the shape and size of the array
+print("Shape of my_array:", my_array.shape)
+print("Size of my_array:", my_array.size)
