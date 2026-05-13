@@ -596,10 +596,8 @@ with _:
         '''
     with bash:
     #     cat myfile.txt
-    #     # out: '''
         cat First\ Jupyter\ notebook.ipynb | head -n 50
         #     # out: {
 INFO()
 # !err: --- ERROR ---
-# !err: IndentationError on line 600: indented 12 space(s), but the previous line wasn't expecting a new block.
-# !err:   line 599 was indented 4 space(s) — line 600 probably wants the same.
+# !err: SyntaxError on line 600: unexpected character after line continuation character
