@@ -326,6 +326,8 @@ with _:
         import numpy as np
         import pandas as pd
         import sklearn as sk
+        import matplotlib.pyplot as plt
+        import seaborn as sns
     
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 03:04:21 UTC 2026
