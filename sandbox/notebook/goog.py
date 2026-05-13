@@ -334,23 +334,23 @@ with _:
     #     pip install numpy
     #     # out: Requirement already satisfied: numpy in /usr/local/python/3.12.1/lib/python3.12/site-packages (2.4.4)
     #     python -c "import numpy as np; print(np.__version__)"
-    with "main.py" as f:
-        '''
-        python3 -m venv .venv
-        source .venv/bin/activate
-        python -m pip install --upgrade pip
-        pip install numpy
-        python -c "import numpy as np; print(np.__version__)'''
-        #cmd("ls","-alf")
-        cmd("python3", "-m", "venv", ".venv")
-        # val: 
-        cmd(".venv/bin/activate")
-        cmd("python", "-m", "pip", "install", "--upgrade", "pip")
-        cmd("pip", "install", "numpy")
-        cmd("python", "-c", "import numpy as np; print(np.__version__)")
-        import numpy as np
-        # !err: PermissionError: [Errno 13] Permission denied: '.venv/bin/activate'
-        # !err:   at line 339: python3 -m venv .venv
+    # with "main.py" as f:
+    #     '''
+    #     python3 -m venv .venv
+    #     source .venv/bin/activate
+    #     python -m pip install --upgrade pip
+    #     pip install numpy
+    #     python -c "import numpy as np; print(np.__version__)'''
+    #     #cmd("ls","-alf")
+    #     cmd("python3", "-m", "venv", ".venv")
+    #     # val: 
+    #     cmd(".venv/bin/activate")
+    #     cmd("python", "-m", "pip", "install", "--upgrade", "pip")
+    #     cmd("pip", "install", "numpy")
+    #     cmd("python", "-c", "import numpy as np; print(np.__version__)")
+    #     import numpy as np
+    #     # !err: PermissionError: [Errno 13] Permission denied: '.venv/bin/activate'
+    #     # !err:   at line 339: python3 -m venv .venv
 
     # with "main.py" as f:
     #     import numpy as np
