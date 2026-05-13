@@ -322,7 +322,15 @@ with _:
         | scipy.stats | sp.stats | SciPy provides algorithms and functions for computing problems that arise in science, engineering and statistics. scipy.stats provides the functions for statistics. |
         | statsmodels | sm | statsmodels adds functionality to Python to estimate many different kinds of statistical models, make inferences from those models, and explore data. |
         '''
-    
+    with bash:
+        
+# COMMANDS (run in /workspaces/Python-Copy2)
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install numpy
+python -c "import numpy as np; print(np.__version__)"
+
     with "main.py" as f:
             import numpy as np
             # !err: ModuleNotFoundError: No module named 'numpy'
