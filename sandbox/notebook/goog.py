@@ -65,20 +65,39 @@ Each characteristic of a penguin, such as bill length, body mass, and sex, is a 
 with Scratch:
     with open("mycsv.csv","w") as f:
         f.write("species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex\n")
+        # val: 78
         f.write("Adelie,Dream,36.5,18.0,181,3750,female\n")
+        # val: 39
         f.write("Chinstrap,Dream,43.5,18.1,195,3800,female\n")
+        # val: 42
         f.write("Gentoo,Dream,48.7,15.7,220,5000,female\n")
+        # val: 39
         f.write("Adelie,Biscoe,36.3,19.3,180,3250,male\n")
+        # val: 38
         f.write("Gentoo,Biscoe,45.3,14.5,210,4500,male\n")
+        # val: 38
         f.write("Dream,Biscoe,18.1,8.5,150,1500,male\n")
+        # val: 36
 # 
+'''participation activity
+15.1.4: Features and instances.
+A data scientist is developing a model to identify suspicious credit card transactions. Identify each of the following as a feature or instance.
 
+1)
+Transactions
+2)
+Sales amount
+3)
+Type of store
+
+Feedback?'''
 
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 02:44:41 UTC 2026
+# val: Wed May 13 02:45:55 UTC 2026
 # val: ./myfile.txt
+# val: ./mycsv.csv
 # val: ./ '
 # val:  _     ___
 # val: #_~`--'__ `===-,
