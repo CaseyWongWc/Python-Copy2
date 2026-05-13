@@ -19,7 +19,7 @@ with bash:
   # out: total 4
   # out: drwxr-xr-x 1 runner runner 250 May 13 01:13 .
   # out: drwxr-xr-x 1 runner runner 472 May 13 01:13 ..
-  # out: -rw-r--r-- 1 runner runner  15 May 13 02:06  '
+  # out: -rw-r--r-- 1 runner runner  15 May 13 02:12  '
   # out:  _     ___
   # out: #_~`--'__ `===-,
   # out: `.`.     `#.,;《
@@ -47,3 +47,5 @@ h
 # val: 2
 3
 # val: 3
+4
+# val: 4
