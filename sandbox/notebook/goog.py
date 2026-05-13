@@ -32,7 +32,7 @@ Feedback?'''
 with "myfile.txt":
     '''
     1)creating an interactive graph of product sales in the past 18 months
-        -correct
+        -data scientists present data in graphs, tables, and interactive visualizations, which help the scientists gather meaningful insights from data. They would be most likely to create an interactive graph of product sales in the past 18 months.
     2)building a user interface for a data storage system containing data on product sales
         -computer scientists design websites, develop software, and build data storage tools. They would be most likely to build a user interface for a data storage system.
     3)designing an experiment to compare three marketing strategies in different markets
