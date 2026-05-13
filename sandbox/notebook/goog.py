@@ -1530,7 +1530,7 @@ with Scratch as f:
 f
 # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[1, 2, 3], [4, 5, 6]], hey2=array([[1, 2, 3],
 # val:        [4, 5, 6]]), out=[], err=[], outs='')
-
+####################################################participation activity15.5.2: Array shape.
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:18:44 UTC 2026
