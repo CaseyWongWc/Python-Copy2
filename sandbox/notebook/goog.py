@@ -334,7 +334,6 @@ with _:
     #     pip install numpy
     #     # out: Requirement already satisfied: numpy in /usr/local/python/3.12.1/lib/python3.12/site-packages (2.4.4)
     #     python -c "import numpy as np; print(np.__version__)"
-        # out: 2.4.4
     with "main.py" as f:
         '''
         python3 -m venv .venv
@@ -343,11 +342,6 @@ with _:
         pip install numpy
         python -c "import numpy as np; print(np.__version__)'''
         cmd("ls","-alf")
-        cmd("python3", "-m", "venv", ".venv")
-        cmd("source", ".venv/bin/activate")
-        cmd("python", "-m", "pip", "install", "--upgrade", "pip")
-        cmd("pip", "install", "numpy")
-        cmd("python", "-c", "import numpy as np; print(np.__version__)")
         # val: myfile.txt
         # val: .venv
         # val: mycsv.csv
@@ -367,11 +361,19 @@ with _:
         # val:         》##'
         # val: Wolves
         # val: '
+        cmd("python3", "-m", "venv", ".venv")
+        # val: 
+        cmd(".venv/bin/activate")
+        cmd("python", "-m", "pip", "install", "--upgrade", "pip")
+        cmd("pip", "install", "numpy")
+        cmd("python", "-c", "import numpy as np; print(np.__version__)")
+        # !err: FileNotFoundError: [Errno 2] No such file or directory: 'source'
+        # !err:   at line 339: '''
 
     with "main.py" as f:
         import numpy as np
         # !err: ModuleNotFoundError: No module named 'numpy'
-        # !err:   at line 330: # err: /bin/sh: 1: source: not found
+        # !err:   at line 345: cmd("ls","-alf")
         # import pandas as pd
         # import sklearn as sk
         # import matplotlib.pyplot as plt
