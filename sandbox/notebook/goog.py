@@ -59,7 +59,8 @@ Step 1: The first column of a data table is shown. Step 2: Rows are revealed one
 Captions
 Researchers at the Palmer Archipelago in the Antarctic collected data on three local penguin species: Adelie, Chinstrap, and Gentoo.
 Each individual penguin in this dataset is an instance. In the dataset, each row represents a different instance.
-Each characteristic of a penguin, such as bill length, body mass, and sex, is a feature. In the dataset, each column represents a different feature.'''
+Each characteristic of a penguin, such as bill length, body mass, and sex, is a feature. In the dataset, each column represents a different feature.
+'''
 
 
 
