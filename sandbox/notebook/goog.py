@@ -1479,11 +1479,10 @@ with "main.py" as RUN:
     # Sum two 1D arrays
     print("Sum of array1 and array2 =", end=" ")
     print(array1 + array2)  
-    # out: Concatenation of list1 and list2 = [15.5, 25.11, 19.0, 12.2, 1.3, 6.38]
-    # out: 
-    # out: Sum of list1 and list2 = 27.7 26.41 25.38 
-    # out: 
-    # out: Sum of array1 and array2 = [27.7  26.41 25.38]
+    # out: NumPy arrays perform mathematical operations faster than lists.
+    # out: NumPy does not perform list concatenation.
+    # out: np is an alias for the NumPy package.
+    # out: NumPy is often used for data science.
 ####################################################Participation activity 15.5.1: NumPy.
 with "main.py" as RUN:
     #what is a benefit of using NumPy over list operations?
@@ -1495,12 +1494,17 @@ with "main.py" as RUN:
     print("np is an alias for the NumPy package.")
     #NumPy is often used for which field?
     print("NumPy is often used for data science.")
-
+    # out: NumPy arrays perform mathematical operations faster than lists.
+    # out: NumPy does not perform list concatenation.
+    # out: np is an alias for the NumPy package.
+    # out: NumPy is often used for data science.
+####################################################Try 15.5.1: Array shape and size attributes.
+with
     
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:00:45 UTC 2026
+# val: Wed May 13 04:06:38 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
