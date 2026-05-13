@@ -1572,7 +1572,7 @@ with "myfile.py" as RUN:
 with "myfile.txt":
     '''
     1) How many axes does a 3D array have?
-        
+        -
     2) In a 2D array, which axis is the second or last axis?
     3) In a 2D array, the 0 axis runs along the array's _____.
     '''
