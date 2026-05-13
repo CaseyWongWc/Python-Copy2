@@ -1843,7 +1843,7 @@ with _ as f:
 
     hey_1=[[],[]]
     hey_1_2=np.array(hey_1)
-    hey2
+    hey_1_2
     # val: array([], shape=(2, 0), dtype=float64)
 f
 # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[], []], hey2=array([], shape=(2, 0), dtype=float64), out=[], err=[], outs='')
