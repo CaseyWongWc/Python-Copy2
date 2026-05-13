@@ -1515,16 +1515,17 @@ with Scratch as f:
     import numpy as np
     import time
     hey=[]
-    hey+=[1,2,3]
+    hey+=[[1,2,3]]
     hey+=[4,5,6]
     hey
+    # val: [1, 2, 3, 4, 5, 6]
     hey2=np.array(hey)
 f
-# val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, out=[], err=[], outs='')
+# val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[1, 2, 3, 4, 5, 6], hey2=array([1, 2, 3, 4, 5, 6]), out=[], err=[], outs='')
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:13:34 UTC 2026
+# val: Wed May 13 04:15:47 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
