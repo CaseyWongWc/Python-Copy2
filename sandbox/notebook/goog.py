@@ -1520,7 +1520,7 @@ with Scratch as f:
     hey
     # val: [[1, 2, 3], [4, 5, 6]]
     hey2=np.array(hey)
-    (hey2.shape,
+    (hey2.shape)
      hey2.size)
     # out: (2, 3) 6
     hey2
