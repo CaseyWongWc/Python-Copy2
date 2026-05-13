@@ -29,7 +29,8 @@ Building a user interface for a data storage system containing data on product s
 Designing an experiment to compare three marketing strategies in different markets
 
 Feedback?'''
-with "myfile.txt"
+with "myfile.txt":
+    
 with bash:
     ls -alf
     # out: ..
