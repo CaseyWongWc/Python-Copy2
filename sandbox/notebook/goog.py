@@ -1693,7 +1693,8 @@ with "myfile.md":
     4) my_array.sort(axis=____)
     '''
 with "myfile.txt":
-    
+    '''
+    '''
 
 
 INFO()
