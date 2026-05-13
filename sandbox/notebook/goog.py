@@ -1609,16 +1609,8 @@ with "mypy.py" as RUN:
     # out:  [3 4]]
 
 ####################################################participation activity 15.5.5: Array functions.
-'''import numpy as np
+with 
 
-my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
-print(my_array)
-
-[["c" "d"]
- ["e" "f"]
- ["a" "b"]
- ["g" "h"]]'''
- 
 
 
 INFO()
