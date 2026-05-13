@@ -1840,7 +1840,7 @@ with Scratch as f:
     hey2*hey2
     # val: array([[ 100,  400,  900, 1600],
     # val:        [   1,    4,    9,   16]])
-
+f
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:56:56 UTC 2026
