@@ -1842,7 +1842,7 @@ with _ as f:
     # val:        [   1,    4,    9,   16]])
 
     hey_1=[[],[]]
-    hey_1_2=np.array(hey)
+    hey_1_2=np.array(hey_1)
     hey2
     # val: array([], shape=(2, 0), dtype=float64)
 f
