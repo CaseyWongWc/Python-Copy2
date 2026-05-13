@@ -619,24 +619,24 @@ with _:
         
         #waht now?
 
-            print("You've completed sections 15.1-15.4 of the data science course!")
-            # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-            # !err: exit code 2
-            print("\nNext steps:")
-            # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-            # !err: exit code 2
-            print("1. Continue to section 15.5: NumPy - learn array operations")
-            # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-            # !err: exit code 2
-            print("2. Practice with pandas DataFrames for data manipulation")
-            # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-            # !err: exit code 2
-            print("3. Build a small data analysis project combining these concepts")
-            # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-            # !err: exit code 2
-            print("\nYes, it's worth it! Data science skills are in high demand.")
-            # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
-            # !err: exit code 2
+        print("You've completed sections 15.1-15.4 of the data science course!")
+        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
+        # !err: exit code 2
+        print("\nNext steps:")
+        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
+        # !err: exit code 2
+        print("1. Continue to section 15.5: NumPy - learn array operations")
+        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
+        # !err: exit code 2
+        print("2. Practice with pandas DataFrames for data manipulation")
+        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
+        # !err: exit code 2
+        print("3. Build a small data analysis project combining these concepts")
+        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
+        # !err: exit code 2
+        print("\nYes, it's worth it! Data science skills are in high demand.")
+        # err: /bin/sh: 1: Syntax error: word unexpected (expecting ")")
+        # !err: exit code 2
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
