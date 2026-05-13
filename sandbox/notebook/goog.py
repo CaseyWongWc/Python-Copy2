@@ -65,12 +65,19 @@ Each characteristic of a penguin, such as bill length, body mass, and sex, is a 
 with Scratch:
     with open("mycsv.csv","w") as f:
         f.write("species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex\n")
+        # val: 78
         f.write("Adelie,Dream,36.5,18.0,181,3750,female\n")
+        # val: 39
         f.write("Chinstrap,Dream,43.5,18.1,195,3800,female\n")
+        # val: 42
         f.write("Gentoo,Dream,48.7,15.7,220,5000,female\n")
+        # val: 39
         f.write("Adelie,Biscoe,36.3,19.3,180,3250,male\n")
+        # val: 38
         f.write("Gentoo,Biscoe,45.3,14.5,210,4500,male\n")
+        # val: 38
         f.write("Dream,Biscoe,18.1,8.5,150,1500,male\n")
+        # val: 36
 # 
 '''participation activity
 15.1.4: Features and instances.
@@ -367,6 +374,7 @@ with _:
         import scipy.stats as sp_stats
         import statsmodels as sm
     f
+    # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, pd=<module 'pandas' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/pandas/__init__.py'>, sk=<module 'sklearn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/sklearn/__init__.py'>, plt=<module 'matplotlib.pyplot' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/matplotlib/pyplot.py'>, sns=<module 'seaborn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/seaborn/__init__.py'>, sp_stats=<module 'scipy.stats' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/scipy/stats/__init__.py'>, sm=<module 'statsmodels' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/statsmodels/__init__.py'>, out=[], err=[], outs='')
     
 with "myfile.txt":
     '''
@@ -596,8 +604,76 @@ with _:
         '''
     with bash:
         # cat myfile.txt
-        cat First\ Jupyter\ notebook.ipynb | head -n 50
+        cat First\ Jupyter\ notebook.ipynb | head -n 10
+        # out: {
+        # out:  "cells": [
+        # out:   {
+        # out:    "cell_type": "markdown",
+        # out:    "id": "c175a6bd",
+        # out:    "metadata": {},
+        # out:    "source": [
+        # out:     "# This is a heading\n",
+        # out:     "\n",
+        # out:     "This is a text cell. Data scientists use text cells in a Jupyter notebook to write comments about a dataset or notes about  findings. Double click this Markdown cell to change the text, and click Run to format the text.\n",
+        # out:     "\n",
+        # out:     "## This is a smaller heading\n",
+        # out:     "\n",
+        # out:     "Text cells can contain:\n",
+        # out:     "\n",
+        # out:     "- Bulleted lists\n",
+        # out:     "- Like this\n",
+        # out:     "\n",
+        # out:     "Or\n",
+        # out:     "\n",
+        # out:     "1. Numbered lists\n",
+        # out:     "2. Like this"
+        # out:    ]
+        # out:   },
+        # out:   {
+        # out:    "cell_type": "code",
+        # out:    "execution_count": 2,
+        # out:    "id": "9a25f640",
+        # out:    "metadata": {},
+        # out:    "outputs": [],
+        # out:    "source": [
+        # out:     "# This is a code cell\n",
+        # out:     "# In Python, hashtags are used to write comments, or text \n",
+        # out:     "# It's good practice to use comments to write notes above a function or command"
+        # out:    ]
+        # out:   },
+        # out:   {
+        # out:    "cell_type": "code",
+        # out:    "execution_count": 3,
+        # out:    "id": "ffe14357",
+        # out:    "metadata": {},
+        # out:    "outputs": [
+        # out:     {
+        # out:      "data": {
+        # out:       "text/html": [
+        # out:        "<div>\n",
+        # out:        "<style scoped>\n",
+        # out:        "    .dataframe tbody tr th:only-of-type {\n",
+        # out:        "        vertical-align: middle;\n",
+        # out:        "    }\n",
         #     # out: {
 INFO()
-# !err: --- ERROR ---
-# !err: SyntaxError on line 600: unexpected character after line continuation character
+# val: /workspaces/Python-Copy2/sandbox/files
+# val: Wed May 13 03:51:20 UTC 2026
+# val: ./myfile.txt
+# val: ./.venv/pyvenv.cfg
+# val: ./mycsv.csv
+# val: ./main.py
+# val: ./PA 15.3.1: Python for data science.txt
+# val: ./myfile.py
+# val: ./myfile.md
+# val: ./First Jupyter notebook.ipynb
+# val: ./ '
+# val:  _     ___
+# val: #_~`--'__ `===-,
+# val: `.`.     `#.,;《
+# val: ,_|_|     ## #《
+# val: `__.__    `####《
+# val:      ~~< ,###'~
+# val:         》##'
+# val: Wolves
+# val: '
