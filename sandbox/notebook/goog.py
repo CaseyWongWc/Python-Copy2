@@ -1476,7 +1476,7 @@ with "main.py" as f:
         print(list1[i] + list2[i], end=" ")  
     print("\n")
 
-    Sum two 1D arrays
+    # Sum two 1D arrays
     print("Sum of array1 and array2 =", end=" ")
     print(array1 + array2)  
 
