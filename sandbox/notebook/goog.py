@@ -308,6 +308,7 @@ with "myfile.txt":
         -true. python is a popular choice for data science programs and has many available resources.
     '''
 with "scratch.py" as f:
+    
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
