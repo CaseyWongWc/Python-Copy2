@@ -1453,7 +1453,7 @@ How was this section?
 
 Provide section feedback
 '''
-####################################################Fig
+####################################################Figure 15.5.1: Array axes.
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
