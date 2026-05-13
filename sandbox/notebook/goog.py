@@ -31,7 +31,7 @@ Designing an experiment to compare three marketing strategies in different marke
 Feedback?'''
 with "myfile.txt":
     '''
-    1)cre
+    1)creating an interactive graph of product sales in the past 18 months
     '''
 with bash:
     ls -alf
