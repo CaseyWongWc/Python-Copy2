@@ -1740,7 +1740,7 @@ with "main.py" as f:
     # out:  ['e' 'f']
     # out:  ['g' 'h']]
 
-    my_array.sort(axis=0)
+    my_array.sort(axis=1)
     print(my_array)
     # f.out: [['c' 'd']
     # f.out:  ['e' 'f']
