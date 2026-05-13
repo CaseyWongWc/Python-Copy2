@@ -322,7 +322,9 @@ with _:
         | scipy.stats | sp.stats | SciPy provides algorithms and functions for computing problems that arise in science, engineering and statistics. scipy.stats provides the functions for statistics. |
         | statsmodels | sm | statsmodels adds functionality to Python to estimate many different kinds of statistical models, make inferences from those models, and explore data. |
         '''
+        
     with "myfile.py" as f:
+    # !err: SyntaxError: invalid syntax (body line 6)
         import numpy as np
         import pandas as pd
         import sklearn as sk
@@ -333,20 +335,3 @@ with _:
 
 
     
-# val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 03:04:21 UTC 2026
-# val: ./myfile.txt
-# val: ./mycsv.csv
-# val: ./scratch.py
-# val: ./PA 15.3.1: Python for data science.txt
-# val: ./"participation activity 15.3.1: Python for data science".txt
-# val: ./ '
-# val:  _     ___
-# val: #_~`--'__ `===-,
-# val: `.`.     `#.,;《
-# val: ,_|_|     ## #《
-# val: `__.__    `####《
-# val:      ~~< ,###'~
-# val:         》##'
-# val: Wolves
-# val: '

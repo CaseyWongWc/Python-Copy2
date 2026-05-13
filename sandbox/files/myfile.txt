@@ -1,8 +1,9 @@
+"PA 15.3.1: Python for data science.txt"
 '''
-variety
--electronic health records contain data on patient measurements, test results, medical history, image scans, and other characteristics. This variety of data types and formats is a key aspect of big data in healthcare.
-velocity
--wearable devices like a smartwatch can track a patient's exercise, heart rate, and sleeping habits. Data from these devices are sent to a patient's doctor or care team in real time. The speed at which this data is generated and transmitted is an example of the velocity aspect of big data in healthcare.
-volume
--unitedhealth group provides insurance for nearly 50 million customers. As part of providing insurance coverage, unitedhealth group manages medical records and claims data for each individual customer. The sheer amount of data generated and managed by unitedhealth group for its customers is an example of the volume aspect of big data in healthcare.
+1)python code is more difficult to read than code in most other programming languages.
+    -false. python was originally designed with readability in mind. python developers have several philosophies related to design, including: "readability counts" and "simple is better than complex."
+2)python is a good choice for a data science project that prioritizes performance.
+    -false. other languages, like julia, perform calculations faster and use less memory.
+3)python is a good choice for a data science project that uses packages developed by other data scientists.
+    -true. python is a popular choice for data science programs and has many available resources.
 '''
