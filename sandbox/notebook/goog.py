@@ -168,7 +168,9 @@ with "myfile.txt":
 ##############################################################################
 #skipped
 ##############################################################################
-'''## 15.3 Introduction to Python for data science
+'''
+
+## 15.3 Introduction to Python for data science
 
 ### Advantages/disadvantages of Python for data science
 
