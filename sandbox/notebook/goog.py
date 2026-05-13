@@ -335,7 +335,7 @@ with _:
         # out: Requirement already satisfied: numpy in /usr/local/python/3.12.1/lib/python3.12/site-packages (2.4.4)
         python -c "import numpy as np; print(np.__version__)"
         # out: 2.4.4
-
+    with "main.py" as f:
     with "main.py" as f:
         import numpy as np
         # !err: ModuleNotFoundError: No module named 'numpy'
