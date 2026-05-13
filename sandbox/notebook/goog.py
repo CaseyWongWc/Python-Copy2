@@ -1592,6 +1592,21 @@ with Scratch:
     # val:        [8787,    5,    6]])
 ####################################################Table Table 15.5.1: Array functions.
 with "mycsv.csv" as RUN:
+    import numpy as np
+
+    # Create an array
+    my_array = np.array([ [1, 2], [3, 4] ])
+
+    # Delete the first row of array
+    new_array = np.delete(my_array, 0, axis=0)
+    print(new_array)
+
+    # Sort array
+    my_array.sort(axis=0)
+    print(my_array)
+    # out: [[3 4]]
+    # out: [[1 2]
+    # out:  [3 4]]
     
 ####################################################participation activity 15.5.5: Array functions.
 INFO()
