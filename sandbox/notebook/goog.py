@@ -39,8 +39,41 @@ with "myfile.txt":
     3)designing an experiment to compare three marketing strategies in different markets
         -statisticians design experiments and apply models to discover trends and patterns in a dataset. They would be most likely to design an experiment to compare three marketing strategies in different markets.
     '''
+'''Datasets
+Data scientists uncover patterns and make predictions from datasets. A dataset is a collection of information. Datasets consist of features and instances. A feature, or variable, is a characteristic that can be measured or observed on an observational unit. Features are recorded for individual instances, or observational units, in the dataset. Instances are also called data points or observations.
 
+participation activity
+15.1.3: Features and instances.
+
+
+1
+
+2
+
+3
+
+Each characteristic of a penguin, such as bill length, body mass, and sex, is a feature. In the dataset, each column represents a different feature.
+AdelieChinstrapGentooAdelieGentooDreamDreamDreamBiscoeBiscoe36.543.548.736.345.318.018.115.719.513.718220220819021031503400535038004300femalefemalefemalemalemalespeciesislandbill_length_mmbill_depth_mmflipper_length_mmbody_mass_gsex
+Step 1: The first column of a data table is shown. Step 2: Rows are revealed one by one. Step 3: Column headers are revealed.
+
+Captions
+Researchers at the Palmer Archipelago in the Antarctic collected data on three local penguin species: Adelie, Chinstrap, and Gentoo.
+Each individual penguin in this dataset is an instance. In the dataset, each row represents a different instance.
+Each characteristic of a penguin, such as bill length, body mass, and sex, is a feature. In the dataset, each column represents a different feature.'''
 
 
 
 INFO()
+# val: /workspaces/Python-Copy2/sandbox/files
+# val: Wed May 13 02:43:47 UTC 2026
+# val: ./myfile.txt
+# val: ./ '
+# val:  _     ___
+# val: #_~`--'__ `===-,
+# val: `.`.     `#.,;《
+# val: ,_|_|     ## #《
+# val: `__.__    `####《
+# val:      ~~< ,###'~
+# val:         》##'
+# val: Wolves
+# val: '
