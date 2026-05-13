@@ -1511,7 +1511,8 @@ with "main1.py" as RUN:
     print("Size of my_array:", my_array.size)
     # out: Shape of my_array: (2, 3)
     # out: Size of my_array: 6
-with _ asff:
+with Scratch as f:
+    
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
