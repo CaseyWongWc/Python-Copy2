@@ -1580,7 +1580,7 @@ with "myfile.txt":
     '''
 with Scratch:
     import numpy as np
-    
+    import time
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:21:37 UTC 2026
