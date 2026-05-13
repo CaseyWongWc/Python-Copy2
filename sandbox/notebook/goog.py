@@ -1610,6 +1610,7 @@ with "mypy.py" as RUN:
 
 ####################################################participation activity 15.5.5: Array functions.
 with "myfile.txt":
+    
 
 
 
