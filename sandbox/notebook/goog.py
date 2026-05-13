@@ -376,5 +376,4 @@ with _:
     f
     # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, pd=<module 'pandas' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/pandas/__init__.py'>, out=[], err=[], outs='')
     
-import pandas as pd
-pd.__version__
+
