@@ -1521,19 +1521,19 @@ with Scratch as f:
     # val: [[1, 2, 3], [4, 5, 6]]
     hey2=np.array(hey)
     (hey2.shape)
-    ( hey2.size)
-    # out: (2, 3) 6
+    # val: (2, 3)
+    (hey2.size)
+    # val: 6
     hey2
     # val: array([[1, 2, 3],
     # val:        [4, 5, 6]])
-    # f.out: (2, 3) 6
 f
 # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[1, 2, 3], [4, 5, 6]], hey2=array([[1, 2, 3],
-# val:        [4, 5, 6]]), out=['(2, 3) 6'], err=[], outs='(2, 3) 6')
+# val:        [4, 5, 6]]), out=[], err=[], outs='')
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:17:56 UTC 2026
+# val: Wed May 13 04:18:44 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
