@@ -227,7 +227,74 @@ Many Python packages exist for data manipulation, visualization, and modeling. D
 - NumPy
 - SciPy
 - scikit-learn ✓
-*scikit-learn provides methods for many types of machine learning: classification, regression, and clustering. scikit-learn also provides methods for preparing data and tuning models: dimensionality reduction, model selection, and preprocessing of data.*'''
+*scikit-learn provides methods for many types of machine learning: classification, regression, and clustering. scikit-learn also provides methods for preparing data and tuning models: dimensionality reduction, model selection, and preprocessing of data.*Skip to main content
+
+zyBooks
+My library >
+CS 2520: Python for Programmers home >
+15.3: Python for data science
+zyBooks catalog
+Help/FAQ
+Casey Wong
+You have unverified email(s). Use My Profile to send another verification email.
+
+
+15.2 Data science life cycle
+15.3 Introduction to Python for data science
+Advantages/disadvantages of Python for data science
+Python is one of the most popular languages for data science due to the language's high-level nature, portability, and broad community support. The readability of the language, and the portability of running a Python script easily on different computers, enables collaboration that outweighs performance concerns. Additionally, industry professionals frequently contribute free and high-quality packages for data science that are widely used.
+
+Table 15.3.1: Advantages and disadvantages of Python for data science.
+Advantages	Disadvantages
+Readability: Python reads like English, and functions from the same library use consistent syntax.	Consistency: Different libraries may have different syntax conventions.
+Popularity: Python is popular in data science and elsewhere in industry, which means resources for learning Python are widely available.	Memory: Python uses more computer memory than other programming languages.
+Innovation: New data science models and technologies are constantly added to Python.	Speed: Other programming languages such as Julia perform computations on datasets more quickly than Python.
+
+Feedback?
+participation activity
+15.3.1: Python for data science.
+1)
+Python code is more difficult to read than code in most other programming languages.
+2)
+Python is a good choice for a data science project that prioritizes performance.
+3)
+Python is a good choice for a data science project that uses packages developed by other data scientists.
+
+Feedback?
+Common data science packages
+Many Python packages exist for data manipulation, visualization, and modeling. Different packages provide different functionality, so a data science project will use multiple packages. Ex: Imagine a scientist wants to classify hawk populations in Iowa from a large dataset. First the data is loaded into special data structures using pandas, then classification algorithms are run from scikit-learn, and then the results are visualized using seaborn. The unique capabilities of each package provide a data scientist with a comprehensive set of tools for almost any task.
+
+Table 15.3.2: Common data science packages in Python.
+Import name	Common alias	Description
+numpy	np	NumPy includes functions and classes that aid in numerical computation. NumPy is used in many other data science packages.
+pandas	pd	pandas provides methods and classes for tabular and time-series data.
+sklearn	sk	scikit-learn provides implementations of many machine learning algorithms with a uniform syntax for preprocessing data, specifying models, fitting models with cross-validation, and assessing models.
+matplotlib.pyplot	plt	Matplotlib allows the creation of data visualizations in Python. The functions mostly expect NumPy arrays.
+seaborn	sns	seaborn also allows the creation of data visualizations but works better with pandas DataFrame objects.
+scipy.stats	sp.stats	SciPy provides algorithms and functions for computing problems that arise in science, engineering and statistics. scipy.stats provides the functions for statistics.
+statsmodels	sm	statsmodels adds functionality to Python to estimate many different kinds of statistical models, make inferences from those models, and explore data.
+
+Feedback?
+participation activity
+15.3.2: Choosing data science packages in Python.
+Select the best package to do the task described.
+
+1)
+Read, investigate, and manipulate datasets
+2)
+Visualize a dataset
+3)
+Create and evaluate a machine learning model from a prepared dataset
+
+Feedback?
+How was this section?
+
+|
+
+
+Provide section feedback
+15.4 Introduction to Jupyter Notebooks
+'''
 ####################################################
 
 
