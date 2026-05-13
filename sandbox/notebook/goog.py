@@ -1591,7 +1591,8 @@ with Scratch:
     # val: array([[   3,    2,    3],
     # val:        [8787,    5,    6]])
 ####################################################Table Table 15.5.1: Array functions.
-with
+with "mycsv.csv" as RUN:
+    
 ####################################################participation activity 15.5.5: Array functions.
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
