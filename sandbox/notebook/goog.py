@@ -1683,7 +1683,7 @@ print(my\_array)
  \["g" "h"\]\]
 
 Check Show answer'''
-with "myfile.txt":
+with "myfile.md":
     '''
     Given the initialized array and console output, fill in the blanks.
 
