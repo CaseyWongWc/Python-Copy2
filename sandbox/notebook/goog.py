@@ -325,6 +325,7 @@ with _:
     with "myfile.py" as f:
         import numpy as np
         import pandas as pd
+        import sklearn as sk
     
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 03:04:21 UTC 2026
