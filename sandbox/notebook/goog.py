@@ -63,7 +63,7 @@ Each individual penguin in this dataset is an instance. In the dataset, each row
 Each characteristic of a penguin, such as bill length, body mass, and sex, is a feature. In the dataset, each column represents a different feature.
 '''
 with Scratch:
-    with open(,"w") as f:
+    with open("","w") as f:
 
 
 
