@@ -1688,6 +1688,7 @@ with "myfile.md":
     Given the initialized array and console output, fill in the blanks.
 
     1) my_array2 = np.______(my_array, 1, axis=0)
+        
         ```python
         my_array2 = np.delete(my_array, 1, axis=0)
         print(my_array2)
