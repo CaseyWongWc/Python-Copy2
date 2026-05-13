@@ -1571,6 +1571,7 @@ with "myfile.py" as RUN:
 ####################################################participation activity 15.5.4: Array axes.
 with "myfile.txt":
     '''
+    
     '''
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
