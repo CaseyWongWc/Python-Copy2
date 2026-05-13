@@ -1848,6 +1848,7 @@ with _ as f:
     hey2=[[1],[1,2]]
     try:
         hey2_2=np.array(hey2)
+    except Exception as e:
 f
 # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, time=<module 'time' (built-in)>, hey=[[10, 20, 30, 40], [1, 2, 3, 4]], hey2=array([[10, 20, 30, 40],
 # val:        [ 1,  2,  3,  4]]), hey_1=[[], []], hey_1_2=array([], shape=(2, 0), dtype=float64), out=[], err=[], outs='')
