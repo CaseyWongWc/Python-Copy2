@@ -1771,7 +1771,7 @@ with "main1.py" as RUN:
     # out: 
     # out: Finding maximum element in array1
     # out: 40
-with "Scratch":
+with "Scratch.py" as f:
     import numpy as np
     import time
     hey=[]
