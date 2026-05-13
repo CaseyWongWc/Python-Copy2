@@ -1,8 +1,27 @@
 import numpy as np
 
-# Create an array
-my_array = np.array([ [1, 2, 3], [4, 5, 6] ])
+array1 = np.array([10, 20, 30, 40])
+array2 = np.array([1, 2, 3, 4])
 
-# Print the shape and size of the array
-print("Shape of my_array:", my_array.shape)
-print("Size of my_array:", my_array.size)
+# Some common array operations
+
+print("Adding arrays (array1 + array2)")
+print(array1 + array2)
+
+print("\nSubtracting arrays (array1 - array2)")
+print(array1 - array2)
+
+print("\nMultiplying arrays (array1 * array2)")
+print(array1 * array2)
+
+print("\nCalculating dot product of arrays")
+print(np.dot(array1, array2))
+
+print("\nFinding square root of each element in array1")
+print(np.sqrt(array1))
+
+print("\nFinding minimum element in array1")
+print(array1.min())
+
+print("\nFinding maximum element in array1")
+print(array1.max())

@@ -1509,8 +1509,26 @@ with "main1.py" as RUN:
     # Print the shape and size of the array
     print("Shape of my_array:", my_array.shape)
     print("Size of my_array:", my_array.size)
-    # out: Shape of my_array: (2, 3)
-    # out: Size of my_array: 6
+    # out: Adding arrays (array1 + array2)
+    # out: [11 22 33 44]
+    # out: 
+    # out: Subtracting arrays (array1 - array2)
+    # out: [ 9 18 27 36]
+    # out: 
+    # out: Multiplying arrays (array1 * array2)
+    # out: [ 10  40  90 160]
+    # out: 
+    # out: Calculating dot product of arrays
+    # out: 300
+    # out: 
+    # out: Finding square root of each element in array1
+    # out: [3.16227766 4.47213595 5.47722558 6.32455532]
+    # out: 
+    # out: Finding minimum element in array1
+    # out: 10
+    # out: 
+    # out: Finding maximum element in array1
+    # out: 40
 with Scratch as f:
     import numpy as np
     import time
@@ -1763,8 +1781,7 @@ with "main.py" as f:
     # f.out:  ['c' 'd']
     # f.out:  ['e' 'f']
     # f.out:  ['g' 'h']]
-####################################################participation activity 15.5.6: Math operators and functions.
-with "main1.py" as RUN:
+####################################################Figure 15.5.2: Common NumPy math operations and functions.
     import numpy as np
 
     array1 = np.array([10, 20, 30, 40])
@@ -1792,11 +1809,31 @@ with "main1.py" as RUN:
 
     print("\nFinding maximum element in array1")
     print(array1.max())
+    # out: Adding arrays (array1 + array2)
+    # out: [11 22 33 44]
+    # out: 
+    # out: Subtracting arrays (array1 - array2)
+    # out: [ 9 18 27 36]
+    # out: 
+    # out: Multiplying arrays (array1 * array2)
+    # out: [ 10  40  90 160]
+    # out: 
+    # out: Calculating dot product of arrays
+    # out: 300
+    # out: 
+    # out: Finding square root of each element in array1
+    # out: [3.16227766 4.47213595 5.47722558 6.32455532]
+    # out: 
+    # out: Finding minimum element in array1
+    # out: 10
+    # out: 
+    # out: Finding maximum element in array1
+    # out: 40
 
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:52:18 UTC 2026
+# val: Wed May 13 04:54:07 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
