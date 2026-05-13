@@ -348,9 +348,9 @@ with _:
         cmd("python", "-m", "pip", "install", "--upgrade", "pip")
         cmd("pip", "install", "numpy")
         cmd("python", "-c", "import numpy as np; print(np.__version__)")
+        import numpy as np
         # !err: PermissionError: [Errno 13] Permission denied: '.venv/bin/activate'
         # !err:   at line 339: python3 -m venv .venv
-        import numpy as np
 
     # with "main.py" as f:
     #     import numpy as np
