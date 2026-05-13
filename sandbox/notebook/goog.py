@@ -38,7 +38,7 @@ with "myfile.txt":
     3)designing an experiment to compare three marketing strategies in different markets
         -statisticians design experiments and apply models to discover trends and patterns in a dataset. They would be most likely to design an experiment to compare three marketing strategies in different markets.
     '''
-    
+
 with bash:
     ls -alf
     # out: myfile.txt
