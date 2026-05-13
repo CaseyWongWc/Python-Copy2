@@ -368,11 +368,14 @@ with _:
     with "main.py" as f:
         import numpy as np
         import pandas as pd
+        # !err: ModuleNotFoundError: No module named 'pandas'
+        # !err:   at line 363: #     # import scipy.stats as sp.stats
         # import sklearn as sk
         # import matplotlib.pyplot as plt
         # import seaborn as sns
         # import scipy.stats as sp.stats
         # import statsmodels as sm
     f
-    # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, out=[], err=[], outs='')
+    # val: Scratch(out=[], err=[], outs='')
     
+import pandas as pd
