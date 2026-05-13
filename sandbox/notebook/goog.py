@@ -1569,6 +1569,7 @@ with "myfile.py" as RUN:
     # out: [ [10, 20, 30, 40], [50, 60, 70, 80] ]
     # out: [3.1415]
 ####################################################participation activity 15.5.4: Array axes.
+with "myfile.txt"
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:21:37 UTC 2026
