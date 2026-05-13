@@ -459,6 +459,7 @@ The Jupyter notebook loads the miles per gallon dataset and creates a scatter pl
 -  Add a new heading and text inside the first text cell.
 -  Copy code cell `In[3]`. In the new cell, change the `"weight"` feature to `"horsepower"`.
 -  Click "File", then "Download as". Download the Jupyter notebook as a notebook or HTML file.'''
+##############################################################################
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 03:38:51 UTC 2026
