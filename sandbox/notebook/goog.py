@@ -367,14 +367,12 @@ with _:
 
     with "main.py" as f:
         import numpy as np
-        # !err: ModuleNotFoundError: No module named 'numpy'
-        # !err:   at line 345: # val: myfile.txt
-        # import pandas as pd
+        import pandas as pd
         # import sklearn as sk
         # import matplotlib.pyplot as plt
         # import seaborn as sns
         # import scipy.stats as sp.stats
         # import statsmodels as sm
     f
-    # val: Scratch(out=[], err=[], outs='')
+    # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, out=[], err=[], outs='')
     
