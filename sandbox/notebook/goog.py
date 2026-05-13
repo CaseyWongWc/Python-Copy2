@@ -1583,7 +1583,7 @@ with Scratch:
     import time
     hey=[]
     hey+=[[8787,2,3]]
-    hey+=[[4,5,6]]
+    hey+=[[3,5,6]]
     hey2=np.array(hey)
     hey2.sort(axis=0)
     # val: None
