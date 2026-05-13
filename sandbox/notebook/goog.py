@@ -597,7 +597,7 @@ with _:
     with bash:
     #     cat myfile.txt
     #     # out: '''
-         cat First\ Jupyter\ notebook.ipynb | head -n 50
+    # cat First\ Jupyter\ notebook.ipynb | head -n 50
         #     # out: {
 INFO()
 # !err: --- ERROR ---
