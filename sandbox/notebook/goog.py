@@ -29,8 +29,21 @@ Building a user interface for a data storage system containing data on product s
 Designing an experiment to compare three marketing strategies in different markets
 
 Feedback?'''
-with open("goog.py") as f:
-    print(f.read())
+
+with bash:
+    ls -alf
+    # out: ..
+    # out: .
+    # out:  '
+    # out:  _     ___
+    # out: #_~`--'__ `===-,
+    # out: `.`.     `#.,;《
+    # out: ,_|_|     ## #《
+    # out: `__.__    `####《
+    # out:      ~~< ,###'~
+    # out:         》##'
+    # out: Wolves
+    # out: '
 # !err: --- ERROR ---
 # !err: Traceback (most recent call last):
 # !err:   File "<string>", line 224, in <module>
@@ -38,5 +51,3 @@ with open("goog.py") as f:
 # !err:     with open("goog.py") as f:
 # !err:          ^^^^^^^^^^^^^^^
 # !err: FileNotFoundError: [Errno 2] No such file or directory: 'goog.py'
-with bash:
-    ls -alf
