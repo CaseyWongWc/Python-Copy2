@@ -1486,7 +1486,7 @@ with "main.py" as RUN:
     # out: Sum of array1 and array2 = [27.7  26.41 25.38]
 ####################################################Participation activity 15.5.1: NumPy.
 with "main.py" as RUN:
-    #what
+    #what is a benefit of using NumPy over list operations?
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
