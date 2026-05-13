@@ -1591,7 +1591,7 @@ with Scratch:
     # val: array([[   3,    2,    3],
     # val:        [8787,    5,    6]])
 ####################################################Table Table 15.5.1: Array functions.
-with "mycsv.csv" as RUN:
+with "mypy.py" as RUN:
     import numpy as np
 
     # Create an array
@@ -1604,14 +1604,17 @@ with "mycsv.csv" as RUN:
     # Sort array
     my_array.sort(axis=0)
     print(my_array)
-    # out: [[3 4]]
-    # out: [[1 2]
-    # out:  [3 4]]
+    # err: Traceback (most recent call last):
+    # err:   File "/workspaces/Python-Copy2/sandbox/files/mycsv.csv", line 1, in <module>
+    # err:     species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
+    # err:     ^^^^^^^
+    # err: NameError: name 'species' is not defined
+    # !err: subprocess exited with code 1
 
 ####################################################participation activity 15.5.5: Array functions.
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:31:43 UTC 2026
+# val: Wed May 13 04:37:50 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
