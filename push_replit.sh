@@ -4,7 +4,7 @@
 # Optional message: bash push_replit.sh "my commit message"
 
 REMOTE="replit"
-BRANCH="main"
+BRANCH="Hithere"
 MSG="${1:-📤 manual push @ $(date +"%H:%M:%S")}"
 
 # Prefer a dedicated replit remote; fall back to origin if missing.
