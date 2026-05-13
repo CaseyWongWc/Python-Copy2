@@ -338,7 +338,7 @@ with _:
     with "main.py" as f:
         '''
         python3 -m venv .venv
-source .venv/bin/activate   
+source .venv/bin/activate
 python -m pip install --upgrade pip
 pip install numpy
 python -c "import numpy as np; print(np.__version__)'''
