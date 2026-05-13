@@ -1703,7 +1703,8 @@ with "myfile.md":
 
         ```python
         my_array.sort(axis=0)
-        
+        print(my_array)
+        ```
     4) my_array.sort(axis=____)
     '''
 
