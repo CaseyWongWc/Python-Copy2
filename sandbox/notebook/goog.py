@@ -1572,6 +1572,7 @@ with "myfile.py" as RUN:
 with "myfile.txt":
     '''
 1)
+How many axes does a 3D array have?
     '''
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
