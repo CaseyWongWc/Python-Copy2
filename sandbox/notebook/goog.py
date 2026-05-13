@@ -377,4 +377,11 @@ with _:
     # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, pd=<module 'pandas' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/pandas/__init__.py'>, sk=<module 'sklearn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/sklearn/__init__.py'>, plt=<module 'matplotlib.pyplot' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/matplotlib/pyplot.py'>, sns=<module 'seaborn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/seaborn/__init__.py'>, sp_stats=<module 'scipy.stats' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/scipy/stats/__init__.py'>, sm=<module 'statsmodels' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/statsmodels/__init__.py'>, out=[], err=[], outs='')
     
 with "myfile.txt":
-    
+    '''
+    1)read, investigate, and manipulate datasets
+        -pandas was built to add functionality for reading, investigating, and manipulating datasets. pandas also provides methods for combining datasets and time series.
+    2)visualize a dataset
+        -seaborn provides functions that allow the creation and customization of visualizations.
+    3)create and evaluate a machine learning model from a prepared dataset
+        -scikit-learn provides methods for many types of machine learning: classification, regression, and clustering. scikit-learn also provides methods for preparing data and tuning models: dimensionality reduction, model selection, and preprocessing of data.
+    '''
