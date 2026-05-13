@@ -1609,7 +1609,16 @@ with "mypy.py" as RUN:
     # out:  [3 4]]
 
 ####################################################participation activity 15.5.5: Array functions.
-with "myfile.md" as RUN:
+'''import numpy as np
+
+my_array = np.array( [  ["c", "d"], ["e", "f"], ["a", "b"], ["g", "h"] ] )
+print(my_array)
+
+[["c" "d"]
+ ["e" "f"]
+ ["a" "b"]
+ ["g" "h"]]'''
+ 
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
