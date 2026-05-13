@@ -1732,7 +1732,7 @@ with "main.py" as f:
     print(my_array2)
     # out: ['c' 'd' 'e' 'f' 'a' 'b' 'g' 'h']
 
-    my_array.sort(axis=0)
+    my_array.sort(axis=1)
     # val: None
     print(my_array)
     # out: [['a' 'b']
@@ -1746,7 +1746,6 @@ with "main.py" as f:
     # out: [['a' 'b']
     # out:  ['c' 'd']
     # out:  ['e' 'f']
-    # out:  ['a' 'b']
     # out:  ['g' 'h']]
     # f.out: [['c' 'd']
     # f.out:  ['e' 'f']
@@ -1768,7 +1767,7 @@ with "main.py" as f:
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:49:54 UTC 2026
+# val: Wed May 13 04:50:09 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
