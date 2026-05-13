@@ -1586,6 +1586,7 @@ with Scratch:
     hey+=[[4,5,6]]
     hey2=np.array(hey)
     hey2.sort(axis=0)
+    hey2
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
 # val: Wed May 13 04:21:37 UTC 2026
