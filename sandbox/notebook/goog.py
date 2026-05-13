@@ -1492,6 +1492,7 @@ with "main.py" as RUN:
     print("NumPy does not perform list concatenation.")
     #import numpy as np
     #which term is an alias?
+    print("np is an alias for the NumPy package.")
 
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
