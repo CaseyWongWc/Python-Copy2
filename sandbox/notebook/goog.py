@@ -613,7 +613,7 @@ with _:
         # out: - copy code cell `In[3]`. in the new cell, change the `"weight"` feature to `"horsepower"`.
         # out: - click "file", then "download as". download the Jupyter notebook as a notebook or HTML file.
         # out: '''
-        #     cat First\ Jupyter\ notebook.ipynb
+        cat First\ Jupyter\ notebook.ipynb | head -n 50
         #     # out: {
         # out:  "cells": [
         # out:   {
