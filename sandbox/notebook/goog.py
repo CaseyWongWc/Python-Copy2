@@ -337,6 +337,7 @@ with _:
         # out: 2.4.4
     with "main.py" as f:
         cmd("","")
+        
     with "main.py" as f:
         import numpy as np
         # !err: ModuleNotFoundError: No module named 'numpy'
