@@ -1689,7 +1689,8 @@ with "myfile.md":
 
     1) my_array2 = np.______(my_array, 1, axis=0)
         ```python
-        my_array2 = np.delete(my_array, 1, axis=0)```
+        my_array2 = np.delete(my_array, 1, axis=0)
+        print(my_array2)```
     2) my_array2 = np._____(my_array)
     3) my_array._____(axis=0)
     4) my_array.sort(axis=____)
