@@ -324,7 +324,16 @@ with _:
         '''
     with bash:
         
-       ''z''
+        # COMMANDS (run in /workspaces/Python-Copy2)
+        python3 -m venv .venv
+        source .venv/bin/activate
+        # err: /bin/sh: 1: source: not found
+        # !err: exit code 127
+        python -m pip install --upgrade pip
+        # out: Requirement already satisfied: pip in /usr/local/python/3.12.1/lib/python3.12/site-packages (26.1.1)
+        pip install numpy
+        # out: Requirement already satisfied: numpy in /usr/local/python/3.12.1/lib/python3.12/site-packages (2.4.4)
+        python -c "import numpy as np; print(np.__version__)"
         # out: 2.4.4
     with "main.py" as f:
         cmd("ls","-alf")
