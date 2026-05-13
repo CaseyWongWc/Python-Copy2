@@ -570,5 +570,9 @@ with "myfile.txt":
         -multiple languages. Jupyter was originally developed to support three programming languages: Julia, Python, and R. together, these three programming languages inspired the name: Ju (Julia) + pyt (Python) + er (R). today, Jupyter supports over 100 programming languages.
     '''
 ####################################################Participation activity 15.4.4: Jupyter notebooks in the zyBook.
-
+with "myfile.txt":
+    '''
+    1)which is a selectable type of cell in the menu bar?
+        -markdown. a markdown cell contains descriptive text that can be formatted. the three types of cells are labeled code, markdown, and raw.
+    2)what does the double right triangle button do in a Jupyter notebook?
 # INFO()
