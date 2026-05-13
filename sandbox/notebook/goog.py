@@ -71,7 +71,7 @@ with Scratch:
         f.write("Adelie,Biscoe,36.3,19.3,180,3250,male\n")
         f.write("Gentoo,Biscoe,45.3,14.5,210,4500,male\n")
         f.write("Dream,Biscoe,18.1,8.5,150,1500,male\n")
-
+# 
 
 
 
