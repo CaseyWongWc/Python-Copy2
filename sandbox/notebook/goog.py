@@ -1467,42 +1467,27 @@ with "main.py" as RUN:
 
     # Concatenate two lists
     print("Concatenation of list1 and list2 =", end=" ")
-    # out: Concatenation of list1 and list2 = 
     print(list1 + list2)
-    # out: [15.5, 25.11, 19.0, 12.2, 1.3, 6.38]
     print()
-    # out: 
 
     # Sum two lists
     print("Sum of list1 and list2 =", end=" ")
-    # out: Sum of list1 and list2 = 
     for i in range(len(list1)):
         print(list1[i] + list2[i], end=" ")  
-        # out: 27.7 
-        # out: 26.41 
-        # out: 25.38 
     print("\n")
-    # out: 
 
     # Sum two 1D arrays
     print("Sum of array1 and array2 =", end=" ")
-    # out: Sum of array1 and array2 = 
     print(array1 + array2)  
-    # out: [27.7  26.41 25.38]
-    # f.out: Concatenation of list1 and list2 = 
-    # f.out: [15.5, 25.11, 19.0, 12.2, 1.3, 6.38]
-    # f.out: 
-    # f.out: Sum of list1 and list2 = 
-    # f.out: 27.7 
-    # f.out: 26.41 
-    # f.out: 25.38 
-    # f.out: 
-    # f.out: Sum of array1 and array2 = 
-    # f.out: [27.7  26.41 25.38]
-
+    # out: Concatenation of list1 and list2 = [15.5, 25.11, 19.0, 12.2, 1.3, 6.38]
+    # out: 
+    # out: Sum of list1 and list2 = 27.7 26.41 25.38 
+    # out: 
+    # out: Sum of array1 and array2 = [27.7  26.41 25.38]
+####################################################
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:00:19 UTC 2026
+# val: Wed May 13 04:00:45 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
