@@ -64,7 +64,12 @@ Each characteristic of a penguin, such as bill length, body mass, and sex, is a 
 '''
 with Scratch:
     with open("mycsv.csv","w") as f:
-        
+        f.write("species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex\n")
+        f.write("Adelie,Dream,36.5,18.0,181,3750,female\n")
+        f.write("Chinstrap,Dream,43.5,18.1,195,3800,female\n")
+        f.write("Gentoo,Dream,48.7,15.7,220,5000,female\n")
+        f.write("Adelie,Biscoe,36.3,19.3,180,3250,male\n")
+        f.write("Gentoo,Biscoe,45.3,14.5,210,4500,male\n")
 
 
 
