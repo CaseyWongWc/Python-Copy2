@@ -336,11 +336,7 @@ with _:
     #     python -c "import numpy as np; print(np.__version__)"
         # out: 2.4.4
     with "main.py" as f:
-        '''python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install numpy
-python -c "import numpy as np; print(np.__version__)'''
+        ''''''
         cmd("ls","-alf")
         cmd()
         # val: myfile.txt
