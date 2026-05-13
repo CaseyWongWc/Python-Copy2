@@ -30,4 +30,4 @@ Designing an experiment to compare three marketing strategies in different marke
 
 Feedback?'''
 with "goog.py" as f:
-    print(f.read())
+        
