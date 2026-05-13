@@ -323,7 +323,7 @@ with _:
         | statsmodels | sm | statsmodels adds functionality to Python to estimate many different kinds of statistical models, make inferences from those models, and explore data. |
         '''
 
-    with Scr:
+    with Scratch:
     # !err: SyntaxError: invalid syntax (body line 6)
             import numpy as np
             import pandas as pd
