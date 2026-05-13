@@ -1588,11 +1588,12 @@ with Scratch:
     hey2.sort(axis=0)
     # val: None
     hey2
-    # val: array([[1, 2, 3],
-    # val:        [4, 5, 6]])
+    # val: array([[   3,    2,    3],
+    # val:        [8787,    5,    6]])
+
 INFO()
 # val: /workspaces/Python-Copy2/sandbox/files
-# val: Wed May 13 04:30:51 UTC 2026
+# val: Wed May 13 04:31:43 UTC 2026
 # val: ./myfile.txt
 # val: ./.venv/pyvenv.cfg
 # val: ./mycsv.csv
