@@ -1574,6 +1574,7 @@ with "myfile.txt":
     1) How many axes does a 3D array have?
         - 3
     2) In a 2D array, which axis is the second or last axis?
+        - 1
     3) In a 2D array, the 0 axis runs along the array's _____.
     '''
 INFO()
