@@ -65,12 +65,19 @@ Each characteristic of a penguin, such as bill length, body mass, and sex, is a 
 with Scratch:
     with open("mycsv.csv","w") as f:
         f.write("species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex\n")
+        # val: 78
         f.write("Adelie,Dream,36.5,18.0,181,3750,female\n")
+        # val: 39
         f.write("Chinstrap,Dream,43.5,18.1,195,3800,female\n")
+        # val: 42
         f.write("Gentoo,Dream,48.7,15.7,220,5000,female\n")
+        # val: 39
         f.write("Adelie,Biscoe,36.3,19.3,180,3250,male\n")
+        # val: 38
         f.write("Gentoo,Biscoe,45.3,14.5,210,4500,male\n")
+        # val: 38
         f.write("Dream,Biscoe,18.1,8.5,150,1500,male\n")
+        # val: 36
 # 
 '''participation activity
 15.1.4: Features and instances.
@@ -359,7 +366,6 @@ with _:
     # # val: Scratch(out=[], err=[], outs='')
 
     with "main.py" as f:
-    # !err: SyntaxError: invalid syntax (body line 6)
         import numpy as np
         import pandas as pd
         import sklearn as sk
@@ -368,7 +374,6 @@ with _:
         import scipy.stats as sp_stats
         import statsmodels as sm
     f
+    # val: Scratch(np=<module 'numpy' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/numpy/__init__.py'>, pd=<module 'pandas' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/pandas/__init__.py'>, sk=<module 'sklearn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/sklearn/__init__.py'>, plt=<module 'matplotlib.pyplot' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/matplotlib/pyplot.py'>, sns=<module 'seaborn' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/seaborn/__init__.py'>, sp_stats=<module 'scipy.stats' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/scipy/stats/__init__.py'>, sm=<module 'statsmodels' from '/workspaces/Python-Copy2/.venv/lib/python3.12/site-packages/statsmodels/__init__.py'>, out=[], err=[], outs='')
     
-import scipy.stats as sp_stats
-# !err: --- ERROR ---
-# !err: SyntaxError on line 371: invalid syntax
+
