@@ -1,8 +1,8 @@
 '''
-1)creating an interactive graph of product sales in the past 18 months
-    -data scientists present data in graphs, tables, and interactive visualizations, which help the scientists gather meaningful insights from data. They would be most likely to create an interactive graph of product sales in the past 18 months.
-2)building a user interface for a data storage system containing data on product sales
-    -computer scientists design websites, develop software, and build data storage tools. They would be most likely to build a user interface for a data storage system.
-3)designing an experiment to compare three marketing strategies in different markets
-    -statisticians design experiments and apply models to discover trends and patterns in a dataset. They would be most likely to design an experiment to compare three marketing strategies in different markets.
+variety
+-electronic health records contain data on patient measurements, test results, medical history, image scans, and other characteristics. This variety of data types and formats is a key aspect of big data in healthcare.
+velocity
+-wearable devices like a smartwatch can track a patient's exercise, heart rate, and sleeping habits. Data from these devices are sent to a patient's doctor or care team in real time. The speed at which this data is generated and transmitted is an example of the velocity aspect of big data in healthcare.
+volume
+-unitedhealth group provides insurance for nearly 50 million customers. As part of providing insurance coverage, unitedhealth group manages medical records and claims data for each individual customer. The sheer amount of data generated and managed by unitedhealth group for its customers is an example of the volume aspect of big data in healthcare.
 '''
