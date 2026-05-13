@@ -345,7 +345,8 @@ with _:
         cmd("ls","-alf")
         cmd("python3", "-m", "venv", ".venv")
         cmd("source", ".venv/bin/activate")
-        cmd("python", "-m", "pip", "install", "--upgrade", "pip
+        cmd("python", "-m", "pip", "install", "--upgrade", "pip")
+        cmd("pip", "install", "numpy")
         # val: myfile.txt
         # val: .venv
         # val: mycsv.csv
